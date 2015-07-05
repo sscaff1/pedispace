@@ -1,4 +1,4 @@
 .meteor/local
 .meteor/meteorite
-server/fixture.js
+server/fixtures.js
 server/smtp.js
