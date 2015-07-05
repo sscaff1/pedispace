@@ -1,0 +1,20 @@
+<template name="shiftItem">
+  <div class="item item-s">
+    <div class="col-xs-6">
+      <h4><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span>{{userName}}</b></h4>
+      <b>Location:</b> {{locationName}}<br />
+      <b>Bike:</b> {{bikeName}}<br /> 
+      {{#if radioId}}<b>Radio:</b> {{radioName}}{{/if}}<br />
+    </div>
+    <div class="col-xs-6">
+    	<b>Start Time:</b> {{startTimeF}}<br/>
+      <b>End Time:</b> {{endTimeF}}<br />
+    	<b>Total Made:</b> ${{totalMade}}<br />
+    	<b>Drop:</b> ${{ratePaid}}<br />
+    	<b>Shift Rate:</b> ${{shiftRate}}<br />
+    </div>
+    <span class="col-xs-12">
+      <b>Comments:</b> {{comments}}
+    </span>
+  </div>
+</template>

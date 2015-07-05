@@ -1,0 +1,20 @@
+<template name="radioAdd">
+  <form class="main form page" name="insertForm">
+	<div class="form-group">
+	  <label for="locationName">Location Name</label>
+	  <select class="form-control" id="locationName" name="locationName">
+	    <option value="">Choose a Location</option>
+	    {{#each location}}
+	    	<option value="{{_id}}">{{name}}</option>
+	    {{/each}}
+	  </select>
+	</div>
+    <div class="form-group">
+      <label class="control-label" for="radioName">Radio Name</label>
+      <div class="controls">
+          <input name="radioName" id="radioName" type="text" placeholder="Add your new radio" class="form-control"/>
+      </div>
+    </div>
+    <input type="submit" value="Add New Radio" class="btn btn-primary"/>
+  </form>
+</template>

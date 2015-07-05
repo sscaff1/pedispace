@@ -1,0 +1,17 @@
+<template name="layout">
+  {{> header}}
+  <div class="container">
+  	{{> errors}}
+  	{{> successes}}
+  	<div id="main" class="col-md-9">
+      {{> yield}}
+  	</div>
+  	{{#if isInRole 'admin,manager'}}
+      <div id="right-panel" class="col-md-3">
+      	<h4>Latest Comments</h4>
+      	{{> shiftsComments}}
+      </div>
+  	{{/if}}
+  </div>
+  {{> footer}}
+</template>

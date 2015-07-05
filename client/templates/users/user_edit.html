@@ -1,0 +1,22 @@
+<template name="userEdit">
+  <form class="main form page" name="insertForm">
+  	<div class="form-group">
+	  <label for="role">Role</label>
+	  <select class="form-control" id="role" name="role">
+	  	<option value="">Choose a Role</option>
+	    <option value="{{roleName}}" selected>{{roles.[0]}}</option>
+	    {{#each role}}
+	    	<option value="{{name}}">{{name}}</option>
+	    {{/each}}
+	  </select>
+	</div>
+	<div class="checkbox">
+	  {{#if profile.active}}
+	  	<label><input type="checkbox" name="activeCheckbox" checked="checked">Active</label>
+	  {{else}}
+	  	<label><input type="checkbox" name="activeCheckbox">Active</label>
+	  {{/if}}
+	</div>
+    <input type="submit" value="Edit {{profile.name}}" class="btn btn-primary"/>
+  </form>
+</template>

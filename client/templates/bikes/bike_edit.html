@@ -1,0 +1,28 @@
+<template name="bikeEdit">
+  <form class="main form page" name="insertForm">
+	<div class="form-group">
+	  <label for="locationName">Location Name</label>
+	  <select class="form-control" id="locationName" name="locationName">
+	  	<option value="">Choose a Location</option>
+	    <option value="{{locationId}}" selected>{{locationName}}</option>
+	    {{#each location}}
+	    	<option value="{{_id}}">{{name}}</option>
+	    {{/each}}
+	  </select>
+	</div>
+    <div class="form-group">
+      <label class="control-label" for="bikeName">Bike Name</label>
+      <div class="controls">
+          <input name="bikeName" value="{{name}}" id="bikeName" type="text" placeholder="Add your new bike" class="form-control"/>
+      </div>
+    </div>
+	<div class="checkbox">
+	  {{#if active}}
+	  	<label><input type="checkbox" name="activeCheckbox" checked="checked">Active</label>
+	  {{else}}
+	  	<label><input type="checkbox" name="activeCheckbox">Active</label>
+	  {{/if}}
+	</div>
+    <input type="submit" value="Edit Bike" class="btn btn-primary"/>
+  </form>
+</template>

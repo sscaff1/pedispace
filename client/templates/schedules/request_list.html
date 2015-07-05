@@ -1,0 +1,33 @@
+<template name="requestList">
+  {{#each requests}}
+    {{> requestItem}}
+  {{/each}}
+</template>
+
+<template name="requestItem">
+  <div class="item">
+    <div class="item-content">
+      <span><b>Biker:</b> {{bikerName}}</span><br />
+      <span><b>Date:</b> {{requestDateNice}}</span>
+    </div>
+    <div class="item-content-mid">
+      <span><b>Schedule Type:</b> {{shiftType}}</span><br />
+      <span><b>Confirmed:</b> 
+        {{#if scheduled}}
+          <span style="color:green;">Scheduled</span>
+        {{else}}
+          <span style="color:red;">Not Scheduled</span>
+        {{/if}}
+      </span>
+    </div>
+    <div class="item-content-right">
+    {{#if isInRole 'admin,manager'}}
+      {{#if scheduled}}
+        <buttton type="button" class="btn btn-warning" name="unconfirm-button" id="unconfirm">Unconfirm</buttton>
+      {{else}}
+        <buttton type="button" class="btn btn-success" name="confirm-button" id="confirm">Confirm</buttton>
+      {{/if}}
+    {{/if}}
+    </div>
+  </div>
+</template>
