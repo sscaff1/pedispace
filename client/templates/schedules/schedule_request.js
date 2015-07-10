@@ -24,7 +24,8 @@ Template.scheduleRequest.events({
 			userId: Meteor.userId(),
 			locationId: Meteor.user().profile.locationId,
 			requestDate: rdate,
-			shiftType: $(e.target).find('[name=shiftType]').val()
+			shiftType: $(e.target).find('[name=shiftType]').val(),
+			scheduled: false
 		}
 		var errors = validateRequest(request);
 

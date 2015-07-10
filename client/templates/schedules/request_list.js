@@ -1,6 +1,6 @@
 Template.requestList.helpers({
 	'requests': function () {
-		return Requests.find({}, {sort: {requestDate: 1}});
+		return Requests.find({}, { sort: {scheduled: -1, requestDate: 1, submitted: 1}});
 	}
 });
 

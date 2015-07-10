@@ -2,34 +2,35 @@
 	<form class="main form page" name="insertForm" style="padding-bottom:40px;">
 	<legend>Schedule Rider</legend>
 	 <div class="form-horizontal">
-	 <div class="form-group">
-	 	<label for="rider" class="col-sm-3 control-label required">Rider:</label>
+	 <div class="form-group {{errorClass 'userId'}}">
+	 	<label for="userId" class="col-sm-3 control-label required">Rider:</label>
 	 	<div class="col-sm-9">
-	 	  <select class="form-control" id="rider" name="rider">
+	 	  <select class="form-control" id="userId" name="userId">
 	 	    <option value="">Choose a Rider</option>
 	 	    {{#each rider}}
               <option value="{{_id}}">{{profile.name}}</option>
             {{/each}}
 	 	  </select>
+	 	  <span class="help-block">{{errorMessage 'userId'}}</span>
 	 	</div>
 	 </div>
-	  <div class="form-group">
+	  <div class="form-group {{errorClass 'requestDate'}}">
 	    <label for="requestDate" class="col-sm-3 control-label required">Request Date:</label>
 	    <div class="col-sm-9">
 	      <input class="form-control" id="requestDate" name="requestDate" type="date">
 	      <span class="glyphicon glyphicon-cal form-control-feedback" aria-hidden="true"></span>
 	      <span>You can only select a date after {{nextSat}}.</span>
-	      <!-- <span class="help-block">{{errorMessage 'requestDate'}}</span> -->
+	      <span class="help-block">{{errorMessage 'requestDate'}}</span>
 	    </div>
 	  </div>
-	  <div class="form-group">
+	  <div class="form-group {{errorClass 'shiftType'}}">
 	    <label for="shiftType" class="col-sm-3 control-label required">Shift Type:</label>
 	    <div class="col-sm-9">
 	      <select class="form-control" id="shiftType" name="shiftType">
 	        <option value="">Choose a Shift Type</option>
 	          {{> shiftTypes}}
 	      </select>
-	      <!-- <span class="help-block">{{errorMessage 'shiftType'}}</span> -->
+	      <span class="help-block">{{errorMessage 'shiftType'}}</span>
 	    </div>
 	  </div>
 	<div class="form-group">

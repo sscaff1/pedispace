@@ -1,11 +1,13 @@
 <template name="layoutRegular">
   <style>
+  {{#if isInRole 'shop'}}
   #login-buttons-open-change-password {
   	display: none;
   }
   #login-buttons-edit-profile {
   	display: none;
   }
+  {{/if}}
   </style>
   <div class="container">
     {{> header}}

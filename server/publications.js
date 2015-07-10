@@ -96,21 +96,16 @@ Meteor.publish('requests', function() {
   if (Roles.userIsInRole(this.userId, ['admin'])) {
     return Requests.find({
       requestDate: {$gt: new Date(minDate)}
-    },{
-      sort: {requestDate: 1, submitted: 1}
     });
   } else if (Roles.userIsInRole(this.userId, ['manager'])) {
     return Requests.find({
       locationId: Meteor.users.findOne(this.userId).profile.locationId, 
       requestDate: {$gt: new Date(minDate)}
-    },{
-      sort: {requestDate:1, submitted: 1}
     });
   } else {
     return Requests.find({
-      userId: this.userId, requestDate: {$gt: new Date(minDate)}
-    },{
-      sort: {requestDate:1,submitted:1}
+      userId: this.userId, 
+      requestDate: {$gt: new Date(minDate)}
     });
   }
 })
