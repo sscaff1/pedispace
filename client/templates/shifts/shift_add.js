@@ -3,15 +3,6 @@ Template.shiftAdd.onCreated(function() {
 });
 
 Template.shiftAdd.helpers({
-  errorMessage: function(field) {
-    return Session.get('postSubmitErrors')[field];
-  },
-  errorClass: function (field) {
-    return !!Session.get('postSubmitErrors')[field] ? 'has-error' : '';
-  }
-});
-
-Template.shiftAdd.helpers({
 	'bike': function() {
 		return Bikes.find();
 	},

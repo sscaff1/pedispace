@@ -13,3 +13,11 @@ UI.registerHelper('nextSat', function () {
   	  return moment().day(6).format("dddd, MMMM Do YYYY");
   	}
 });
+
+UI.registerHelper('errorMessage', function (field) {
+  return Session.get('postSubmitErrors')[field];
+});
+
+UI.registerHelper('errorClass', function (field) {
+  return !!Session.get('postSubmitErrors')[field] ? 'has-error' : '';
+});

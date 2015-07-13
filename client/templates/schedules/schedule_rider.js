@@ -8,15 +8,6 @@ Template.scheduleRider.onCreated(function() {
   Session.set('postSubmitErrors', {});
 });
 
-Template.scheduleRider.helpers({
-  errorMessage: function(field) {
-    return Session.get('postSubmitErrors')[field];
-  },
-  errorClass: function (field) {
-    return !!Session.get('postSubmitErrors')[field] ? 'has-error' : '';
-  }
-});
-
 Template.scheduleRider.events({
 	'submit form': function(e) {
 		e.preventDefault();
@@ -44,6 +35,9 @@ Template.scheduleRider.events({
 		Meteor.call('requestAdd', schedule, function(error, result) {
 			if (error)
 				return throwError(error.reason);
+			if (result.requestExist)
+				throwError('This request has already been made.');
+
 			Session.set('postSubmitErrors', {});
 		});
 		document.insertForm.reset();

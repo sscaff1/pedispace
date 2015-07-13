@@ -2,15 +2,6 @@ Template.scheduleRequest.onCreated(function() {
   Session.set('postSubmitErrors', {});
 });
 
-Template.scheduleRequest.helpers({
-  errorMessage: function(field) {
-    return Session.get('postSubmitErrors')[field];
-  },
-  errorClass: function (field) {
-    return !!Session.get('postSubmitErrors')[field] ? 'has-error' : '';
-  }
-});
-
 Template.scheduleRequest.events({
 	'submit form': function(e) {
 		e.preventDefault();
@@ -35,6 +26,9 @@ Template.scheduleRequest.events({
       	Meteor.call('requestAdd', request, function(error, result) {
 			if (error) 
 				return throwError(error.reason);
+			if (result.requestExist)
+				throwError('This request has already been made.');
+
 			Session.set('postSubmitErrors', {});
 		});
 		document.insertForm.reset();
@@ -42,5 +36,6 @@ Template.scheduleRequest.events({
 });
 
 Requests.after.insert(function(userId, doc) {
+	Session.set('postSubmitErrors', {});
 	return throwSuccess("You've successfully created a shift request.");
 });
