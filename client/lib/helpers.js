@@ -21,3 +21,22 @@ UI.registerHelper('errorMessage', function (field) {
 UI.registerHelper('errorClass', function (field) {
   return !!Session.get('postSubmitErrors')[field] ? 'has-error' : '';
 });
+
+UI.registerHelper('scheduleDates', function () {
+  var dateArray = [];
+  var nextWeek = moment().day(i+7).format("dddd, MMMM Do YYYY");
+  for (var i = 0; i <= 7; i++) {
+    dateArray[i] ={
+      'dateValue': moment().day(i+7).format("dddd, MMMM Do YYYY"),
+      'formId': "formId"+i,
+      'alternate': function() {
+        return Alternates.find({scheduleDate: nextWeek}, 
+          {sort: {userName: 1}});
+      },
+      'riders': function () {
+        return Requests.find({scheduled: true, scheduleDate: nextWeek});
+      }
+    }
+  };
+  return dateArray;
+});

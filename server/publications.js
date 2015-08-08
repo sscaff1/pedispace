@@ -11,6 +11,12 @@ Meteor.publish('bikes', function() {
   }
 });
 
+Meteor.publish('requestSchedule', function() {
+  return Requests.find({
+    loctionId: Meteor.users.findOne(this.userId).profile.locationId
+  });
+});
+
 Meteor.publish('radios', function() {
   if (Roles.userIsInRole(this.userId, ['admin'])) {
     return Radios.find();

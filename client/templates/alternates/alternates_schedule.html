@@ -1,0 +1,53 @@
+<template name="alternatesSchedule">
+	{{#each scheduleDates '7'}}
+		<h4>{{this.dateValue}}</h4>
+		<h5>Current Alternates</h5>
+		{{#each this.alternate}}
+			{{> alternateItem}}
+		{{/each}}
+		<form class="main form page" name="{{this.formId}}am" style="padding-bottom:40px;">
+		<legend>AM Shift</legend>
+		<div class="form-horizontal">
+		 <div class="form-group {{errorClass 'userId'}}">
+		 	<label for="userId" class="col-sm-3 control-label required">Rider:</label>
+		 	<div class="col-sm-9">
+		 	  <select class="form-control" id="userId" name="userId">
+		 	    <option value="">Choose a Rider</option>
+		 	    {{#each rider}}
+	              <option value="{{_id}}">{{profile.name}}</option>
+	            {{/each}}
+		 	  </select>
+		 	  <span class="help-block">{{errorMessage 'userId'}}</span>
+		 	</div>
+		 </div>
+		 <div class="form-group">
+    	  <div class="col-sm-offset-3 col-sm-9">
+      	    <input type="submit" value="Schedule Alternate" class="btn btn-primary"/>
+    	  </div>
+		</div>
+		</div>
+		</form>
+		<form class="main form page" name="{{this.formId}}pm" style="padding-bottom:40px;">
+		<legend>PM Shift</legend>
+		<div class="form-horizontal">
+		 <div class="form-group {{errorClass 'userId'}}">
+		 	<label for="userId" class="col-sm-3 control-label required">Rider:</label>
+		 	<div class="col-sm-9">
+		 	  <select class="form-control" id="userId" name="userId">
+		 	    <option value="">Choose a Rider</option>
+		 	    {{#each rider}}
+	              <option value="{{_id}}">{{profile.name}}</option>
+	            {{/each}}
+		 	  </select>
+		 	  <span class="help-block">{{errorMessage 'userId'}}</span>
+		 	</div>
+		 </div>
+	 	<div class="form-group">
+    	  <div class="col-sm-offset-3 col-sm-9">
+      	    <input type="submit" value="Schedule Alternate" class="btn btn-primary"/>
+    	  </div>
+		</div>
+		</div>
+		</form>
+	{{/each}}
+</template>

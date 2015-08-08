@@ -26,8 +26,8 @@
             <ul class="dropdown-menu">
               <li><a href="{{pathFor 'scheduleRequest'}}">Pending Requests</a></li>
               <li><a href="{{pathFor 'scheduleRider'}}">Schedule Riders</a></li>
-              <li class="disabled"><a href="{{pathFor 'scheduleAlternates'}}">Schedule Alternates</a></li>
-              <li class="disabled"><a href="{{pathFor 'schedulePrint'}}">Print Schedule</a></li>
+              <li><a href="{{pathFor 'alternatesSchedule'}}">Schedule Alternates</a></li>
+              <li><a href="{{pathFor 'printSchedule'}}">Print Schedule</a></li>
             </ul>
           </li>
         {{#if isInRole 'admin'}}

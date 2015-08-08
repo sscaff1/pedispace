@@ -1,0 +1,14 @@
+<template name="printSchedule">
+  <div class="form-horizontal">
+  <div class="form-group">
+    <label for="dateRange" class="col-sm-3 control-label">Select Schedule:</label>
+    <div class="col-sm-9">
+      <select class="form-control" id="dateRange" name="dateRange">
+        <option value="{{thisSat}}" selected>Current Schedule (thru {{thisSat}})</option>
+        <option value="{{nextWeek}}">Next Week (thru {{nextWeek}})</option>
+      </select>
+    </div>
+  </div>
+  </div>
+  {{> scheduleDay}}
+</template>

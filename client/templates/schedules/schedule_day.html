@@ -1,0 +1,14 @@
+<template name="scheduleDay">
+  {{#each scheduleDates}}
+  <div class="item item-s">
+    <div class="col-xs-12">
+      <h3>{{this.dateValue}}</h3>
+      <h4><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Scheduled Riders</b></h4>
+      {{#each this.riders}}
+        <p>{{this.userId}}</p>
+      {{/each}}
+    </div>
+
+  </div>
+  {{/each}}
+</template>
