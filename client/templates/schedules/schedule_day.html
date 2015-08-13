@@ -1,14 +1,50 @@
-<template name="scheduleDay">
-  {{#each scheduleDates}}
+<template name="scheduleDay">  
   <div class="item item-s">
     <div class="col-xs-12">
-      <h3>{{this.dateValue}}</h3>
+      <h3>{{dateValuef}}</h3>
       <h4><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Scheduled Riders</b></h4>
-      {{#each this.riders}}
-        <p>{{this.userId}}</p>
-      {{/each}}
+      <div class="col-xs-4">
+        <h5>AM Shift</h5>
+        <ol>
+        {{#each riders "AM"}}
+          <li>
+            {{userName.name}}<br />
+            <i>
+            	{{userName.phoneNumber}} <br />
+            	{{userName.email}}
+            </i>
+          </li>
+        {{/each}}
+        </ol>
+      </div>
+      <div class="col-xs-4">
+        <h5>PM Shift</h5>
+        <ol>
+        {{#each riders "PM"}}
+          <li>
+            {{userName.name}}<br />
+            <i>
+            	{{userName.phoneNumber}} <br />
+            	{{userName.email}}
+            </i>
+          </li>
+        {{/each}}
+        </ol>
+      </div>
+      <div class="col-xs-4">
+        <h5>FLEX Shift</h5>
+        <ol>
+        {{#each riders "FLEX"}}
+          <li>
+            {{userName.name}}<br />
+            <i>
+            	{{userName.phoneNumber}} <br />
+            	{{userName.email}}
+            </i>
+          </li>
+        {{/each}}
+        </ol>
+      </div>
     </div>
-
   </div>
-  {{/each}}
 </template>

@@ -22,21 +22,16 @@ UI.registerHelper('errorClass', function (field) {
   return !!Session.get('postSubmitErrors')[field] ? 'has-error' : '';
 });
 
-UI.registerHelper('scheduleDates', function () {
+UI.registerHelper('scheduleDates', function (inc) {
   var dateArray = [];
-  var nextWeek = moment().day(i+7).format("dddd, MMMM Do YYYY");
-  for (var i = 0; i <= 7; i++) {
+  inc = parseInt(inc);
+  for (var i = 0; i < 7; i++) {
+    var day = 7 + i + inc;
     dateArray[i] ={
-      'dateValue': moment().day(i+7).format("dddd, MMMM Do YYYY"),
-      'formId': "formId"+i,
-      'alternate': function() {
-        return Alternates.find({scheduleDate: nextWeek}, 
-          {sort: {userName: 1}});
-      },
-      'riders': function () {
-        return Requests.find({scheduled: true, scheduleDate: nextWeek});
-      }
+      'dateValue': moment().day(day).startOf('day'),
+      'formId': "formId" + i,
     }
+    console.log(day);
   };
   return dateArray;
 });
