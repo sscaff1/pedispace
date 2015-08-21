@@ -8,8 +8,10 @@
   	</div>
   	{{#if isInRole 'admin,manager'}}
       <div id="right-panel" class="col-md-3">
-      	<h4>Latest Comments</h4>
-      	{{> shiftsComments}}
+        <h4>Scheduled Riders</h4>
+        {{> scheduleListFull}}
+        <h4>Latest Comments</h4>
+        {{> shiftsComments}}
       </div>
   	{{/if}}
   </div>

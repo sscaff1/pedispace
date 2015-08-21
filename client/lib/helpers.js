@@ -1,3 +1,4 @@
+//A helper to figure out if an object is empty
 isEmptyO = function (obj) {
   for(var prop in obj) {
     if(obj.hasOwnProperty(prop))
@@ -31,7 +32,6 @@ UI.registerHelper('scheduleDates', function (inc) {
       'dateValue': moment().day(day).startOf('day'),
       'formId': "formId" + i,
     }
-    console.log(day);
   };
   return dateArray;
 });

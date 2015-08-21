@@ -11,12 +11,6 @@ Meteor.publish('bikes', function() {
   }
 });
 
-Meteor.publish('requestSchedule', function() {
-  return Requests.find({
-    loctionId: Meteor.users.findOne(this.userId).profile.locationId
-  });
-});
-
 Meteor.publish('radios', function() {
   if (Roles.userIsInRole(this.userId, ['admin'])) {
     return Radios.find();
@@ -99,11 +93,7 @@ Meteor.publish('requests', function() {
   } else {
     var minDate = moment().day(6);
   }
-  if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Requests.find({
-      requestDate: {$gt: new Date(minDate)}
-    });
-  } else if (Roles.userIsInRole(this.userId, ['manager'])) {
+  if (Roles.userIsInRole(this.userId, ['admin', 'manager'])) {
     return Requests.find({
       locationId: Meteor.users.findOne(this.userId).profile.locationId, 
       requestDate: {$gt: new Date(minDate)}

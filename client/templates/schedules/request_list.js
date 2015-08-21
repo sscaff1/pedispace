@@ -11,6 +11,13 @@ Template.requestItem.helpers({
 	'bikerName': function() {
 		var u = Meteor.users.findOne(this.userId);
 		return u.profile.name;
+	},
+	alternate: function () {
+		if (this.rider) {
+			return 'rider';
+		} else {
+			return 'alternate';
+		}
 	}
 });
 
@@ -18,7 +25,10 @@ Template.requestItem.events({
 	'click #unconfirm': function() {
 		Requests.update(this._id, {$set: {scheduled: false}});
 	},
-	'click #confirm': function() {
-		Requests.update(this._id, {$set: {scheduled: true}});
+	'click #rider': function() {
+		Requests.update(this._id, {$set: {scheduled: true, rider: true}});
+	},
+	'click #alternate': function() {
+		Requests.update(this._id, {$set: {scheduled: true, rider: false}});
 	}
 })
