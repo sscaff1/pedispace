@@ -1,13 +1,10 @@
 Template.userEdit.helpers({
-	'role': function() {
+	role: function() {
 		return Meteor.roles.find({name: {$ne: Meteor.user().roles[0]}}, {sort: {name: 1}});
 	},
-	'roleName': function() {
+	roleName: function() {
 		var l = Meteor.roles.findOne({name: Meteor.user().roles[0]});
 		return l.name;
-	},
-	'idcheck': function() {
-		return this._id;
 	}
 
 });

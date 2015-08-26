@@ -1,8 +1,8 @@
 Template.radioEdit.helpers({
-	'location': function() {
+	location: function() {
 		return Locations.find({_id: {$ne: this.locationId}});
 	},
-	'locationName': function() {
+	locationName: function() {
 		var l = Locations.findOne({_id: this.locationId});
 		return l.name;
 	}

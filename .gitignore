@@ -2,3 +2,4 @@
 .meteor/meteorite
 server/fixtures.js
 server/smtp.js
+server/kadira.js

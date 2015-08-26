@@ -3,16 +3,16 @@ Template.shiftAdd.onCreated(function() {
 });
 
 Template.shiftAdd.helpers({
-	'bike': function() {
+	bike: function() {
 		return Bikes.find();
 	},
-	'radio': function() {
+	radio: function() {
 		if (Radios.find().count() === 0) {
 			return null
 		}
 		return Radios.find();
 	},
-	'rider': function() {
+	rider: function() {
 		return Meteor.users.find({_id: { $ne: this._id }}, {sort: {"profile.name": 1}});
 	}
 });
@@ -48,7 +48,23 @@ Template.shiftAdd.events({
 			Session.set('postSubmitErrors', {});
 		});
 		document.insertForm.reset();
+	},
+	'change #shiftType, change #startTime': function(e) {
+		var s = $(e.target).find('[name=startTime]').val();
+		s = moment(s).startOf('day');
+		
+		var st = $(e.target).find('[name=shiftType]').val();
+
+		var r = Rates.findOne({
+			locationId: this.profile.locationId,
+			//scheduleDate: s,
+			//shiftType: st
+		});
+
+		Session.set('rate', r.rateAmount);
+		console.log(Session.get('rate'));
 	}
+
 });
 
 Shifts.after.insert(function(userId, doc) {
@@ -56,9 +72,7 @@ Shifts.after.insert(function(userId, doc) {
 });
 
 Template.shiftAdd.onRendered(function() {
-	var current = new Date();
-	var now = new Date(current - 60*13*60000);
-	now = now.toISOString();
+	var now = moment().subtract(13, 'hours').toISOString();
 	now = now.substr(0, now.length - 8);
 	document.getElementById("startTime").defaultValue = now;
 });

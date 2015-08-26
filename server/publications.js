@@ -104,7 +104,21 @@ Meteor.publish('requests', function() {
       requestDate: {$gt: new Date(minDate)}
     });
   }
-})
+});
+
+Meteor.publish('rates', function() {
+  if (moment() >= moment().day(6) && moment().hour() >= 12) {
+    var minDate = moment().day(6+7);
+  } else {
+    var minDate = moment().day(6);
+  }
+  if (this.userId) {
+    return Rates.find({
+      locationId: Meteor.users.findOne(this.userId).profile.locationId, 
+      scheduleDate: {$gt: new Date(minDate)}
+    });
+  }
+});
 
 Accounts.onCreateUser(function(options, user) {
   options.roles = ['biker'];

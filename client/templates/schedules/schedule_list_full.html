@@ -1,18 +1,16 @@
 <template name="scheduleListFull">
-  <div class="item">
-	  {{#each scheduleDates 0}}
-	  	<span style="{{notScheduled}}">
-	  	<h6>AM Shift</h6>
-	  	  <p>{{dateValuef}} ({{scheduledRiders "AM"}}/{{bikes}})</p>
-	  	</span>
-	  	<span style="{{notScheduled}}">
-	  	<h6>PM Shift</h6>
-	  	   <p>{{dateValuef}} ({{scheduledRiders "PM"}}/{{bikes}})</p>
-	  	</span>
-	  	<span style="{{notScheduled}}">
-	  	<h6>FLEX Shift</h6>
-	  	  <p>{{dateValuef}} ({{scheduledRiders "FLEX"}}/{{bikes}})</p>
-	  	</span>
-	  {{/each}}
-  </div>
+  {{#each scheduleDates 0}}
+  	<span style="{{notScheduled}}">
+  	<h6>AM Shift</h6>
+  	  <p>{{dateValuef}} ({{scheduledRiders "AM"}}/{{bikes}})</p>
+  	</span>
+  	<span style="{{notScheduled}}">
+  	<h6>PM Shift</h6>
+  	   <p>{{dateValuef}} ({{scheduledRiders "PM"}}/{{bikes}})</p>
+  	</span>
+  	<span style="{{notScheduled}}">
+  	<h6>FLEX Shift</h6>
+  	  <p>{{dateValuef}} ({{scheduledRiders "FLEX"}}/{{bikes}})</p>
+  	</span>
+  {{/each}}
 </template>

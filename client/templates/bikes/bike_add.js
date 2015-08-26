@@ -1,5 +1,5 @@
 Template.bikeAdd.helpers({
-	'location': function() {
+	location: function() {
 		return Locations.find({}, {sort: {name: 1}});
 	}
 });

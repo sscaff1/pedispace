@@ -30,7 +30,7 @@ UI.registerHelper('scheduleDates', function (inc) {
     var day = 7 + i + inc;
     dateArray[i] ={
       'dateValue': moment().day(day).startOf('day'),
-      'formId': "formId" + i,
+      'formId': i
     }
   };
   return dateArray;

@@ -1,11 +1,11 @@
 Template.scheduleDay.helpers({
-	'riders': function(shift) {
+	riders: function(shift) {
 		return Requests.find({scheduled: true, requestDate: new Date(this.dateValue), shiftType: shift});
 	},
-	'dateValuef': function() {
+	dateValuef: function() {
 		return this.dateValue.format("dddd, MMMM Do YYYY")
 	},
-	'userName': function() {
+	userName: function() {
 		var user = Meteor.users.findOne(this.userId);
 		return {
 			name: user.profile.name,

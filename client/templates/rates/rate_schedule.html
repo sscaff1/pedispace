@@ -1,0 +1,23 @@
+<template name="rateSchedule">
+	{{#each scheduleDates 0}}
+		<h4>{{dateValuef}}</h4>
+		<div class="item">
+			<div style="margin-bottom:75px">
+			<h5>Current Rates</h5>
+			<div class="col-xs-5 col-xs-offset-2">
+				<h6>AM Shift</h6>
+			  	{{#each rate "AM"}}
+			    	${{rateAmount}}.00
+			  	{{/each}}
+			</div>
+			<div class="col-xs-5">
+			<h6>PM Shift</h6>
+			  {{#each rate "PM"}}
+			    ${{rateAmount}}.00
+			  {{/each}}
+			</div>
+			</div>
+			{{> rateAdd}}
+		</div>
+	{{/each}}
+</template>

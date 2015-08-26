@@ -1,5 +1,5 @@
 Template.radioAdd.helpers({
-  'location': function() {
+  location: function() {
   	return Locations.find({}, {sort: {name: 1}});
   }
 });
@@ -12,7 +12,9 @@ Template.radioAdd.events({
 			locationId: $(e.target).find('[name=locationName]').val(),
 			name: $(e.target).find('[name=radioName]').val()
 		}
+		
 		Meteor.call('radioAdd', radio);
+
 		document.insertForm.reset();
 	}
 })

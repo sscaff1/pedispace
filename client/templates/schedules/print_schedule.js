@@ -1,13 +1,13 @@
 Session.setDefault('week', 0);
 
 Template.printSchedule.helpers({
-	'thisSat': function() {
+	thisSat: function() {
 		return moment().day(6+7).format("dddd, MMMM Do YYYY");
 	},
-	'nextWeek': function () {
+	nextWeek: function () {
 		return moment().day(6+14).format("dddd, MMMM Do YYYY");
 	},
-	'inc': function () {
+	inc: function () {
 		return Session.get('week');
 	}
 });
