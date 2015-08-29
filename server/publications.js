@@ -34,11 +34,14 @@ Meteor.publish('locations', function() {
   }
 });
 
-Meteor.publish('shifts', function() {
+Meteor.publish('shifts', function(limit) {
 	if (Roles.userIsInRole(this.userId, ['admin'])) {
-		return Shifts.find();
+		return Shifts.find({}, {limit: limit});
 	} else if (Roles.userIsInRole(this.userId, ['manager'])) {
-		return Shifts.find({locationId: Meteor.users.findOne(this.userId).profile.locationId});
+		return Shifts.find(
+        {locationId: Meteor.users.findOne(this.userId).profile.locationId},
+        {limit: limit}
+      );
 	} else {
 		this.ready();
 	};

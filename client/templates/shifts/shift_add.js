@@ -22,7 +22,6 @@ Template.shiftAdd.events({
 		e.preventDefault();
 
 		var s = $(e.target).find('[name=startTime]').val();
-		var startTime = new Date(s.replace(/-/g,'/').replace('T',' '));
 
 		var shift = {
 			locationId: this.profile.locationId,
@@ -32,7 +31,7 @@ Template.shiftAdd.events({
 			totalMade: $(e.target).find('[name=totalMade]').val(),
 			ratePaid: $(e.target).find('[name=ratePaid]').val(),
 			shiftRate: $(e.target).find('[name=shiftRate]').val(),
-			startTime: startTime,
+			startTime: new Date(s),
 			comments: $(e.target).find('[name=comments]').val(),
 			userId: $(e.target).find('[name=userName]').val()
 		}
@@ -50,15 +49,15 @@ Template.shiftAdd.events({
 		document.insertForm.reset();
 	},
 	'change #shiftType, change #startTime': function(e) {
-		var s = $(e.target).find('[name=startTime]').val();
+		var s = $('form').closest('[name=startTime]').val();
 		s = moment(s).startOf('day');
 		
-		var st = $(e.target).find('[name=shiftType]').val();
+		var st = $('form').closest('[name=shiftType]').val();
 
 		var r = Rates.findOne({
 			locationId: this.profile.locationId,
 			//scheduleDate: s,
-			//shiftType: st
+			shiftType: st
 		});
 
 		Session.set('rate', r.rateAmount);
