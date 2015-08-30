@@ -36,11 +36,14 @@ Meteor.publish('locations', function() {
 
 Meteor.publish('shifts', function(limit) {
 	if (Roles.userIsInRole(this.userId, ['admin'])) {
-		return Shifts.find({}, {limit: limit});
+		return Shifts.find({}, {limit: limit, sort: {submitted: -1}});
 	} else if (Roles.userIsInRole(this.userId, ['manager'])) {
 		return Shifts.find(
         {locationId: Meteor.users.findOne(this.userId).profile.locationId},
-        {limit: limit}
+        {
+          limit: limit,
+          sort: {submitted: -1}
+        }
       );
 	} else {
 		this.ready();

@@ -51,12 +51,13 @@ Template.shiftAdd.events({
 	'change #shiftType, change #startTime': function(e) {
 		var s = $('form').closest('[name=startTime]').val();
 		s = moment(s).startOf('day');
-		
+		s = new Date(s);
+
 		var st = $('form').closest('[name=shiftType]').val();
 
 		var r = Rates.findOne({
 			locationId: this.profile.locationId,
-			//scheduleDate: s,
+			scheduleDate: s,
 			shiftType: st
 		});
 

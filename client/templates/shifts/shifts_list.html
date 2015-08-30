@@ -5,17 +5,20 @@
 	  		<input type="date" class="form-control" id="dateFilter" placeholder="Filter Date" name="dateFilter">
 		</div>
 		<button type="submit" class="btn btn-default">Submit</button>
+		{{#if shiftsF}}
+			<button class="btn btn-primary reset">Reset</button>
+		{{/if}}
 	</form>
 	<br />
 	{{#if shiftsF}}
 		{{#each shiftsF}}
 			{{> shiftItem}}
 		{{/each}}
-	{{else}}
+	{{else}}	
+		{{#each shifts}}
+			{{> shiftItem}}
+		{{/each}}
 		{{#if Template.subscriptionsReady}}
-			{{#each shifts}}
-				{{> shiftItem}}
-			{{/each}}
 			{{#if hasMoreShifts}}
 				<a href="#" class="load-more">Load More</a>
 			{{/if}}

@@ -1,19 +1,3 @@
-Template.shiftsList.helpers({
-	shifts: function() {
-		return Template.instance().shifts();
-	},
-	hasMoreShifts: function () {
-		return Template.instance().shifts().count() >= Template.instance().limit.get();
-	},
-	shiftsF: function() {
-		var dateFilter1 = Template.instance().dateFilter.get();
-		var dateFilter2 = moment(dateFilter1).add(1, 'days');
-		if (dateFilter1)
-			return Shifts.find({startDate: {$gte: new Date(dateFilter1), $lt: new Date(dateFilter2)}});
-		return false;
-	}
-});
-
 Template.shiftsList.onCreated(function() {
 	var instance = this;
 
@@ -31,7 +15,11 @@ Template.shiftsList.onCreated(function() {
 	});
 
 	instance.shifts = function() {
-		return Shifts.find({}, {limit: instance.loaded.get()});	
+		return Shifts.find({}, 
+			{
+				limit: instance.loaded.get(),
+				sort: {submitted: -1}
+			});	
 	};
 
 });
@@ -51,8 +39,27 @@ Template.shiftsList.events({
 		dateFilter = new Date(moment(dateFilter));
 
 		instance.dateFilter.set(dateFilter);
-
+	},
+	'click .reset': function(e) {
+		e.preventDefault();
+		//I need to reset shifts F with this event
 	}
 		
+});
+
+Template.shiftsList.helpers({
+	shifts: function() {
+		return Template.instance().shifts();
+	},
+	hasMoreShifts: function () {
+		return Template.instance().shifts().count() >= Template.instance().limit.get();
+	},
+	shiftsF: function() {
+		var dateFilter1 = Template.instance().dateFilter.get();
+		var dateFilter2 = new Date(moment(dateFilter1).add(1, 'days'));
+		if (dateFilter1)
+			return Shifts.find({startTime: {$gte: dateFilter1, $lt: dateFilter2}});
+		return false;
+	}
 });
 

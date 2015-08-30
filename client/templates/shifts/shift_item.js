@@ -12,13 +12,11 @@ Template.shiftItem.helpers({
 		return b;
 	},
 	locationName: function() {
-		var instance = this;
-		var l = Locations.findOne({_id: instance.locationId});
-		l = l.name;
+		var l = Locations.findOne({_id: this.locationId});
 		return l;
 	},
 	startTimeF: function() {
-		var d = this.startTime;
+		var d = moment(this.startTime).format("ddd, MMM Do YY, h:mm A");
 		return d;
 	},
 	endTimeF: function() {
