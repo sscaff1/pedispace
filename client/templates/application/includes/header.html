@@ -35,6 +35,13 @@
         {{/if}}
         </ul>
       {{/if}}
+    {{else}}
+      {{#if currentUser}}
+        <ul class="nav navbar-nav">
+          <li><a href="{{pathFor 'scheduleRequest'}}">Request Schedule</a></li>
+          <li><a href="{{pathFor 'printSchedule'}}">Print Schedule</a></li>
+        </ul>
+      {{/if}}
     {{/if}}
       <ul class="nav navbar-nav navbar-right">
       {{> loginButtons}}

@@ -40,10 +40,10 @@ Template.shiftsList.events({
 
 		instance.dateFilter.set(dateFilter);
 	},
-	'click .reset': function(e) {
-		e.preventDefault();
-		//I need to reset shifts F with this event
-	}
+	// 'click .reset': function(e) {
+	// 	e.preventDefault();
+	// 	//I need to reset shifts F with this event
+	// }
 		
 });
 

@@ -14,6 +14,9 @@ Template.shiftAdd.helpers({
 	},
 	rider: function() {
 		return Meteor.users.find({_id: { $ne: this._id }}, {sort: {"profile.name": 1}});
+	},
+	rateComments: function() {
+		return Session.get('rateComments');
 	}
 });
 
@@ -49,20 +52,22 @@ Template.shiftAdd.events({
 		document.insertForm.reset();
 	},
 	'change #shiftType, change #startTime': function(e) {
-		var s = $('form').closest('[name=startTime]').val();
+		var s = $('form').find('[name=startTime]').val();
 		s = moment(s).startOf('day');
 		s = new Date(s);
 
-		var st = $('form').closest('[name=shiftType]').val();
+		var st = $('form').find('[name=shiftType]').val();
 
 		var r = Rates.findOne({
 			locationId: this.profile.locationId,
 			scheduleDate: s,
 			shiftType: st
 		});
-
-		Session.set('rate', r.rateAmount);
-		console.log(Session.get('rate'));
+		if (r) {
+			$('form').find('[name=shiftRate]').val(r.rateAmount);
+			$('form').find('[name=shiftRate]').prop('disabled', true);
+			Session.set('rateComments', r.comments);
+		}
 	}
 
 });

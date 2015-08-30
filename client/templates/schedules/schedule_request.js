@@ -27,7 +27,7 @@ Template.scheduleRequest.events({
 			if (error) 
 				return throwError(error.reason);
 			if (result.requestExist)
-				throwError('This request has already been made.');
+				return throwError('This request has already been made.');
 
 			Session.set('postSubmitErrors', {});
 		});

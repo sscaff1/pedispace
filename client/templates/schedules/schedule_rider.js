@@ -24,7 +24,8 @@ Template.scheduleRider.events({
 			locationId: Meteor.user().profile.locationId,
 			requestDate: rdate,
 			shiftType: $(e.target).find('[name=shiftType]').val(),
-			scheduled: true
+			scheduled: true,
+			rider: $(e.target).find('[name=riderType]').prop('checked')
 		}
 		
 		var errors = validateRequest(schedule);

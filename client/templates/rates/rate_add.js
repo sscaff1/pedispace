@@ -6,7 +6,8 @@ Template.rateAdd.events({
 			scheduleDate: new Date(this.dateValue.toISOString()),
 			locationId: Meteor.user().profile.locationId,
 			shiftType: $(e.target).find('[name=shiftType]').val(),
-			rateAmount: $(e.target).find('[name=rateAmount]').val()
+			rateAmount: $(e.target).find('[name=rateAmount]').val(),
+			comments: $(e.target).find('[name=comments]').val()
 		}
 
 		var errors = validateRate(rate);
@@ -22,4 +23,14 @@ Template.rateAdd.events({
 
       	$('[name=insertForm]')[this.formId].reset();
 	}
+});
+
+Rates.after.insert(function(userId, doc) {
+	Session.set('postSubmitErrors', {});
+	return throwSuccess("You've successfully created a rate schedule.");
+});
+
+Rates.after.update(function(userId, doc) {
+	Session.set('postSubmitErrors', {});
+	return throwSuccess("You've successfully updated a rate schedule.");
 });
