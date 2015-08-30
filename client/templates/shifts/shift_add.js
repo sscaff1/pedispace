@@ -52,6 +52,8 @@ Template.shiftAdd.events({
 		document.insertForm.reset();
 	},
 	'change #shiftType, change #startTime': function(e) {
+		e.preventDefault();
+
 		var s = $('form').find('[name=startTime]').val();
 		s = moment(s).startOf('day');
 		s = new Date(s);
@@ -67,6 +69,8 @@ Template.shiftAdd.events({
 			$('form').find('[name=shiftRate]').val(r.rateAmount);
 			$('form').find('[name=shiftRate]').prop('disabled', true);
 			Session.set('rateComments', r.comments);
+		} else {
+			Session.set('rateComments', null);
 		}
 	}
 

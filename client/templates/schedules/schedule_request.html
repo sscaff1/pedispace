@@ -22,18 +22,21 @@
 	      <span class="help-block">{{errorMessage 'shiftType'}}</span>
 	    </div>
 	  </div>
-	<div class="form-group">
+	  <div class="col-sm-offset-3 col-sm-9">
+	  	<strong>Rate Amount:</strong> {{#if rateSelect}}${{/if}}{{rateSelect.rateAmount}}<br/>
+	  	<strong>Comments:</strong> {{rateSelect.comments}}
+	  </div>
+	  <div class="form-group">
 	    <div class="col-sm-offset-3 col-sm-9">
 	      <input type="submit" value="Create Request" class="btn btn-primary"/>
 	    </div>
-  	</div>
-  	<div class="col-sm-3"></div>
-  	<div class="col-sm-9">
+  	  </div>
+  	<div class="col-sm-9 col-sm-offset-3">
 		<small>Note that you cannot edit your schedule requests.</small>
   	</div>
   </div>
   </form>
-  <div class="item"><center>You will receive your schedule via email.</center></div>
+  <div class="item"><center>You can print out your schedule by cliking on the print schedule button.</center></div>
   {{/if}}
   {{> requestList}}
 </template>

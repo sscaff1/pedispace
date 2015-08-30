@@ -32,6 +32,32 @@ Template.scheduleRequest.events({
 			Session.set('postSubmitErrors', {});
 		});
 		document.insertForm.reset();
+	},
+	'change #shiftType, change #requestDate': function(e) {
+		e.preventDefault();
+
+		var s = $('form').find('[name=requestDate]').val();
+		s = moment(s).startOf('day');
+		s = new Date(s);
+
+		var st = $('form').find('[name=shiftType]').val();
+
+		var r = Rates.findOne({
+			locationId: Meteor.user().profile.locationId,
+			scheduleDate: s,
+			shiftType: st
+		});
+		if (r) {
+			Session.set('rateSelect', r);
+		} else {
+			Session.set('rateSelect', null);
+		}
+	}
+});
+
+Template.scheduleRequest.helpers({
+	rateSelect: function() {
+		return Session.get('rateSelect');
 	}
 });
 
