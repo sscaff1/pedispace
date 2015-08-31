@@ -1,6 +1,6 @@
 # pediSpace
-## Pedicab business management made easy
-### Powered by Meteor and MongoDB
+Pedicab business management made easy<br/> 
+Powered by Meteor and MongoDB
 
 ## Main Features
  - Scheduling
