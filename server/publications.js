@@ -104,11 +104,13 @@ Meteor.publish('requests', function() {
       locationId: Meteor.users.findOne(this.userId).profile.locationId, 
       requestDate: {$gt: new Date(minDate)}
     });
-  } else {
+  } else if (this.userId) {
     return Requests.find({
       userId: this.userId, 
       requestDate: {$gt: new Date(minDate)}
     });
+  } else {
+    this.ready();
   }
 });
 
@@ -118,11 +120,15 @@ Meteor.publish('rates', function() {
   } else {
     var minDate = moment().day(6);
   }
-  if (this.userId) {
-    return Rates.find({
-      locationId: Meteor.users.findOne(this.userId).profile.locationId, 
+ if (Roles.userIsInRole(this.userId, ['admin'])) {
+    return Bikes.find();
+  } else if (this.userId) {
+    return Bikes.find({
+      locationId: Meteor.users.findOne(this.userId).profile.locationId,
       scheduleDate: {$gt: new Date(minDate)}
     });
+  } else {
+    this.ready();
   }
 });
 
