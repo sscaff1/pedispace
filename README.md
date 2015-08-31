@@ -1,5 +1,5 @@
 # pediSpace
-Pedicab business management made easy 
+Pedicab business management made easy<br/> 
 Powered by Meteor and MongoDB
 
 ## Main Features
