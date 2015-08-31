@@ -16,10 +16,12 @@
 	- Managers can be created by the fixture.js file or a user can be edited by an admin to create a manager. Managers have all access to their location. Managers cannot access other location data and cannot add new locations.
 	- Bikers are created when users register. These users will then appear on the drop down menu in the shift add form for the shop. Bikers are able to request schedule, edit their profile, and print out their schedule. Managers and Admins can now scheduled registered bikers for shifts as well.
 	- Shop users are created by default through the fixtures.js file. They can also be created by registering a user and then changing the role of that user to shop. The shop can only do one thing: add new shifts. As designed, there should be one shop user per location. While in the shop and changing or starting shifts, the shop user should be logged in. When the shop user is logged in, the bikers will be able to input their shifts quickly without having to log in and out. The shift rate will also dynamically populate for defined shift rates. Not every shift will have a rate because the admins or managers may not have put in a rate.
+
 ## Next Steps
  - Shop users are created when a new location is added.
  - Admins and managers can add users when logged in.
  - Mechanics are another user that can more traditionally clock in and out.
  - Biker performance ranking.
+
 ## About
 This app was created by [Tela Edge, LLC](http://telaedge.com). The purpose of this app was to make pedicab management dirt simple. The product is currently in beta. The source code is open source, and I encourage contributions. Email me at [steven@telaedge.com](mailto:steven@telaedge.com) if you have any questions or like to use this product for your business. 
