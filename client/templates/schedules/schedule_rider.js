@@ -30,7 +30,7 @@ Template.scheduleRider.events({
 		
 		var errors = validateRequest(schedule);
 
-		if (!isEmptyO(errors)) 
+		if (!$.isEmptyObject(errors)) 
 			return Session.set('postSubmitErrors', errors);
 
 		Meteor.call('requestAdd', schedule, function(error, result) {

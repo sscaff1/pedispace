@@ -14,6 +14,7 @@ Template.printSchedule.helpers({
 
 Template.printSchedule.events({
 	'change select': function(e) {
+		e.preventDefault();
 		Session.set('week', $(e.target).val());
 	}
 });

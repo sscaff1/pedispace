@@ -41,7 +41,7 @@ Template.shiftAdd.events({
 
 		var errors = validatePost(shift);
 
-    	if (!isEmptyO(errors))
+    	if (!$.isEmptyObject(errors))
       		return Session.set('postSubmitErrors', errors);
 
 		Meteor.call('shiftAdd', shift, function(error, result) {

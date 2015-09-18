@@ -12,7 +12,7 @@ Template.rateAdd.events({
 
 		var errors = validateRate(rate);
 
-		if (!isEmptyO(errors))
+		if (!$.isEmptyObject(errors))
       		return Session.set('postSubmitErrors', errors);
 
       	Meteor.call('rateAdd', rate, function(error, result) {
