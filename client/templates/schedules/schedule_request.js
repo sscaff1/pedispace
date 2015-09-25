@@ -2,12 +2,20 @@ Template.scheduleRequest.onCreated(function() {
   Session.set('postSubmitErrors', {});
 });
 
+Template.scheduleRequest.onRendered(function() {
+	$('[name=requestDate]').datepicker({
+	  format: "MM dd yyyy",
+	  autoclose: true
+	});
+});
+
 Template.scheduleRequest.events({
 	'submit form': function(e) {
 		e.preventDefault();
+
 		if ($(e.target).find('[name=requestDate]').val()) {
-			var r = $(e.target).find('[name=requestDate]').val();
-			var rdate = new Date(r.replace(/-/g,'/').replace('T',' '));
+			var rdate = 
+				moment($(e.target).find('[name=requestDate]').val(), 'MMMM DD YYYY').format();
 		} else {
 			var rdate = null;
 		}
@@ -36,17 +44,18 @@ Template.scheduleRequest.events({
 	'change #shiftType, change #requestDate': function(e) {
 		e.preventDefault();
 
-		var s = $('form').find('[name=requestDate]').val();
-		s = moment(s).startOf('day');
-		s = new Date(s);
+		var rdate = 
+			moment($('form').find('[name=requestDate]').val(), 'MMMM DD YYYY');
+		rdate = new Date(rdate);
 
 		var st = $('form').find('[name=shiftType]').val();
-
+		
 		var r = Rates.findOne({
 			locationId: Meteor.user().profile.locationId,
-			scheduleDate: s,
+			scheduleDate: rdate,
 			shiftType: st
 		});
+		
 		if (r) {
 			Session.set('rateSelect', r);
 		} else {

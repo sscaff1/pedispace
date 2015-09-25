@@ -3,11 +3,11 @@
 	<form class="main form page" name="insertForm" style="padding-bottom:40px;">
 	<legend>Request Schedule</legend>
 	 <div class="form-horizontal">
-	  <div class="form-group {{errorClass 'requestDate'}}">
+	  <div class="form-group has-feedback {{errorClass 'requestDate'}}">
 	    <label for="requestDate" class="col-sm-3 control-label required">Request Date:</label>
 	    <div class="col-sm-9">
-	      <input class="form-control" id="requestDate" name="requestDate" type="date">
-	      <span class="glyphicon glyphicon-cal form-control-feedback" aria-hidden="true"></span>
+	      <input class="form-control" id="requestDate" name="requestDate" type="text">
+	      <i class="glyphicon glyphicon-calendar form-control-feedback"></i>
 	      <span>You can only select a date after {{nextSat}}.</span>
 	      <span class="help-block">{{errorMessage 'requestDate'}}</span>
 	    </div>
@@ -23,8 +23,10 @@
 	    </div>
 	  </div>
 	  <div class="col-sm-offset-3 col-sm-9">
-	  	<strong>Rate Amount:</strong> {{#if rateSelect}}${{/if}}{{rateSelect.rateAmount}}<br/>
-	  	<strong>Comments:</strong> {{rateSelect.comments}}
+	  {{#if rateSelect}}
+	  	<strong>Rate Amount:</strong> ${{rateSelect.rateAmount}}<br/>
+	  	<strong>Comments:</strong> {{rateSelect.comments}}<br/>
+	  {{/if}}
 	  </div>
 	  <div class="form-group">
 	    <div class="col-sm-offset-3 col-sm-9">

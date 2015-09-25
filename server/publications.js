@@ -121,9 +121,9 @@ Meteor.publish('rates', function() {
     var minDate = moment().day(6);
   }
  if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Bikes.find();
+    return Rates.find();
   } else if (this.userId) {
-    return Bikes.find({
+    return Rates.find({
       locationId: Meteor.users.findOne(this.userId).profile.locationId,
       scheduleDate: {$gt: new Date(minDate)}
     });
