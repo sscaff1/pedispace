@@ -15,7 +15,7 @@ Template.scheduleRequest.events({
 
 		if ($(e.target).find('[name=requestDate]').val()) {
 			var rdate = 
-				moment($(e.target).find('[name=requestDate]').val(), 'MMMM DD YYYY').format();
+				new Date(moment($(e.target).find('[name=requestDate]').val(), 'MMMM DD YYYY'));
 		} else {
 			var rdate = null;
 		}
