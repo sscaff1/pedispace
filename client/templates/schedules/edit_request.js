@@ -1,18 +1,21 @@
-Template.scheduleRequest.onCreated(function() {
+Template.requestEdit.onCreated(function() {
   Session.set('postSubmitErrors', {});
+  Session.set('rateSelect', null);
 });
 
-Template.scheduleRequest.onRendered(function() {
+Template.requestEdit.onRendered(function() {
 	$('[name=requestDate]').datepicker({
 	  format: "MM dd yyyy",
 	  autoclose: true
 	});
+  $('[name=shiftType]').val(Template.parentData(0).shiftType);
 });
 
-Template.scheduleRequest.events({
+Template.requestEdit.events({
 	'submit form': function(e) {
 		e.preventDefault();
 
+    var rId = this._id;
 		if ($(e.target).find('[name=requestDate]').val()) {
 			var rdate =
 				new Date(moment($(e.target).find('[name=requestDate]').val(), 'MMMM DD YYYY'));
@@ -20,11 +23,8 @@ Template.scheduleRequest.events({
 			var rdate = null;
 		}
 		var request = {
-			userId: Meteor.userId(),
-			locationId: Meteor.user().profile.locationId,
 			requestDate: rdate,
 			shiftType: $(e.target).find('[name=shiftType]').val(),
-			scheduled: false,
       guaranteeRate: $(e.target).find('[name=guaranteeRate]').prop('checked'),
       comments: $(e.target).find('[name=comments]').val()
 		}
@@ -33,7 +33,7 @@ Template.scheduleRequest.events({
 		if (!$.isEmptyObject(errors))
       		return Session.set('postSubmitErrors', errors);
 
-      	Meteor.call('requestAdd', request, function(error, result) {
+    Meteor.call('requestEdit', rId, request, function(error, result) {
 			if (error)
 				return throwError(error.reason);
 			if (result.requestExist)
@@ -41,7 +41,7 @@ Template.scheduleRequest.events({
 
 			Session.set('postSubmitErrors', {});
 		});
-		document.insertForm.reset();
+    Router.go('scheduleRequest');
 	},
 	'change #shiftType, change #requestDate': function(e) {
 		e.preventDefault();
@@ -66,13 +66,23 @@ Template.scheduleRequest.events({
 	}
 });
 
-Template.scheduleRequest.helpers({
+Template.requestEdit.helpers({
 	rateSelect: function() {
 		return Session.get('rateSelect');
-	}
+	},
+  requestDateF: function() {
+    return moment(this.requestDate).format('MMMM DD YYYY');
+  },
+  guaranteeRateCheck: function() {
+    if (this.guaranteeRate)
+      return 'checked'
+  },
+  shiftTypesDropDown: function() {
+    return ['AM', 'PM', 'FLEX'];
+  }
 });
 
-Requests.after.insert(function(userId, doc) {
+Requests.after.update(function(userId, doc) {
 	Session.set('postSubmitErrors', {});
-	return throwSuccess("You've successfully created a shift request.");
+	return throwSuccess("You've successfully updated your shift request.");
 });

@@ -1,0 +1,56 @@
+<template name="requestEdit">
+<form class="main form page" name="insertForm" style="padding-bottom:40px;">
+  <legend>Request Edit</legend>
+   <div class="form-horizontal">
+    <div class="form-group has-feedback {{errorClass 'requestDate'}}">
+      <label for="requestDate" class="col-sm-3 control-label required">Request Date:</label>
+      <div class="col-sm-9">
+        <input class="form-control" id="requestDate" name="requestDate" type="text" value="{{requestDateF}}">
+        <i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+        <span>You can only select a date after {{nextSat}}.</span>
+        <span class="help-block">{{errorMessage 'requestDate'}}</span>
+      </div>
+    </div>
+    <div class="form-group {{errorClass 'shiftType'}}">
+      <label for="shiftType" class="col-sm-3 control-label required">Shift Type:</label>
+      <div class="col-sm-9">
+        <select class="form-control" id="shiftType" name="shiftType">
+          <option value="">Choose a Shift Type</option>
+            {{> shiftTypes}}
+        </select>
+        <span class="help-block">{{errorMessage 'shiftType'}}</span>
+      </div>
+    </div>
+    <div class="col-sm-offset-3 col-sm-9">
+      {{#if rateSelect}}
+        <strong>Rate Amount:</strong> ${{rateSelect.rateAmount}}<br/>
+        <strong>Comments:</strong> {{rateSelect.comments}}<br/>
+      {{/if}}
+    </div>
+    <div class="checkbox">
+      <div class="col-sm-offset-3 col-sm-9">
+        <label>
+          <input type="checkbox" name="guaranteeRate" {{guaranteeRateCheck}}>
+          Guarantee Rate
+        </label>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label" for="comments">Comments:</label>
+      <div class="col-sm-9">
+        <div class="controls">
+          <textarea rows="3" name="comments" id="comments" type="text" placeholder="Add your comments" class="form-control" value="{{comments}}"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="col-sm-offset-3 col-sm-9">
+        <input type="submit" value="Edit Request" class="btn btn-primary"/>
+      </div>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3">
+    <small>Note that you cannot edit your schedule requests after 1 hour.</small>
+    </div>
+  </div>
+</form>
+</template>

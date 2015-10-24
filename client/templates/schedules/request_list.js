@@ -18,6 +18,12 @@ Template.requestItem.helpers({
 		} else {
 			return 'alternate';
 		}
+	},
+	timeElapse: function() {
+		var requested = moment().diff(moment(this.submitted), 'hours', true);
+		if (requested < 1) {
+			return true;
+		}
 	}
 });
 

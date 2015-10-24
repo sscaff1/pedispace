@@ -1,51 +1,51 @@
-<template name="scheduleDay">  
+<template name="scheduleDay">
   <div class="item item-s">
     <div class="col-xs-12">
       <h3>{{dateValuef}}</h3>
       <h4><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span>Scheduled Riders</b></h4>
       <div class="col-xs-4">
         <h5>AM Shift</h5>
-        <strong>Riders:</strong>
+        Riders:
         <ol>
-        {{#each riders "AM" true}}
-          {{> scheduleDayUser}}
-        {{/each}}
+          {{#each riders "AM" true}}
+            {{> scheduleDayUser}}
+          {{/each}}
         </ol>
-        <strong>Alternates:</strong>
+        Alternates:
         <ol>
-        {{#each riders "AM" false}}
-          {{> scheduleDayUser}}
-        {{/each}}
+          {{#each riders "AM" false}}
+            {{> scheduleDayUser}}
+          {{/each}}
         </ol>
       </div>
       <div class="col-xs-4">
         <h5>PM Shift</h5>
-        <strong>Riders:</strong>
+        Riders:
         <ol>
-        {{#each riders "PM" true}}
-          {{> scheduleDayUser}}
-        {{/each}}
+          {{#each riders "PM" true}}
+            {{> scheduleDayUser}}
+          {{/each}}
         </ol>
-        <strong>Alternates:</strong>
+        Alternates:
         <ol>
-        {{#each riders "PM" false}}
-          {{> scheduleDayUser}}
-        {{/each}}
+          {{#each riders "PM" false}}
+            {{> scheduleDayUser}}
+          {{/each}}
         </ol>
       </div>
       <div class="col-xs-4">
         <h5>FLEX Shift</h5>
-        <strong>Riders:</strong>
+        Riders:
         <ol>
-        {{#each riders "FLEX" true}}
-          {{> scheduleDayUser}}
-        {{/each}}
+          {{#each riders "FLEX" true}}
+            {{> scheduleDayUser}}
+          {{/each}}
         </ol>
-        <strong>Alternates:</strong>
+        Alternates:
         <ol>
-        {{#each riders "FLEX" false}}
-          {{> scheduleDayUser}}
-        {{/each}}
+          {{#each riders "FLEX" false}}
+            {{> scheduleDayUser}}
+          {{/each}}
         </ol>
       </div>
     </div>

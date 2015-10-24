@@ -26,3 +26,11 @@ UI.registerHelper('scheduleDates', function (inc) {
   };
   return dateArray;
 });
+
+Template.header.events({
+  'click .navbar-collapse.in':function(e) {
+    if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
+        $('.navbar-collapse.in').collapse('hide');
+    }
+  }
+});

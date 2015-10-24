@@ -11,8 +11,13 @@
       <span><b>Date:</b> {{requestDateNice}}</span>
     </div>
     <div class="item-content-mid">
-      <span><b>Schedule Type:</b> {{shiftType}}</span><br />
-      <span><b>Confirmed:</b> 
+      <span>
+        <b>Schedule Type:</b> {{shiftType}}
+        {{#if guaranteeRate}}
+          <span style="color:green">Guarantee Rate</span>
+        {{/if}}
+      </span><br />
+      <span><b>Confirmed:</b>
         {{#if scheduled}}
           <span style="color:green;">Scheduled as {{alternate}}</span>
         {{else}}
@@ -28,7 +33,14 @@
         <buttton type="button" class="btn btn-success" name="confirm-button" id="rider">Rider</buttton>
         <buttton type="button" class="btn btn-success" name="confirm-button" id="alternate">Alternate</buttton>
       {{/if}}
+    {{else}}
+      {{#if timeElapse}}
+        <a href="{{pathFor 'requestEdit'}}"><buttton type="button" class="btn btn-primary" name="edit-button" id="edit">Edit Request</buttton></a>
+      {{/if}}
     {{/if}}
+    </div>
+    <div class="col-xs-12" style="padding:0;">
+      <span><strong>Comments: </strong></span>{{comments}}
     </div>
   </div>
 </template>

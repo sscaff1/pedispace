@@ -23,18 +23,31 @@
 	    </div>
 	  </div>
 	  <div class="col-sm-offset-3 col-sm-9">
-	  {{#if rateSelect}}
-	  	<strong>Rate Amount:</strong> ${{rateSelect.rateAmount}}<br/>
-	  	<strong>Comments:</strong> {{rateSelect.comments}}<br/>
-	  {{/if}}
+		  {{#if rateSelect}}
+		  	<strong>Rate Amount:</strong> ${{rateSelect.rateAmount}}<br/>
+		  	<strong>Comments:</strong> {{rateSelect.comments}}<br/>
+		  {{/if}}
 	  </div>
+		<div class="checkbox">
+			<div class="col-sm-offset-3 col-sm-9">
+				<label><input type="checkbox" name="guaranteeRate">Guarantee Rate</label>
+			</div>
+		</div>
+		<div class="form-group">
+			<label class="col-sm-3 control-label" for="comments">Comments:</label>
+			<div class="col-sm-9">
+				<div class="controls">
+					<textarea rows="3" name="comments" id="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
+				</div>
+			</div>
+		</div>
 	  <div class="form-group">
 	    <div class="col-sm-offset-3 col-sm-9">
 	      <input type="submit" value="Create Request" class="btn btn-primary"/>
 	    </div>
-  	  </div>
+  	</div>
   	<div class="col-sm-9 col-sm-offset-3">
-		<small>Note that you cannot edit your schedule requests.</small>
+		<small>Note that you cannot edit your schedule requests after 1 hour.</small>
   	</div>
   </div>
   </form>
