@@ -6,7 +6,7 @@ Template.requestList.helpers({
 
 Template.requestItem.helpers({
 	requestDateNice: function () {
-		return moment(this.requestDate).format("dddd, MMMM Do YYYY");
+		return moment(this.requestDate).format("ddd, MMMM Do YY");
 	},
 	bikerName: function() {
 		var u = Meteor.users.findOne(this.userId);

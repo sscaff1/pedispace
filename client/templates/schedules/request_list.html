@@ -8,14 +8,15 @@
   <div class="item">
     <div class="item-content">
       <span><b>Biker:</b> {{bikerName}}</span><br />
-      <span><b>Date:</b> {{requestDateNice}}</span>
+      <span><b>Date:</b> {{requestDateNice}}</span><br />
+      <span><strong>Comments: </strong></span>{{comments}}
     </div>
     <div class="item-content-mid">
       <span>
-        <b>Schedule Type:</b> {{shiftType}}
-        {{#if guaranteeRate}}
-          <span style="color:green">Guarantee Rate</span>
-        {{/if}}
+        <b>Schedule Type:</b> {{shiftType}}<br />
+      </span><br />
+      <span>
+        <b>Rate Guaranteed:</b> {{#if guaranteeRate}}<span style="color:green">Yes</span>{{/if}}
       </span><br />
       <span><b>Confirmed:</b>
         {{#if scheduled}}
@@ -38,9 +39,6 @@
         <a href="{{pathFor 'requestEdit'}}"><buttton type="button" class="btn btn-primary" name="edit-button" id="edit">Edit Request</buttton></a>
       {{/if}}
     {{/if}}
-    </div>
-    <div class="col-xs-12" style="padding:0;">
-      <span><strong>Comments: </strong></span>{{comments}}
     </div>
   </div>
 </template>

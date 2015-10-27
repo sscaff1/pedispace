@@ -31,10 +31,10 @@ Template.shiftAdd.events({
 			bikeId: $(e.target).find('[name=bikeName]').val(),
 			radioId: $(e.target).find('[name=radioName]').val(),
 			shiftType: $(e.target).find('[name=shiftType]').val(),
-			totalMade: $(e.target).find('[name=totalMade]').val(),
-			ratePaid: $(e.target).find('[name=ratePaid]').val(),
-			shiftRate: $(e.target).find('[name=shiftRate]').val(),
-			startTime: new Date(s),
+			totalMade: $(e.target).find('[name=totalMade]').val()*1,
+			ratePaid: $(e.target).find('[name=ratePaid]').val()*1,
+			shiftRate: $(e.target).find('[name=shiftRate]').val()*1,
+			startTime: moment(s).toDate(),
 			comments: $(e.target).find('[name=comments]').val(),
 			userId: $(e.target).find('[name=userName]').val()
 		}
@@ -45,7 +45,7 @@ Template.shiftAdd.events({
       		return Session.set('postSubmitErrors', errors);
 
 		Meteor.call('shiftAdd', shift, function(error, result) {
-			if (error) 
+			if (error)
 				return throwError(error.reason);
 			Session.set('postSubmitErrors', {});
 		});
