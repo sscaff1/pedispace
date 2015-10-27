@@ -78,7 +78,7 @@ Meteor.publish('userData', function () {
       'roles': 'biker'
     },
     { fields: {'emails': 1, 'profile': 1} });
-  } else {  
+  } else {
     this.ready();
   }
 });
@@ -94,20 +94,15 @@ Meteor.publish('roles', function() {
 });
 
 Meteor.publish('requests', function() {
-  if (moment() >= moment().day(6) && moment().hour() >= 12) {
-    var minDate = moment().day(6+7);
-  } else {
-    var minDate = moment().day(6);
-  }
   if (Roles.userIsInRole(this.userId, ['admin', 'manager'])) {
     return Requests.find({
-      locationId: Meteor.users.findOne(this.userId).profile.locationId, 
-      requestDate: {$gt: new Date(minDate)}
+      locationId: Meteor.users.findOne(this.userId).profile.locationId,
+      requestDate: {$gt: new Date()}
     });
   } else if (this.userId) {
     return Requests.find({
-      userId: this.userId, 
-      requestDate: {$gt: new Date(minDate)}
+      userId: this.userId,
+      requestDate: {$gte: new Date()}
     });
   } else {
     this.ready();
@@ -115,17 +110,12 @@ Meteor.publish('requests', function() {
 });
 
 Meteor.publish('rates', function() {
-  if (moment() >= moment().day(6) && moment().hour() >= 12) {
-    var minDate = moment().day(6+7);
-  } else {
-    var minDate = moment().day(6);
-  }
  if (Roles.userIsInRole(this.userId, ['admin'])) {
     return Rates.find();
   } else if (this.userId) {
     return Rates.find({
       locationId: Meteor.users.findOne(this.userId).profile.locationId,
-      scheduleDate: {$gt: new Date(minDate)}
+      scheduleDate: {$gte: new Date()}
     });
   } else {
     this.ready();
@@ -143,6 +133,6 @@ Accounts.onCreateUser(function(options, user) {
   Meteor.setTimeout(function() {
     Accounts.sendVerificationEmail(user._id);
   }, 2 * 1000);
-  
+
   return user;
 });
