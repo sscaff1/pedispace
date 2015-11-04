@@ -22,7 +22,7 @@
 
 body {
   background: #eee;
-  color: #666666; 
+  color: #666666;
   padding-top: 60px;
 }
 html {
@@ -74,14 +74,13 @@ html {
     float: left; }
   .item .item-content {
     float: left;
-    min-width: 33%; }
+    min-width: 100%; }
     .item .item-content h3 {
       margin: 0;
       line-height: 1.4;
       font-size: 18px; }
       .item .item-content h3 a {
-        display: inline-block;
-        margin-right: 5px; }
+        display: inline-block;}
       .item .item-content h3 span {
         font-weight: normal;
         font-size: 14px;
@@ -93,13 +92,6 @@ html {
     display: block;
     float: right;
     margin-top: 7px; }
-  .item-content-right {
-    text-align: right;
-  }
-  .item-content-mid {
-    margin-left:50px;
-    float:left;
-  }
   .glyphicon {
     margin-right: .25em;
   }
@@ -150,48 +142,7 @@ html {
   font-size: 60px;
   font-weight: 100;
 }
-
-@-webkit-keyframes fadeOut {
-  0% {opacity: 0;}
-  10% {opacity: 1;}
-  90% {opacity: 1;}
-  100% {opacity: 0;}
-}
-
-@keyframes fadeOut {
-  0% {opacity: 0;}
-  10% {opacity: 1;}
-  90% {opacity: 1;}
-  100% {opacity: 0;}
-}
-
-.message {
-  position: fixed;
-  z-index: 10000;
-  padding: 10px;
-  top: 0px;
-  left: 0px;
-  right: 0px;
-  bottom: 0px;
-  pointer-events: none;
-}
-.alert {
-          animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards;
-     -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards;
-  width: 250px;
-  float: right;
-  clear: both;
-  margin-bottom: 5px;
-  pointer-events: auto;
-}
 .required:after {
-    color: #e32;
-    content: '*';
-    display:inline;
-    margin-left:.15em;
-}
-.help-block {
-  margin:0;
-  padding: 0;
-}
+	content:"*";
+	color:red;
+ }

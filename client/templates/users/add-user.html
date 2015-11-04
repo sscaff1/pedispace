@@ -1,0 +1,32 @@
+<template name="addUser">
+  <form class="main form page" name="insertForm">
+    <div class="form-group">
+      <label class="control-label required" for="fullName">Full Name</label>
+      <div class="controls">
+        <input name="fullName" type="text" placeholder="User Full Name" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label required" for="email">Email</label>
+      <div class="controls">
+        <input name="email" type="text" placeholder="User Email" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label" for="phoneNumber">Phone Number</label>
+      <div class="controls">
+        <input name="phoneNumber" type="text" placeholder="User Phone Number" class="form-control"/>
+      </div>
+    </div>
+    <div class="form-group">
+  	  <label for="role" class="required">Role</label>
+  	  <select class="form-control" name="role">
+  	  	<option value="">Choose a Role</option>
+  	    {{#each role}}
+  	    	<option value="{{name}}">{{name}}</option>
+  	    {{/each}}
+  	  </select>
+	  </div>
+    <input type="submit" value="Create User" class="btn btn-primary"/>
+  </form>
+</template>

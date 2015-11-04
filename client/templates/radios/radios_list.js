@@ -1,5 +1,5 @@
 Template.radiosList.helpers({
-	radios: function() {	
-	  return Radios.find({}, {sort: {locationId: 1, name: 1}});
+	radios: function() {
+	  return Radios.find({}, {sort: {name: 1}});
 	}
 })

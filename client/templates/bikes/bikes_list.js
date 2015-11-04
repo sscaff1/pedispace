@@ -1,5 +1,5 @@
 Template.bikesList.helpers({
 	bikes: function(){
-		return Bikes.find({}, {sort: {locationId: 1, name: 1}});
+		return Bikes.find({}, {sort: {name: 1}});
 	}
 });

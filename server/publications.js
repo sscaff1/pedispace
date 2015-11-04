@@ -1,9 +1,11 @@
 Meteor.publish('bikes', function() {
-  if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Bikes.find();
+  if (Roles.userIsInRole(this.userId, ['manager'])) {
+    return Bikes.find({
+      businessId: Meteor.users.findOne(this.userId).profile.businessId
+    });
   } else if (this.userId) {
     return Bikes.find({
-      locationId: Meteor.users.findOne(this.userId).profile.locationId,
+      businessId: Meteor.users.findOne(this.userId).profile.businessId,
       active: true
     });
   } else {
@@ -12,11 +14,13 @@ Meteor.publish('bikes', function() {
 });
 
 Meteor.publish('radios', function() {
-  if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Radios.find();
+  if (Roles.userIsInRole(this.userId, ['manager'])) {
+    return Radios.find({
+      businessId: Meteor.users.findOne(this.userId).profile.businessId
+    });
   } else if (this.userId) {
     return Radios.find({
-      locationId: Meteor.users.findOne(this.userId).profile.locationId,
+      businessId: Meteor.users.findOne(this.userId).profile.businessId,
       active: true
     });
   } else {
@@ -24,56 +28,28 @@ Meteor.publish('radios', function() {
   }
 });
 
-Meteor.publish('locations', function() {
-  if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Locations.find();
-  } else if (this.userId) {
-    return Locations.find({_id: Meteor.users.findOne(this.userId).profile.locationId});
-  } else {
-    return Locations.find();
-  }
-});
-
 Meteor.publish('shifts', function(limit) {
-	if (Roles.userIsInRole(this.userId, ['admin'])) {
-		return Shifts.find({}, {limit: limit, sort: {submitted: -1}});
-	} else if (Roles.userIsInRole(this.userId, ['manager'])) {
-		return Shifts.find(
-        {locationId: Meteor.users.findOne(this.userId).profile.locationId},
-        {
-          limit: limit,
-          sort: {submitted: -1}
-        }
-      );
+	if (Roles.userIsInRole(this.userId, ['manager'])) {
+		return Shifts.find({
+      businessId: Meteor.users.findOne(this.userId).profile.businessId
+    },{
+      limit: limit,
+      sort: {submitted: -1}
+    });
 	} else {
 		this.ready();
 	};
 });
 
-Meteor.publish('comments', function() {
-  if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Shifts.find({comments: {$ne:''}}, {fields: {'comments': 1, 'bikeId': 1, 'userId': 1},
-     sort: {'submitted': -1}});
-  } else if (Roles.userIsInRole(this.userId, ['manager'])) {
-    return Shifts.find({locationId: Meteor.users.findOne(this.userId).profile.locationId, coments: {$ne:''}},
-      {fields: {'comments': 1, 'bikeId': 1, 'userId': 1},
-      sort: {'submitted': -1}});
-  } else {
-    this.ready();
-  };
-});
-
 Meteor.publish('userData', function () {
-  if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Meteor.users.find({}, {fields: {'emails': 1, 'profile': 1, 'roles': 1}});
-  } else if (Roles.userIsInRole(this.userId, ['manager'])) {
+  if (Roles.userIsInRole(this.userId, ['manager'])) {
     return Meteor.users.find({
-      "profile.locationId": Meteor.users.findOne(this.userId).profile.locationId
+      "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId
     },
     { fields: {'emails': 1, 'profile': 1, 'roles': 1} });
   } else if (this.userId) {
     return Meteor.users.find({
-      "profile.locationId": Meteor.users.findOne(this.userId).profile.locationId,
+      "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId,
       "profile.active": true,
       'roles': 'biker'
     },
@@ -84,9 +60,7 @@ Meteor.publish('userData', function () {
 });
 
 Meteor.publish('roles', function() {
-  if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Meteor.roles.find();
-  } else if (Roles.userIsInRole(this.userId, ['manager'])) {
+  if (Roles.userIsInRole(this.userId, ['manager'])) {
     return Meteor.roles.find({name: {$ne: 'admin'}});
   } else {
     this.ready();
@@ -122,17 +96,12 @@ Meteor.publish('rates', function() {
   }
 });
 
-Accounts.onCreateUser(function(options, user) {
-  options.roles = ['biker'];
-  options.profile.active = true;
-  _.extend(user, {
-    profile: options.profile,
-    roles: options.roles
-  });
-
-  Meteor.setTimeout(function() {
-    Accounts.sendVerificationEmail(user._id);
-  }, 2 * 1000);
-
-  return user;
-});
+Meteor.publish('businesses', function() {
+  if (this.userId) {
+    return Businesses.find({
+      businessId: Meteor.users.findOne(this.userId).profile.businessId
+    });
+  } else {
+    return Businesses.find();
+  }
+})

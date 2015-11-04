@@ -1,19 +1,8 @@
 <template name="layout">
   {{> header}}
   <div class="container">
-  	{{> errors}}
-  	{{> successes}}
-  	<div id="main" class="col-md-9">
-      {{> yield}}
-  	</div>
-  	{{#if isInRole 'admin,manager'}}
-      <div class="col-md-3">
-      <div id="right-panel" class="panel panel-primary">
-        <div class="panel-heading" data-toggle="collapse" data-target="#collapseSchedule" aria-expanded="false" aria-controls="collapseSchedule"><center><h6>Schedule Dates</h6></center></div>
-        <div class="panel-body collapse" id="collapseSchedule">{{> scheduleListFull}}</div>
-      </div>
-      </div>
-  	{{/if}}
+  	{{> messageList}}
+    {{> yield}}
   </div>
   {{> footer}}
 </template>

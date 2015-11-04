@@ -1,12 +1,18 @@
 <template name="radioItem">
   <div class="item">
     <div class="item-content">
-      <h3><span class="glyphicon glyphicon-phone" aria-hidden="true"></span>Radio: {{name}}</h3>
-      <small><b>Location:</b> {{locationName}}</small><br />
-      <small><b>Status:</b> {{#if active}}Active{{else}}Not Active{{/if}}</small>
-    </div>
-    <div class="item-content-right">
-    	<a href="{{pathFor 'radioEdit'}}"><button type="button" class="btn btn-default" aria-expanded="false">Edit</button></a>
+      <div class="col-xs-6">
+    	  <h3>
+          <span class="glyphicon glyphicon-phone" aria-hidden="true"></span>
+          Radio: {{name}}
+        </h3>
+    	  <small><b>Status:</b> {{#if active}}Active{{else}}Not Active{{/if}}</small>
+      </div>
+      <div class="col-xs-6 text-right">
+        <a href="{{pathFor 'radioEdit'}}">
+          <button type="button" class="btn btn-default" aria-expanded="false">Edit</button>
+        </a>
+      </div>
     </div>
   </div>
 </template>
