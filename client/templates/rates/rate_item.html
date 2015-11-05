@@ -1,0 +1,17 @@
+<template name="rateItem">
+  <div class="item">
+    <div class="item-content">
+      <div class="col-xs-6">
+        <h3>
+          <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+          {{scheduleDatePretty}}
+        </h3>
+        <b>Shift Type:</b> {{shiftType.name}}<br/>
+        <b>Rate Amount:</b> ${{rateAmount}}
+      </div>
+      <div class="col-xs-6 text-left">
+        <b>Comments:</b> {{comments}}
+      </div>
+    </div>
+  </div>
+</template>

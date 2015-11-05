@@ -2,11 +2,13 @@ Template.rateAdd.events({
 	'submit form': function(e) {
 		e.preventDefault();
 
+		var scheduleDate =
+			moment($(e.target).find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
+
 		var rate = {
-			scheduleDate: new Date(this.dateValue.toISOString()),
-			locationId: Meteor.user().profile.locationId,
-			shiftType: $(e.target).find('[name=shiftType]').val(),
-			rateAmount: $(e.target).find('[name=rateAmount]').val(),
+			scheduleDate: scheduleDate,
+			shiftTypeId: $(e.target).find('[name=shiftType]').val(),
+			rateAmount: parseInt($(e.target).find('[name=rateAmount]').val()),
 			comments: $(e.target).find('[name=comments]').val()
 		}
 
@@ -15,14 +17,26 @@ Template.rateAdd.events({
 		if (!$.isEmptyObject(errors))
       		return Session.set('postSubmitErrors', errors);
 
-      	Meteor.call('rateAdd', rate, function(error, result) {
-      		if (error)
-      			return throwError(error.reason);
-      		Session.set('postSubmitErrors', {});
-      	});
-
-      	$('[name=insertForm]')[this.formId].reset();
+  	Meteor.call('rateAdd', rate, function(error, result) {
+  		if (error)
+  			return throwError(error.reason);
+  		Session.set('postSubmitErrors', {});
+  	});
+		document.insertForm.reset();
 	}
+});
+
+Template.rateAdd.helpers({
+	shiftTypes: function() {
+		return ShiftTypes.find();
+	}
+});
+
+Template.rateAdd.onRendered(function() {
+	$('[name=scheduleDate]').datepicker({
+	  format: "MM dd yyyy",
+	  autoclose: true
+	});
 });
 
 Rates.after.insert(function(userId, doc) {

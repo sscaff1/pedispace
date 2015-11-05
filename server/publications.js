@@ -13,6 +13,21 @@ Meteor.publish('bikes', function() {
   }
 });
 
+Meteor.publish('shiftTypes', function() {
+  if (Roles.userIsInRole(this.userId, ['manager'])) {
+    return ShiftTypes.find({
+      businessId: Meteor.users.findOne(this.userId).profile.businessId
+    });
+  } else if (this.userId) {
+    return ShiftTypes.find({
+      businessId: Meteor.users.findOne(this.userId).profile.businessId,
+      active: true
+    });
+  } else {
+    this.ready();
+  }
+})
+
 Meteor.publish('radios', function() {
   if (Roles.userIsInRole(this.userId, ['manager'])) {
     return Radios.find({
@@ -84,11 +99,13 @@ Meteor.publish('requests', function() {
 });
 
 Meteor.publish('rates', function() {
- if (Roles.userIsInRole(this.userId, ['admin'])) {
-    return Rates.find();
+ if (Roles.userIsInRole(this.userId, ['manager'])) {
+    return Rates.find({
+      businessId: Meteor.users.findOne(this.userId).profile.businessId
+    });
   } else if (this.userId) {
     return Rates.find({
-      locationId: Meteor.users.findOne(this.userId).profile.locationId,
+      businessId: Meteor.users.findOne(this.userId).profile.businessId,
       scheduleDate: {$gte: new Date()}
     });
   } else {

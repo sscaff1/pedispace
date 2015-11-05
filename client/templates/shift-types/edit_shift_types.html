@@ -1,0 +1,18 @@
+<template name="editShiftTypes">
+  <form class="main form page" name="insertForm">
+    <div class="form-group">
+      <label class="control-label" for="shiftTypeName">Shift Type Name</label>
+      <div class="controls">
+          <input name="shiftTypeName" value="{{name}}" type="text" class="form-control"/>
+      </div>
+    </div>
+    <div class="checkbox">
+  	  {{#if active}}
+  	  	<label><input type="checkbox" name="activeCheckbox" checked="checked">Active</label>
+  	  {{else}}
+  	  	<label><input type="checkbox" name="activeCheckbox">Active</label>
+  	  {{/if}}
+  	</div>
+    <input type="submit" value="Edit Shift Type" class="btn btn-primary"/>
+  </form>
+</template>

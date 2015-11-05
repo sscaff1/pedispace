@@ -1,26 +1,6 @@
 <template name="rateSchedule">
-	{{#each scheduleDates 0}}
-		<div class="panel panel-primary">
-		<div class="panel-heading"><h4>{{dateValuef}}</h4></div>
-		<div class="panel-body">
-			<div class="col-xs-6">
-				<h5>AM Shift</h5>
-			  	{{#each rate "AM"}}
-			    	<strong>Amount:</strong> ${{rateAmount}}.00<br/>
-			    	<strong>Comments:</strong> {{comments}}
-			  	{{/each}}
-			</div>
-			<div class="col-xs-6">
-			<h5>PM Shift</h5>
-			  {{#each rate "PM"}}
-			    <strong>Amount:</strong> ${{rateAmount}}.00<br/>
-			    <strong>Comments:</strong> {{comments}}
-			  {{/each}}
-			</div>
-		</div>
-		</div>
-		<div class="item">
-			{{> rateAdd}}
-		</div>
+	{{> rateAdd}}
+	{{#each rateLists}}
+		{{> rateItem}}
 	{{/each}}
 </template>
