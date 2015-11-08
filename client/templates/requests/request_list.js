@@ -1,12 +1,12 @@
 Template.requestList.helpers({
 	requests: function () {
-		return Requests.find({}, { sort: {scheduled: -1, requestDate: 1, submitted: 1}});
+		return Requests.find();
 	}
 });
 
 Template.requestItem.helpers({
 	requestDateNice: function () {
-		return moment(this.requestDate).format("ddd, MMMM Do YY");
+		return moment(this.scheduleDate).format("dd, MMM Do YY");
 	},
 	bikerName: function() {
 		var u = Meteor.users.findOne(this.userId);
@@ -24,6 +24,9 @@ Template.requestItem.helpers({
 		if (requested < 1) {
 			return true;
 		}
+	},
+	shiftType: function() {
+		return ShiftTypes.findOne(this.shiftTypeId).name;
 	}
 });
 

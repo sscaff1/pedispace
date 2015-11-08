@@ -1,0 +1,41 @@
+<template name="requestList">
+  {{> scheduleRider}}
+  {{#each requests}}
+    {{> requestItem}}
+  {{/each}}
+</template>
+
+<template name="requestItem">
+  <div class="item">
+    <div class="item-content">
+      <div class="col-xs-6">
+        <span><b>Rider:</b> {{bikerName}}</span><br />
+        <span><b>Date:</b> {{requestDateNice}}</span><br />
+        <span><b>Shift:</b> {{shiftType}}</span><br />
+        <span><strong>Comments: </strong></span>{{comments}}
+      </div>
+      <div class="col-xs-6 text-right">
+        {{#if isInRole 'admin,manager'}}
+          {{#if scheduled}}
+            <buttton type="button" class="btn btn-warning" name="unconfirm-button" id="unconfirm">Unconfirm</buttton>
+          {{else}}
+            <buttton type="button" class="btn btn-success" name="confirm-button" id="rider">Rider</buttton>
+            <buttton type="button" class="btn btn-success" name="confirm-button" id="alternate">Alternate</buttton>
+          {{/if}}
+        {{else}}
+          {{#if timeElapse}}
+            <a href="{{pathFor 'requestEdit'}}"><buttton type="button" class="btn btn-primary" name="edit-button" id="edit">Edit Request</buttton></a>
+          {{/if}}
+        {{/if}}<br/>
+        <span><b>Rate Guaranteed:</b> {{#if guaranteeRate}}<span style="color:green">Yes</span>{{else}}<span style="color:red">No</span>{{/if}}</span><br />
+        <span><b>Confirmed:</b>
+          {{#if scheduled}}
+            <span style="color:green;">Scheduled as {{alternate}}</span>
+          {{else}}
+            <span style="color:red;">Not Scheduled</span>
+          {{/if}}
+        </span>
+      </div>
+    </div>
+  </div>
+</template>

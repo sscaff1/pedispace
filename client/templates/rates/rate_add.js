@@ -1,3 +1,7 @@
+Template.rateAdd.onCreated(function() {
+	Session.set('postSubmitErrors', {});
+});
+
 Template.rateAdd.events({
 	'submit form': function(e) {
 		e.preventDefault();

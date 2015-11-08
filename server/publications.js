@@ -83,15 +83,19 @@ Meteor.publish('roles', function() {
 });
 
 Meteor.publish('requests', function() {
-  if (Roles.userIsInRole(this.userId, ['admin', 'manager'])) {
+  if (Roles.userIsInRole(this.userId, ['manager'])) {
     return Requests.find({
-      locationId: Meteor.users.findOne(this.userId).profile.locationId,
-      requestDate: {$gt: new Date()}
+      businessId: Meteor.users.findOne(this.userId).profile.businessId,
+      scheduleDate: {$gt: new Date()}
+    },{
+      sort: {scheduled: -1, scheduleDate: 1, submitted: 1}
     });
   } else if (this.userId) {
     return Requests.find({
       userId: this.userId,
-      requestDate: {$gte: new Date()}
+      scheduleDate: {$gte: new Date()}
+    }, {
+      sort: {scheduled: -1, scheduleDate: 1, submitted: 1}
     });
   } else {
     this.ready();
