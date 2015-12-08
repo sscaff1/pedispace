@@ -240,3 +240,7 @@ i {
 	font-size: 75px;
 	height: 80px;
 }
+.row.screen-shot-row {
+	padding: 20px 0px 20px 0px;
+	background-color: #fff;
+}
