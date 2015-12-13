@@ -24,16 +24,12 @@
         <li><a href="{{pathFor 'usersList'}}">Users</a></li>
         <li><a href="{{pathFor 'rateSchedule'}}">Set Rates</a></li>
         <li><a href="{{pathFor 'requestList'}}">Schedule Riders</a></li>
-        <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Requests<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a href="{{pathFor 'printSchedule'}}">Print Schedule</a></li>
-          </ul>
-        </li>
+        <li><a href="{{pathFor 'printSchedule'}}">Print Schedule</a></li>
       </ul>
     {{else}}
-      {{#if isInRole 'rider'}}
+      {{#if isInRole 'biker'}}
         <ul class="nav navbar-nav">
-          <li><a href="{{pathFor 'scheduleRequest'}}">Request Schedule</a></li>
+          <li><a href="{{pathFor 'requestList'}}">Request Schedule</a></li>
           <li><a href="{{pathFor 'printSchedule'}}">Print Schedule</a></li>
         </ul>
       {{/if}}

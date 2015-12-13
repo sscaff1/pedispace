@@ -46,7 +46,6 @@ Template.scheduleRider.events({
       schedule.scheduled = false;
       schedule.userId = Meteor.userId();
     }
-    console.log(schedule);
 
 		var errors = validateRequest(schedule);
 
@@ -66,7 +65,7 @@ Template.scheduleRider.events({
 	},
   'change #shiftType, change #scheduleDate': function(e) {
     e.preventDefault();
-
+    Session.set('rateSelected', {});
     var scheduleDate =
       moment($('#requestForm').find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
 

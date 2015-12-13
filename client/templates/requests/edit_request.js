@@ -1,14 +1,22 @@
 Template.requestEdit.onCreated(function() {
   Session.set('postSubmitErrors', {});
-  Session.set('rateSelect', null);
+  Session.set('rateSelected', {});
 });
 
 Template.requestEdit.onRendered(function() {
-	$('[name=requestDate]').datepicker({
+  var rateFound = Rates.findOne({
+    scheduleDate: Template.parentData(0).scheduleDate,
+    shiftTypeId: Template.parentData(0).shiftTypeId
+  });
+  if (rateFound)
+    Session.set('rateSelected', rateFound);
+	$('[name=scheduleDate]').datepicker({
 	  format: "MM dd yyyy",
 	  autoclose: true
-	});
-  $('[name=shiftType]').val(Template.parentData(0).shiftType);
+	}).val(moment(Template.parentData(0).scheduleDate).format('MMMM DD YYYY'));
+  $('[name=shiftType]').val(Template.parentData(0).shiftTypeId);
+  if (Template.parentData(0).guaranteeRate)
+    $('[name=guaranteeRate]').prop('checked', true);
 });
 
 Template.requestEdit.events({
@@ -16,73 +24,54 @@ Template.requestEdit.events({
 		e.preventDefault();
 
     var rId = this._id;
-		if ($(e.target).find('[name=requestDate]').val()) {
-			var rdate =
-				new Date(moment($(e.target).find('[name=requestDate]').val(), 'MMMM DD YYYY'));
-		} else {
-			var rdate = null;
-		}
-		var request = {
-			requestDate: rdate,
-			shiftType: $(e.target).find('[name=shiftType]').val(),
-      guaranteeRate: $(e.target).find('[name=guaranteeRate]').prop('checked'),
-      comments: $(e.target).find('[name=comments]').val()
-		}
-		var errors = validateRequest(request);
+    var scheduleDate =
+			moment($(e.target).find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
+
+    var schedule = {
+      userId: this.userId,
+			scheduleDate: scheduleDate,
+			shiftTypeId: $(e.target).find('[name=shiftType]').val(),
+			rider: $(e.target).find('[name=riderType]').prop('checked'),
+      comments: $(e.target).find('[name=comments]').val(),
+      guaranteeRate: $(e.target).find('[name=guaranteeRate]').prop('checked')
+  	}
+
+		var errors = validateRequest(schedule);
 
 		if (!$.isEmptyObject(errors))
       		return Session.set('postSubmitErrors', errors);
 
-    Meteor.call('requestEdit', rId, request, function(error, result) {
+    Meteor.call('requestEdit', rId, schedule, function(error, result) {
 			if (error)
 				return throwError(error.reason);
 			if (result.requestExist)
-				return throwError('This request has already been made.');
-
+				return Messages.throw('This request has already been made.', 'danger');
 			Session.set('postSubmitErrors', {});
+      Router.go('requestList');
 		});
-    Router.go('scheduleRequest');
 	},
-	'change #shiftType, change #requestDate': function(e) {
-		e.preventDefault();
+  'change #shiftType, change #scheduleDate': function(e) {
+    e.preventDefault();
+    Session.set('rateSelected', {});
+    var scheduleDate =
+      moment($('#requestForm').find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
 
-		var rdate =
-			moment($('form').find('[name=requestDate]').val(), 'MMMM DD YYYY');
-		rdate = new Date(rdate);
+    var shiftType = $('#requestForm').find('[name=shiftType]').val();
 
-		var st = $('form').find('[name=shiftType]').val();
-
-		var r = Rates.findOne({
-			locationId: Meteor.user().profile.locationId,
-			scheduleDate: rdate,
-			shiftType: st
-		});
-
-		if (r) {
-			Session.set('rateSelect', r);
-		} else {
-			Session.set('rateSelect', null);
-		}
-	}
+    var rateFound = Rates.findOne({
+      scheduleDate: scheduleDate,
+      shiftTypeId: shiftType
+    });
+    if (rateFound)
+      return Session.set('rateSelected', rateFound);
+  }
 });
 
 Template.requestEdit.helpers({
 	rateSelect: function() {
-		return Session.get('rateSelect');
+		return Session.get('rateSelected');
 	},
-  requestDateF: function() {
-    return moment(this.requestDate).format('MMMM DD YYYY');
-  },
-  guaranteeRateCheck: function() {
-    if (this.guaranteeRate)
-      return 'checked'
-  },
-  shiftTypesDropDown: function() {
-    return ['AM', 'PM', 'FLEX'];
+  shiftTypes: function() {
+    return ShiftTypes.find();
   }
-});
-
-Requests.after.update(function(userId, doc) {
-	Session.set('postSubmitErrors', {});
-	return throwSuccess("You've successfully updated your shift request.");
 });
