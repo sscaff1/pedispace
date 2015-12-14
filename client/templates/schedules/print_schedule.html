@@ -1,16 +1,20 @@
 <template name="printSchedule">
-  <div class="form-horizontal">
-  <div class="form-group" name="dateRange">
-    <label for="dateRange" class="col-sm-3 control-label">Select Schedule:</label>
-    <div class="col-sm-9">
-      <select class="form-control" id="dateRange" name="dateRange">
-        <option value="0" selected>Current Schedule (thru {{thisSat}})</option>
-        <option value="7">Next Week (thru {{nextWeek}})</option>
-      </select>
+  <div class="form-inline">
+    <div class="form-group has-feedback">
+      <label for="initialDate">From Date:</label>
+      <input type="text" class="form-control datepicker" name="initialDate">
+      <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
+    </div>
+    &nbsp;
+    &nbsp;
+    &nbsp;
+    <div class="form-group has-feedback">
+      <label for="finalDate">To Date:</label>
+      <input type="text" class="form-control datepicker" name="finalDate">
+      <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
     </div>
   </div>
-  </div>
-  {{#each scheduleDates inc}}
-    {{> scheduleDay}}
+  {{#each scheduleDates}}
+    {{> scheduleDay scheduleDateNice=scheduleDateNice}}
   {{/each}}
 </template>
