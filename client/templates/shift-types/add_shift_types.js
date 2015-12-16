@@ -1,11 +1,18 @@
 Template.addShiftTypes.events({
-	'submit form': function(e) {
-		e.preventDefault();
+	'submit form': function(event) {
+		event.preventDefault();
 
 		var shiftType = {
-			name: $(e.target).find('[name=shiftTypeName]').val()
+			name: $(event.target).find('[name=shiftTypeName]').val()
 		};
-		Meteor.call('shiftTypeAdd', shiftType);
-		document.insertForm.reset();
+		if (!shiftType.name) {
+			Messages.throw('The shift type name cannot be blank.', 'danger');
+		}
+		Meteor.call('shiftTypeAdd', shiftType, function(error) {
+			if (error)
+				console.log(error);
+			document.insertForm.reset();
+		});
+
 	}
 });

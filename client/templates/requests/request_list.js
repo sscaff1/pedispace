@@ -1,3 +1,14 @@
+Template.requestList.onCreated(function() {
+  Session.set('postSubmitErrors', {});
+});
+
+Template.requestList.onRendered(function() {
+  $('[name=scheduleDate]').datepicker({
+	  format: "MM dd yyyy",
+	  autoclose: true
+	});
+});
+
 Template.requestList.helpers({
 	requests: function () {
 		return Requests.find();

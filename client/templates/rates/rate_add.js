@@ -1,11 +1,3 @@
-Template.rateAdd.onRendered(function() {
-	Session.set('postSubmitErrors', {});
-	$('[name=scheduleDate]').datepicker({
-	  format: "MM dd yyyy",
-	  autoclose: true
-	});
-});
-
 Template.rateAdd.events({
 	'submit form': function(event, template) {
 		event.preventDefault();

@@ -1,12 +1,13 @@
 <template name="scheduleRider">
-  <form class="main form page" name="insertForm" id="requestForm">
-    <div class="form-group has-feedback">
+  <form class="main form page" name="insertForm">
+    <div class="form-group has-feedback {{errorClass 'scheduleDate'}}">
       <label class="control-label required" for="scheduleDate">Schedule Date</label>
-      <input name="scheduleDate" id="scheduleDate" type="text" placeholder="Select Date" class="form-control"/>
+      <input name="scheduleDate" type="text" placeholder="Select Date" class="form-control"/>
       <i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+      <span class="help-block">{{errorMessage 'scheduleDate'}}</span>
     </div>
     {{#if isInRole 'manager'}}
-  		<div class="form-group">
+  		<div class="form-group {{errorClass 'userId'}}">
   			<label class="control-label required" for="userId">Rider</label>
   			<select class="form-control" name="userId">
   				<option value="">Choose a Rider</option>
@@ -14,23 +15,20 @@
   					<option value="{{_id}}">{{profile.name}}</option>
   				{{/each}}
   			</select>
+        <span class="help-block">{{errorMessage 'userId'}}</span>
   		</div>
     {{/if}}
-    <div class="form-group">
+    <div class="form-group {{errorClass 'shiftType'}}">
   	  <label for="shiftType" class="required">Shift Type</label>
-  	  <select class="form-control" name="shiftType" id="shiftType">
+  	  <select class="form-control" name="shiftType">
   	  	<option value="">Choose a Shift Type</option>
   	    {{#each shiftTypes}}
   	    	<option value="{{_id}}">{{name}}</option>
   	    {{/each}}
   	  </select>
+      <span class="help-block">{{errorMessage 'shiftType'}}</span>
 	  </div>
-    {{#if rateSelect.rateAmount}}
-      <div>
-        <strong>Rate Amount:</strong> ${{rateSelect.rateAmount}}<br/>
-        <strong>Comments:</strong> {{rateSelect.comments}}<br/>
-      </div>
-    {{/if}}
+    {{> rateSelectedTemplate}}
     {{#if isInRole 'manager'}}
   		<div class="checkbox form-group">
   	    <label><input type="checkbox" name="riderType" checked="checked">Schedule as Rider</label>
@@ -42,9 +40,7 @@
     {{/if}}
     <div class="form-group">
       <label class="control-label" for="comments">Comments</label>
-      <div class="controls">
-        <textarea rows="3" name="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
-      </div>
+      <textarea rows="3" name="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
     </div>
     {{#if isInRole 'manager'}}
       <input type="submit" value="Schedule Rider" class="btn btn-primary"/>
@@ -52,12 +48,15 @@
       <input type="submit" value="Request Schedule" class="btn btn-primary"/>
     {{/if}}
   </form>
-  <div class="item">
-    <center>
-      <small>
-        Riders can only edit requests for one hour after submission.<br/>
-        You can print the schedule by clicking on print schedule.
-      </small>
-    </center>
-  </div>
+</template>
+
+<template name="rateSelectedTemplate">
+  {{#if rateSelect.rateAmount}}
+    <div>
+      <strong>Rate Amount:</strong> ${{rateSelect.rateAmount}}<br/>
+      {{#if rateSelect.comments}}
+        <strong>Comments:</strong> {{rateSelect.comments}}
+      {{/if}}
+    </div>
+  {{/if}}
 </template>

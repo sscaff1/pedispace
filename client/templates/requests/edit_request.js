@@ -22,39 +22,35 @@ Template.requestEdit.onRendered(function() {
 });
 
 Template.requestEdit.events({
-	'submit form': function(e) {
-		e.preventDefault();
-
+	'submit form': function(event) {
+		event.preventDefault();
     var rId = this._id;
-    var scheduleDate =
-			moment($(e.target).find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
-
     var schedule = {
       userId: this.userId,
-			scheduleDate: scheduleDate,
-			shiftTypeId: $(e.target).find('[name=shiftType]').val(),
-			rider: $(e.target).find('[name=riderType]').prop('checked'),
-      comments: $(e.target).find('[name=comments]').val(),
-      guaranteeRate: $(e.target).find('[name=guaranteeRate]').prop('checked')
+			shiftTypeId: $(event.target).find('[name=shiftType]').val(),
+			rider: $(event.target).find('[name=riderType]').prop('checked'),
+      comments: $(event.target).find('[name=comments]').val(),
+      guaranteeRate: $(event.target).find('[name=guaranteeRate]').prop('checked')
   	}
-
+    var scheduleDate = $(event.target).find('[name=scheduleDate]').val();
+		if (scheduleDate) {
+			schedule.scheduleDate = moment(scheduleDate, 'MMMM DD YYYY').toDate();
+		}
 		var errors = validateRequest(schedule);
-
 		if (!$.isEmptyObject(errors))
-      		return Session.set('postSubmitErrors', errors);
+      return Session.set('postSubmitErrors', errors);
 
     Meteor.call('requestEdit', rId, schedule, function(error, result) {
 			if (error)
-				return throwError(error.reason);
-			if (result.requestExist)
+				console.log(error.reason);
+			if (result)
 				return Messages.throw('This request has already been made.', 'danger');
 			Session.set('postSubmitErrors', {});
       Router.go('requestList');
 		});
 	},
-  'change #shiftType, change #scheduleDate': function(e, t) {
-    e.preventDefault();
-
+  'change [name=shiftType], change [name=scheduleDate]': function(event, template) {
+    event.preventDefault();
     var scheduleDate =
       moment($('#requestForm').find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
     var shiftType = $('#requestForm').find('[name=shiftType]').val();
@@ -63,7 +59,7 @@ Template.requestEdit.events({
       shiftTypeId: shiftType
     });
     if (rateFound)
-      t.rateSelected.set(rateFound);
+      template.rateSelected.set(rateFound);
   }
 });
 

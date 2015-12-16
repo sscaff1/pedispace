@@ -1,13 +1,6 @@
 Template.scheduleRider.onCreated(function() {
-  Session.set('postSubmitErrors', {});
-  Session.set('rateSelected', {});
-});
-
-Template.scheduleRider.onRendered(function() {
-	$('[name=scheduleDate]').datepicker({
-	  format: "MM dd yyyy",
-	  autoclose: true
-	});
+  var instance = this;
+  instance.rateSelected = new ReactiveVar({});
 });
 
 Template.scheduleRider.helpers({
@@ -18,31 +11,30 @@ Template.scheduleRider.helpers({
 		return ShiftTypes.find();
 	},
   rateSelect: function() {
-    return Session.get('rateSelected');
+    return Template.instance().rateSelected.get();
   }
 });
 
 Template.scheduleRider.events({
-	'submit form': function(e) {
-		e.preventDefault();
-
-		var scheduleDate =
-			moment($(e.target).find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
+	'submit form': function(event,template) {
+		event.preventDefault();
 
 		var schedule = {
 			businessId: Meteor.user().profile.businessId,
-			scheduleDate: scheduleDate,
-			shiftTypeId: $(e.target).find('[name=shiftType]').val(),
-			rider: $(e.target).find('[name=riderType]').prop('checked'),
-      comments: $(e.target).find('[name=comments]').val()
+			shiftTypeId: $(event.target).find('[name=shiftType]').val(),
+			rider: $(event.target).find('[name=riderType]').prop('checked'),
+      comments: $(event.target).find('[name=comments]').val()
 		}
-
+    var scheduleDate = $(event.target).find('[name=scheduleDate]').val();
+		if (scheduleDate) {
+			schedule.scheduleDate = moment(scheduleDate, 'MMMM DD YYYY').toDate();
+		}
     if (Roles.userIsInRole(Meteor.user(), ['manager'])) {
       schedule.guaranteeRate = false;
       schedule.scheduled = true;
-      schedule.userId = $(e.target).find('[name=userId]').val();
+      schedule.userId = $(event.target).find('[name=userId]').val();
     } else {
-      schedule.guaranteeRate = $(e.target).find('[name=guaranteeRate]').prop('checked');
+      schedule.guaranteeRate = $(event.target).find('[name=guaranteeRate]').prop('checked');
       schedule.scheduled = false;
       schedule.userId = Meteor.userId();
     }
@@ -54,28 +46,29 @@ Template.scheduleRider.events({
 
 		Meteor.call('requestAdd', schedule, function(error, result) {
 			if (error)
-				return throwError(error.reason);
-			if (result.requestExist)
-				Messages.throw('This request has already been made.', 'danger');
-
+				console.log(error);
+			if (result)
+				return Messages.throw('This request has already been made.', 'danger');
 			Session.set('postSubmitErrors', {});
-      Session.set('rateSelected', {});
+      template.rateSelected.set({});
+      document.insertForm.reset();
 		});
-		document.insertForm.reset();
+
 	},
-  'change #shiftType, change #scheduleDate': function(e) {
-    e.preventDefault();
-    Session.set('rateSelected', {});
+  'change [name=shiftType], change [name=scheduleDate]': function(event, template) {
+    event.preventDefault();
+
     var scheduleDate =
-      moment($('#requestForm').find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
-
-    var shiftType = $('#requestForm').find('[name=shiftType]').val();
-
+      moment($('[name=insertForm]').find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
+    var shiftType = $('[name=insertForm]').find('[name=shiftType]').val();
     var rateFound = Rates.findOne({
       scheduleDate: scheduleDate,
       shiftTypeId: shiftType
     });
-    if (rateFound)
-      return Session.set('rateSelected', rateFound);
+    if (rateFound) {
+      template.rateSelected.set(rateFound);
+    } else {
+      template.rateSelected.set({});
+    }
   }
 });

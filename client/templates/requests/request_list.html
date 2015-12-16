@@ -1,5 +1,13 @@
 <template name="requestList">
   {{> scheduleRider}}
+  <div class="item">
+    <center>
+      <small>
+        Riders can only edit requests for one hour after submission.<br/>
+        You can print the schedule by clicking on print schedule.
+      </small>
+    </center>
+  </div>
   {{#each requests}}
     {{> requestItem}}
   {{/each}}

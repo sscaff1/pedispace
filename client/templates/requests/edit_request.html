@@ -1,33 +1,28 @@
 <template name="requestEdit">
   <form class="main form page" name="insertForm" id="requestForm">
-    <div class="form-group has-feedback">
+    <div class="form-group has-feedback {{errorClass 'scheduleDate'}}">
       <label class="control-label required" for="scheduleDate">Schedule Date</label>
-      <input name="scheduleDate" id="scheduleDate" type="text" placeholder="Select Date" class="form-control"/>
+      <input name="scheduleDate" type="text" placeholder="Select Date" class="form-control"/>
       <i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+      <span class="help-block">{{errorMessage 'scheduleDate'}}</span>
     </div>
-    <div class="form-group">
+    <div class="form-group {{errorClass 'shiftType'}}">
   	  <label for="shiftType" class="required">Shift Type</label>
-  	  <select class="form-control" name="shiftType" id="shiftType">
+  	  <select class="form-control" name="shiftType">
   	  	<option value="">Choose a Shift Type</option>
   	    {{#each shiftTypes}}
   	    	<option value="{{_id}}">{{name}}</option>
   	    {{/each}}
   	  </select>
+      <span class="help-block">{{errorMessage 'shiftType'}}</span>
 	  </div>
-    {{#if rateSelect.rateAmount}}
-      <div>
-        <strong>Rate Amount:</strong> ${{rateSelect.rateAmount}}<br/>
-        <strong>Comments:</strong> {{rateSelect.comments}}<br/>
-      </div>
-    {{/if}}
+    {{> rateSelectedTemplate}}
     <div class="checkbox form-group">
       <label><input type="checkbox" name="guaranteeRate">Guarantee Rate</label>
     </div>
     <div class="form-group">
       <label class="control-label" for="comments">Comments</label>
-      <div class="controls">
-        <textarea rows="3" name="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
-      </div>
+      <textarea rows="3" name="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
     </div>
     <input type="submit" value="Request Schedule" class="btn btn-primary"/>
   </form>
