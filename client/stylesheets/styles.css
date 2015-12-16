@@ -146,3 +146,56 @@ html {
 	content:"*";
 	color:red;
  }
+.help-block {
+  margin:0;
+  padding: 0;
+}
+.row.rickshaw-row {
+	background-color: white;
+	padding: 30px 0px 30px 0px;
+	margin-top: 0px;
+}
+h1, h2, h3, h4, h5, h6 {
+	font-family: Montserrat;
+}
+h1 {
+	font-size: 28px;
+	color: #000;
+}
+
+h2 {
+	font-size: 24px;
+	color: #004822;
+}
+h3 {
+	font-size: 18px;
+	font-weight: lighter;
+	color: #000;
+}
+h4 {
+	color: #000;
+	font-size: 16px;
+	font-weight: 300;
+}
+.pedispace-title-body {
+	background-color: #7fa390;
+	padding: 30px 0px 55px 5px;
+	margin-bottom: 0%;
+	margin-top: 0%;
+	background-image: url("/img/line2.png");
+	background-repeat: no-repeat;
+	background-position: center;
+}
+.button-row {
+	background-color: #d7f0ea;
+	padding: 50px 0px 50px 0px;
+}
+i {
+	vertical-align: middle;
+	font-size: 75px;
+	height: 80px;
+}
+.row.screen-shot-row {
+	padding: 20px 0px 20px 0px;
+	background-color: #fff;
+}
