@@ -1,15 +1,15 @@
 <template name="layout">
-  {{> header}}
-  	{{> messageList}}
-    <div class="container">
-      {{> yield}}
-    </div>
-  {{> footer}}
+  {{> messageList}}
+  {{> yield "header"}}
+  <div class="container">
+    {{> yield}}
+  </div>
+  {{> yield "footer"}}
 </template>
 
 <template name="layoutFrontPage">
+  {{> messageList}}
   {{> header}}
-    {{> messageList}}
-    {{> yield}}
+  {{> yield}}
   {{> footer}}
 </template>
