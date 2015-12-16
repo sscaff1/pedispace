@@ -14,7 +14,6 @@ Template.printSchedule.onCreated(function() {
 
 Template.printSchedule.onRendered(function() {
 	var instance = this;
-
 	$('.datepicker').datepicker({
 		format: "mm/dd/yyyy",
 		autoclose: true,
