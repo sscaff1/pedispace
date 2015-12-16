@@ -22,12 +22,10 @@
 body {
   background: #eee;
   color: #666666;
-  padding-top: 60px;
 	overflow-x: hidden;
+  padding-top: 50px;
 }
-html {
-  position: relative;
-}
+
  body > .container {
   margin-bottom: 40px;
 }
@@ -179,9 +177,9 @@ h4 {
 }
 .pedispace-title-body {
 	background-color: #7fa390;
-	padding: 30px 0px 55px 5px;
+	padding: 30px 0px 55px 0px;
 	margin-bottom: 0%;
-	margin-top: 0%;
+	margin-top: 0px;
 	background-image: url("/img/line2.png");
 	background-repeat: no-repeat;
 	background-position: center;
