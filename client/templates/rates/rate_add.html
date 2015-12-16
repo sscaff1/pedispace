@@ -1,28 +1,29 @@
 <template name="rateAdd">
   <form class="main form page" name="insertForm">
-    <div class="form-group has-feedback">
+    <div class="form-group has-feedback {{errorClass 'scheduleDate'}}">
       <label class="control-label required" for="scheduleDate">Schedule Date</label>
       <input name="scheduleDate" type="text" placeholder="Select Date" class="form-control"/>
       <i class="glyphicon glyphicon-calendar form-control-feedback"></i>
+      <span class="help-block">{{errorMessage 'scheduleDate'}}</span>
     </div>
-    <div class="form-group">
-  	  <label for="shiftType" class="required">Shift Type</label>
+    <div class="form-group {{errorClass 'shiftType'}}">
+  	  <label for="shiftType" class="control-label required">Shift Type</label>
   	  <select class="form-control" name="shiftType">
   	  	<option value="">Choose a Shift Type</option>
   	    {{#each shiftTypes}}
   	    	<option value="{{_id}}">{{name}}</option>
   	    {{/each}}
   	  </select>
+      <span class="help-block">{{errorMessage 'shiftType'}}</span>
 	  </div>
-    <div class="form-group">
+    <div class="form-group {{errorClass 'rateAmount'}}">
       <label class="control-label required" for="rateAmount">Rate Amount</label>
-      <div class="controls">
-        <div class="input-group">
-  	      <span class="input-group-addon">$</span>
-  	      <input name="rateAmount" id="rateAmount" type="number" min="0" max="3000" placeholder="Input shift rate" class="form-control"/>
-          <span class="input-group-addon">.00</span>
-  	    </div>
-      </div>
+      <div class="input-group">
+	      <span class="input-group-addon">$</span>
+	      <input name="rateAmount" type="number" placeholder="Input shift rate" class="form-control"/>
+        <span class="input-group-addon">.00</span>
+	    </div>
+      <span class="help-block">{{errorMessage 'rateAmount'}}</span>
     </div>
     <div class="form-group">
       <label class="control-label" for="comments">Comments</label>

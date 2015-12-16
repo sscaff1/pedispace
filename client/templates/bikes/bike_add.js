@@ -1,11 +1,16 @@
 Template.bikeAdd.events({
-	'submit form': function(e) {
-		e.preventDefault();
-
+	'submit form': function(event) {
+		event.preventDefault();
 		var bike = {
-			name: $(e.target).find('[name=bikeName]').val()
+			name: $(event.target).find('[name=bikeName]').val()
 		};
-		Meteor.call('bikeAdd', bike);
-		document.insertForm.reset();
+		if (!bike.name) {
+			Messages.throw('The bike name cannot be blank.', 'danger');
+		}
+		Meteor.call('bikeAdd', bike, function(error) {
+			if (error)
+				console.log(error)
+			document.insertForm.reset();
+		});
 	}
 });

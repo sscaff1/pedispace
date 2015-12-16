@@ -1,12 +1,18 @@
 Template.radioEdit.events({
-	'submit form': function(e) {
-		e.preventDefault();
+	'submit form': function(event) {
+		event.preventDefault();
 		currentId = this._id;
 		var radio = {
-			name: $(e.target).find('[name=radioName]').val(),
-			active: $(e.target).find('[name=activeCheckbox]').prop('checked')
+			name: $(event.target).find('[name=radioName]').val(),
+			active: $(event.target).find('[name=activeCheckbox]').prop('checked')
 		};
-		Radios.update(currentId, {$set: radio});
-		Router.go('radiosList');
+		if (!radio.name) {
+			return Messages.throw('The radio name cannot be blank.', 'danger');
+		}
+		Radios.update(currentId, {$set: radio}, function(error) {
+			if (error)
+				console.log(error);
+			Router.go('radiosList');
+		});
 	}
 });

@@ -1,10 +1,17 @@
 Template.radioAdd.events({
-	'submit form': function(e) {
-		e.preventDefault();
+	'submit form': function(event) {
+		event.preventDefault();
 		var radio = {
-			name: $(e.target).find('[name=radioName]').val()
+			name: $(event.target).find('[name=radioName]').val()
 		};
-		Meteor.call('radioAdd', radio);
-		document.insertForm.reset();
+		if (!radio.name) {
+			return Messages.throw('The radio name cannot be blank.', 'danger');
+		}
+		Meteor.call('radioAdd', radio, function(error) {
+			if (error)
+				console.log(error)
+			document.insertForm.reset();
+		});
+
 	}
 })

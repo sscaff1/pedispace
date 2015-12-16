@@ -1,12 +1,18 @@
 Template.bikeEdit.events({
-	'submit form': function(e) {
-		e.preventDefault();
+	'submit form': function(event) {
+		event.preventDefault();
 		var currentBikeId = this._id;
 		var bike = {
-			name: $(e.target).find('[name=bikeName]').val(),
-			active: $(e.target).find('[name=activeCheckbox]').prop('checked')
+			name: $(event.target).find('[name=bikeName]').val(),
+			active: $(event.target).find('[name=activeCheckbox]').prop('checked')
 		};
-		Bikes.update(currentBikeId, {$set: bike});
-		Router.go('bikesList');
+		if (!bike.name) {
+			Messages.throw('The bike name cannot be blank.', 'danger');
+		}
+		Bikes.update(currentBikeId, {$set: bike}, function(error) {
+			if (error)
+				console.log(error)
+			Router.go('bikesList');
+		});
 	}
 });

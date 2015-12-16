@@ -1,32 +1,33 @@
-Template.rateAdd.onCreated(function() {
+Template.rateAdd.onRendered(function() {
 	Session.set('postSubmitErrors', {});
+	$('[name=scheduleDate]').datepicker({
+	  format: "MM dd yyyy",
+	  autoclose: true
+	});
 });
 
 Template.rateAdd.events({
-	'submit form': function(e) {
-		e.preventDefault();
-
-		var scheduleDate =
-			moment($(e.target).find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
+	'submit form': function(event, template) {
+		event.preventDefault();
 
 		var rate = {
-			scheduleDate: scheduleDate,
-			shiftTypeId: $(e.target).find('[name=shiftType]').val(),
-			rateAmount: parseInt($(e.target).find('[name=rateAmount]').val()),
-			comments: $(e.target).find('[name=comments]').val()
+			shiftTypeId: $(event.target).find('[name=shiftType]').val(),
+			rateAmount: parseFloat($(event.target).find('[name=rateAmount]').val()),
+			comments: $(event.target).find('[name=comments]').val()
 		}
-
+		var scheduleDate = $(event.target).find('[name=scheduleDate]').val();
+		if (scheduleDate) {
+			rate.scheduleDate = moment(scheduleDate, 'MMMM DD YYYY').toDate();
+		}
 		var errors = validateRate(rate);
-
 		if (!$.isEmptyObject(errors))
-      		return Session.set('postSubmitErrors', errors);
-
+      return Session.set('postSubmitErrors', errors);
   	Meteor.call('rateAdd', rate, function(error, result) {
   		if (error)
-  			return throwError(error.reason);
-  		Session.set('postSubmitErrors', {});
+  			console.log(error);
+			Session.set('postSubmitErrors', {});
+			document.insertForm.reset();
   	});
-		document.insertForm.reset();
 	}
 });
 
@@ -36,19 +37,10 @@ Template.rateAdd.helpers({
 	}
 });
 
-Template.rateAdd.onRendered(function() {
-	$('[name=scheduleDate]').datepicker({
-	  format: "MM dd yyyy",
-	  autoclose: true
-	});
-});
-
 Rates.after.insert(function(userId, doc) {
-	Session.set('postSubmitErrors', {});
-	return throwSuccess("You've successfully created a rate schedule.");
+	return Messages.throw("You've successfully created a rate schedule.", 'success');
 });
 
 Rates.after.update(function(userId, doc) {
-	Session.set('postSubmitErrors', {});
-	return throwSuccess("You've successfully updated a rate schedule.");
+	return Messages.throw("You've successfully updated a rate schedule.", 'success');
 });

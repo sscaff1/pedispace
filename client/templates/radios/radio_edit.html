@@ -1,10 +1,8 @@
 <template name="radioEdit">
-  <form class="main form page" name="insertForm">
+  <form class="main form page">
     <div class="form-group">
       <label class="control-label" for="radioName">Radio Name</label>
-      <div class="controls">
-        <input name="radioName" value="{{name}}" id="radioName" type="text" class="form-control"/>
-      </div>
+      <input name="radioName" value="{{name}}" type="text" class="form-control"/>
     </div>
   	<div class="checkbox">
   	  {{#if active}}

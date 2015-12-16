@@ -3,14 +3,18 @@
     <div class="item-content">
       <div class="col-xs-6">
         <h3>
-          <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+          <i class="fa fa-calendar"></i>
           {{scheduleDatePretty}}
         </h3>
-        <b>Shift Type:</b> {{shiftType.name}}<br/>
-        <b>Rate Amount:</b> ${{rateAmount}}
+        <strong>Shift Type:</strong> {{shiftType.name}}<br/>
+        <strong>Rate Amount:</strong> ${{rateAmount}}
       </div>
       <div class="col-xs-6 text-left">
-        <b>Comments:</b> {{comments}}
+        {{#if comments}}
+          <strong>Comments:</strong> {{comments}}
+        {{else}}
+          <strong>No Comments Set</strong>
+        {{/if}}
       </div>
     </div>
   </div>

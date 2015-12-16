@@ -1,15 +1,17 @@
 Template.requestEdit.onCreated(function() {
+  var instance = this;
   Session.set('postSubmitErrors', {});
-  Session.set('rateSelected', {});
+  instance.rateSelected = new ReactiveVar(null);
 });
 
 Template.requestEdit.onRendered(function() {
+  var instance = this;
   var rateFound = Rates.findOne({
     scheduleDate: Template.parentData(0).scheduleDate,
     shiftTypeId: Template.parentData(0).shiftTypeId
   });
   if (rateFound)
-    Session.set('rateSelected', rateFound);
+    instance.rateSelected.set(rateFound);
 	$('[name=scheduleDate]').datepicker({
 	  format: "MM dd yyyy",
 	  autoclose: true
@@ -50,26 +52,24 @@ Template.requestEdit.events({
       Router.go('requestList');
 		});
 	},
-  'change #shiftType, change #scheduleDate': function(e) {
+  'change #shiftType, change #scheduleDate': function(e, t) {
     e.preventDefault();
-    Session.set('rateSelected', {});
+
     var scheduleDate =
       moment($('#requestForm').find('[name=scheduleDate]').val(), 'MMMM DD YYYY').toDate();
-
     var shiftType = $('#requestForm').find('[name=shiftType]').val();
-
     var rateFound = Rates.findOne({
       scheduleDate: scheduleDate,
       shiftTypeId: shiftType
     });
     if (rateFound)
-      return Session.set('rateSelected', rateFound);
+      t.rateSelected.set(rateFound);
   }
 });
 
 Template.requestEdit.helpers({
 	rateSelect: function() {
-		return Session.get('rateSelected');
+		return Template.instance().rateSelected.get();
 	},
   shiftTypes: function() {
     return ShiftTypes.find();

@@ -1,5 +1,12 @@
 <template name="rateSchedule">
 	{{> rateAdd}}
+	<div class="item">
+    <center>
+      <small>
+        To edit a schedule day below simply fill out the form again for the same date and shift type.
+      </small>
+    </center>
+  </div>
 	{{#each rateLists}}
 		{{> rateItem}}
 	{{/each}}
