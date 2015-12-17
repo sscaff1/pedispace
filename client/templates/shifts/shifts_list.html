@@ -1,6 +1,6 @@
 <template name="shiftsList">
 	{{#if emptyShifts.flag}}
-	<form class="form-inline">
+	<form class="form-inline" name="filterForm">
 		<div class="form-group">
 	  		<label for="dateFilter">Select Date to Filter</label>
 	  		<input type="date" class="form-control" placeholder="Filter Date" name="dateFilter">
@@ -22,6 +22,30 @@
 	{{else}}
 	<div class="jumbotron text-center">
 		<h2>{{emptyShifts.message}}</h2>
+		{{#if emptyShifts.noPassword}}
+			{{> setPasswordForShop}}
+		{{/if}}
 	</div>
 	{{/if}}
+</template>
+
+<template name="setPasswordForShop">
+	<div class="item">
+		<h4>Looks like you haven't setup a password for your shop account. Set it below.</h4>
+	</div>
+	<form class="main form page" name="shopNewPasswordForm">
+		<div class="form-group {{errorClass 'password'}}">
+			<label class="control-label required" for="password">Password</label>
+			<input class="form-control" name="password" type="password">
+			<span class="help-block">{{errorMessage 'password'}}</span>
+		</div>
+		<div class="form-group {{errorClass 'confirmPassword'}}">
+			<label class="control-label required" for="confirmPassword">Confirm Password</label>
+			<input class="form-control" name="confirmPassword" type="password">
+			<span class="help-block">{{errorMessage 'confirmPassword'}}</span>
+		</div>
+		<div class="form-group">
+			<input type="submit" value="Set Shop Password" class="btn btn-primary"/>
+		</div>
+	</form>
 </template>

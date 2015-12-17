@@ -32,18 +32,27 @@ Meteor.methods({
     Accounts.sendVerificationEmail(newUserId);
     return newUserId;
   },
-  createShopUser: function(user, managerEmail) {
+  createShopUser: function(user) {
     check(user, {
       name: String,
       email: String,
       businessId: String,
       role: String
     });
-    var newUser = Accounts.createUser({
+    Accounts.createUser({
       email: user.email,
       profile: user
     });
-    Accounts.sendEnrollmentEmail(newUser);
+  },
+  setNewShopPassword: function(userId, password) {
+    Accounts.setPassword(userId, password);
+  },
+  checkUserPassword: function(userId) {
+    if (Meteor.users.findOne(userId).services.password == null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 });
 Accounts.onCreateUser(function(options, user) {

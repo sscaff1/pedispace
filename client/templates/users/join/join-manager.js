@@ -23,14 +23,13 @@ Template.joinManager.events({
       } else {
         Meteor.setTimeout(function() {
           var businessId = Meteor.users.findOne({_id: result}).profile.businessId;
-          var managerEmail = Meteor.users.findOne({_id: result}).emails[0];
           var shopUser = {
             email: user.businessId.replace(/ /g,'').toLowerCase()+'@pedispace.com',
             businessId: businessId,
             name: user.businessId,
             role: 'shop'
           }
-          Meteor.call('createShopUser', shopUser, managerEmail, function(error) {
+          Meteor.call('createShopUser', shopUser, function(error) {
             if (error)
               console.log(error);
           });
