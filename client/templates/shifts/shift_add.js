@@ -1,5 +1,12 @@
 Template.shiftAdd.onCreated(function() {
+  var instance = this;
   Session.set('postSubmitErrors', {});
+  instance.rateComments = new ReactiveVar(null);
+});
+
+Template.shiftAdd.onRendered(function() {
+	var now = moment().local().subtract(8, 'hours').toDate();
+	$('[name=startTime]').val(now);
 });
 
 Template.shiftAdd.helpers({
@@ -8,80 +15,67 @@ Template.shiftAdd.helpers({
 	},
 	radio: function() {
 		if (Radios.find().count() === 0) {
-			return null
+			return false;
 		}
 		return Radios.find();
 	},
 	rider: function() {
-		return Meteor.users.find({_id: { $ne: this._id }}, {sort: {"profile.name": 1}});
+		return Meteor.users.find({roles: 'biker', "profile.active": true});
 	},
 	rateComments: function() {
-		return Session.get('rateComments');
+		return Template.instance().rateComments.get()
 	}
 });
 
 Template.shiftAdd.events({
-	'submit form': function(e) {
-		e.preventDefault();
-
-		var s = $(e.target).find('[name=startTime]').val();
-
+	'submit form': function(event,template) {
+		event.preventDefault();
 		var shift = {
-			locationId: this.profile.locationId,
-			bikeId: $(e.target).find('[name=bikeName]').val(),
-			radioId: $(e.target).find('[name=radioName]').val(),
-			shiftType: $(e.target).find('[name=shiftType]').val(),
-			totalMade: $(e.target).find('[name=totalMade]').val()*1,
-			ratePaid: $(e.target).find('[name=ratePaid]').val()*1,
-			shiftRate: $(e.target).find('[name=shiftRate]').val()*1,
-			startTime: moment(s).toDate(),
-			comments: $(e.target).find('[name=comments]').val(),
-			userId: $(e.target).find('[name=userName]').val()
+			businessId: Meteor.user().profile.businessId,
+			bikeId: $(event.target).find('[name=bikeName]').val(),
+			radioId: $(event.target).find('[name=radioName]').val(),
+			shiftTypeId: $(event.target).find('[name=shiftType]').val(),
+			totalMade: parseFloat($(event.target).find('[name=totalMade]').val()),
+			ratePaid: parseFloat($(event.target).find('[name=ratePaid]').val()),
+			shiftRate: parseFloat($(event.target).find('[name=shiftRate]').val()),
+			startTime: moment($(event.target).find('[name=startTime]').val()).toDate(),
+			comments: $(event.target).find('[name=comments]').val(),
+			userId: $(event.target).find('[name=userName]').val()
 		}
 
 		var errors = validatePost(shift);
-
-    	if (!$.isEmptyObject(errors))
-      		return Session.set('postSubmitErrors', errors);
-
+  	if (!$.isEmptyObject(errors))
+    		return Session.set('postSubmitErrors', errors);
 		Meteor.call('shiftAdd', shift, function(error, result) {
 			if (error)
-				return throwError(error.reason);
+				console.log(error);
 			Session.set('postSubmitErrors', {});
+      template.rateComments.set(null);
+      document.insertForm.reset();
 		});
-		document.insertForm.reset();
+
 	},
-	'change #shiftType, change #startTime': function(e) {
-		e.preventDefault();
+	'change [name=shiftType], change [name=startTime]': function(event) {
+		event.preventDefault();
 
-		var s = $('form').find('[name=startTime]').val();
-		s = moment(s).startOf('day');
-		s = new Date(s);
-
-		var st = $('form').find('[name=shiftType]').val();
-
+		var s = $('[name=insertForm]').find('[name=startTime]').val();
+		s = moment(s).startOf('day').toDate();
+		var st = $('[name=insertForm]').find('[name=shiftType]').val();
 		var r = Rates.findOne({
-			locationId: this.profile.locationId,
+			businessId: Meteor.user().profile.businessId,
 			scheduleDate: s,
 			shiftType: st
 		});
 		if (r) {
-			$('form').find('[name=shiftRate]').val(r.rateAmount);
-			$('form').find('[name=shiftRate]').prop('disabled', true);
-			Session.set('rateComments', r.comments);
+			$('[name=insertForm]').find('[name=shiftRate]').val(r.rateAmount);
+			$('[name=insertForm]').find('[name=shiftRate]').prop('disabled', true);
+			template.rateComments.set(r.comments);
 		} else {
-			Session.set('rateComments', null);
+			template.rateComments.set(null);;
 		}
 	}
-
 });
 
 Shifts.after.insert(function(userId, doc) {
-	return throwSuccess("You've successfully created a shift.");
-});
-
-Template.shiftAdd.onRendered(function() {
-	var now = moment().subtract(13, 'hours').toISOString();
-	now = now.substr(0, now.length - 8);
-	document.getElementById("startTime").defaultValue = now;
+	return throwSuccess("You've successfully created logged your shift.");
 });

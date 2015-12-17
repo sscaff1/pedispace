@@ -1,50 +1,40 @@
 Template.shiftsList.onCreated(function() {
 	var instance = this;
-
 	instance.loaded = new ReactiveVar(0);
 	instance.limit = new ReactiveVar(5);
 	instance.dateFilter = new ReactiveVar(0);
-
 	instance.autorun(function () {
 		var limit = instance.limit.get();
-		var subscription = instance.subscribe('shifts', limit);
-
+		var searchDate = instance.dateFilter.get();
+		var subscription = instance.subscribe('shifts', limit, searchDate);
 		if (subscription.ready()) {
 			instance.loaded.set(limit);
 		}
 	});
-
 	instance.shifts = function() {
-		return Shifts.find({}, 
+		return Shifts.find({},
 			{
 				limit: instance.loaded.get(),
 				sort: {submitted: -1}
-			});	
+			});
 	};
 
 });
 
 Template.shiftsList.events({
-	'click .load-more': function(e, instance) {
-		e.preventDefault();
-		
-		var limit = instance.limit.get();
+	'click .load-more': function(event, template) {
+		event.preventDefault();
+
+		var limit = template.limit.get();
 		limit += 5;
-		instance.limit.set(limit);
+		template.limit.set(limit);
 	},
-	'submit form': function(e, instance) {
-		e.preventDefault();
-
-		var dateFilter = $(e.target).find('[name=dateFilter]').val();
-		dateFilter = new Date(moment(dateFilter));
-
+	'submit form': function(event, template) {
+		event.preventDefault();
+		var dateFilter =
+			moment($(event.target).find('[name=dateFilter]').val(), 'MMMM DD YYYY').toDate();
 		instance.dateFilter.set(dateFilter);
-	},
-	// 'click .reset': function(e) {
-	// 	e.preventDefault();
-	// 	//I need to reset shifts F with this event
-	// }
-		
+	}
 });
 
 Template.shiftsList.helpers({
@@ -55,11 +45,21 @@ Template.shiftsList.helpers({
 		return Template.instance().shifts().count() >= Template.instance().limit.get();
 	},
 	shiftsF: function() {
-		var dateFilter1 = Template.instance().dateFilter.get();
-		var dateFilter2 = new Date(moment(dateFilter1).add(1, 'days'));
-		if (dateFilter1)
-			return Shifts.find({startTime: {$gte: dateFilter1, $lt: dateFilter2}});
+		if (Template.instance().dateFilter.get())
+			return true;
 		return false;
+	},
+	emptyShifts: function() {
+		if (Template.instance().shifts().count() === 0) {
+			var shopAccount = Meteor.users.findOne({roles: 'shop'}).emails[0].address;
+			return {
+				flag: false,
+				message: "Opps looks like there are no shifts yet. You can create shifts by logging into your shop account: " + shopAccount
+			}
+		} else {
+			return {
+				flag: true
+			}
+		}
 	}
 });
-

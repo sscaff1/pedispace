@@ -1,107 +1,111 @@
 <template name="shiftAdd">
   <form class="main form page" name="insertForm">
-  <div class="form-horizontal">
-  <div class="form-group {{errorClass 'userId'}}">
-    <label for="userName" class="col-sm-3 control-label required">Rider:</label>
-    <div class="col-sm-9">
-      <select class="form-control" id="userName" name="userName">
-        <option value="">Choose a Rider</option>
-        {{#each rider}}
-          <option value="{{_id}}">{{profile.name}}</option>
-        {{/each}}
-      </select>
-      <span class="help-block">{{errorMessage 'userId'}}</span>
-    </div>
-  </div>
-  <div class="form-group {{errorClass 'bikeId'}}">
-    <label for="bikeName" class="col-sm-3 control-label required">Bike Name:</label>
-    <div class="col-sm-9">
-      <select class="form-control" id="bikeName" name="bikeName">
-        <option value="">Choose a Bike</option>
-        {{#each bike}}
-          <option value="{{_id}}">{{name}}</option>
-        {{/each}}
-      </select>
-      <span class="help-block">{{errorMessage 'bikeId'}}</span>
-    </div>
-  </div>
-  {{#if radio}}
-  <div class="form-group {{errorClass 'radioId'}}">
-    <label for="radioName" class="col-sm-3 control-label">Radio Name:</label>
-    <div class="col-sm-9">
-      <select class="form-control" id="radioName" name="radioName">
-        <option value="">Choose a Radio</option>
-        {{#each radio}}
-          <option value="{{_id}}">{{name}}</option>
-        {{/each}} 
-      </select>
-      <span class="help-block">{{errorMessage 'radioId'}}</span>
-    </div>
-  </div>
-  {{/if}}
-  <div class="form-group {{errorClass 'shiftType'}}">
-    <label for="shiftType" class="col-sm-3 control-label required">Shift Type:</label>
-    <div class="col-sm-9">
-      <select class="form-control" id="shiftType" name="shiftType">
-        <option value="">Choose a Shift Type</option>
-          {{> shiftTypes}}
-      </select>
-      <span class="help-block">{{errorMessage 'shiftType'}}</span>
-    </div>
-  </div>
-  <div class="form-group {{errorClass 'startTime'}}">
-    <label class="col-sm-3 control-label required" for="startTime">Start Time:</label>
-    <div class="col-sm-9 controls">
-        <input name="startTime" id="startTime" type="datetime-local" class="form-control"/>
-        Time has been defaulted. Please change your start time appropriately.
-        <span class="help-block">{{errorMessage 'startTime'}}</span>
-    </div>
-  </div>
-  <div class="form-group {{errorClass 'totalMade'}}">
-    <label class="col-sm-3 control-label required" for="totalMade">Total Made:</label>
-    <div class="col-sm-9">
-      <div class="input-group">
-          <span class="input-group-addon">$</span><input name="totalMade" id="totalMade" type="number" min="0" max="3000" placeholder="Input amount made" class="form-control"/>
-          <span class="input-group-addon">.00</span>
+    <div class="form-horizontal">
+      <div class="form-group {{errorClass 'userId'}}">
+        <label for="userName" class="col-sm-3 control-label required">Rider:</label>
+        <div class="col-sm-9">
+          <select class="form-control" name="userName">
+            <option value="">Choose a Rider</option>
+            {{#each rider}}
+              <option value="{{_id}}">{{profile.name}}</option>
+            {{/each}}
+          </select>
+          <span class="help-block">{{errorMessage 'userId'}}</span>
+        </div>
       </div>
-      <span class="help-block">{{errorMessage 'totalMade'}}</span>
-    </div>
-  </div>
-  <div class="form-group {{errorClass 'ratePaid'}}">
-    <label class="col-sm-3 control-label required" for="ratePaid">Drop Amount:</label>
-    <div class="col-sm-9">
-      <div class="input-group">
-          <span class="input-group-addon">$</span><input name="ratePaid" id="ratePaid" type="number" min="0" max="3000" placeholder="Input drop amount" class="form-control"/>
-          <span class="input-group-addon">.00</span>
+      <div class="form-group {{errorClass 'bikeId'}}">
+        <label for="bikeName" class="col-sm-3 control-label required">Bike Name:</label>
+        <div class="col-sm-9">
+          <select class="form-control" name="bikeName">
+            <option value="">Choose a Bike</option>
+            {{#each bike}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
+          <span class="help-block">{{errorMessage 'bikeId'}}</span>
+        </div>
       </div>
-      <span class="help-block">{{errorMessage 'ratePaid'}}</span>
-    </div>
-  </div>
-  <div class="form-group {{errorClass 'shiftRate'}}">
-    <label class="col-sm-3 control-label required" for="shiftRate">Shift Rate:</label>
-    <div class="col-sm-9">
-      <div class="input-group">
-          <span class="input-group-addon">$</span><input name="shiftRate" id="shiftRate" type="number" min="0" max="3000" placeholder="Input shift rate" class="form-control"/>
-          <span class="input-group-addon">.00</span>
+      {{#if radio}}
+      <div class="form-group {{errorClass 'radioId'}}">
+        <label for="radioName" class="col-sm-3 control-label">Radio Name:</label>
+        <div class="col-sm-9">
+          <select class="form-control" name="radioName">
+            <option value="">Choose a Radio</option>
+            {{#each radio}}
+              <option value="{{_id}}">{{name}}</option>
+            {{/each}}
+          </select>
+          <span class="help-block">{{errorMessage 'radioId'}}</span>
+        </div>
       </div>
-      Note if the rate is available in the schedule, then the rate above is defaulted.<br/>
-      <strong>Rate Comments:</strong> {{rateComments}}
-      <span class="help-block">{{errorMessage 'shiftRate'}}</span>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-3 control-label" for="comments">Comments:</label>
-    <div class="col-sm-9">
-      <div class="controls">
-          <textarea rows="6" name="comments" id="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
+      {{/if}}
+      <div class="form-group {{errorClass 'shiftType'}}">
+        <label for="shiftType" class="col-sm-3 control-label required">Shift Type:</label>
+        <div class="col-sm-9">
+          <select class="form-control" name="shiftType">
+            <option value="">Choose a Shift Type</option>
+              {{#each shiftType}}
+                <option value="{{_id}}">{{name}}</option>
+              {{/each}}
+          </select>
+          <span class="help-block">{{errorMessage 'shiftType'}}</span>
+        </div>
+      </div>
+      <div class="form-group {{errorClass 'startTime'}}">
+        <label class="col-sm-3 control-label required" for="startTime">Start Time:</label>
+        <div class="col-sm-9 controls">
+            <input name="startTime" type="datetime-local" class="form-control"/>
+            Time has been defaulted. Please change your start time appropriately.
+            <span class="help-block">{{errorMessage 'startTime'}}</span>
+        </div>
+      </div>
+      <div class="form-group {{errorClass 'totalMade'}}">
+        <label class="col-sm-3 control-label required" for="totalMade">Total Made:</label>
+        <div class="col-sm-9">
+          <div class="input-group">
+              <span class="input-group-addon">$</span><input name="totalMade" type="number" min="0" max="3000" placeholder="Input amount made" class="form-control"/>
+              <span class="input-group-addon">.00</span>
+          </div>
+          <span class="help-block">{{errorMessage 'totalMade'}}</span>
+        </div>
+      </div>
+      <div class="form-group {{errorClass 'ratePaid'}}">
+        <label class="col-sm-3 control-label required" for="ratePaid">Drop Amount:</label>
+        <div class="col-sm-9">
+          <div class="input-group">
+              <span class="input-group-addon">$</span><input name="ratePaid" type="number" min="0" max="3000" placeholder="Input drop amount" class="form-control"/>
+              <span class="input-group-addon">.00</span>
+          </div>
+          <span class="help-block">{{errorMessage 'ratePaid'}}</span>
+        </div>
+      </div>
+      <div class="form-group {{errorClass 'shiftRate'}}">
+        <label class="col-sm-3 control-label required" for="shiftRate">Shift Rate:</label>
+        <div class="col-sm-9">
+          <div class="input-group">
+              <span class="input-group-addon">$</span><input name="shiftRate" type="number" min="0" max="3000" placeholder="Input shift rate" class="form-control"/>
+              <span class="input-group-addon">.00</span>
+          </div>
+          Note if the rate is available in the schedule, then the rate above is defaulted.<br/>
+          {{#if rateComments}}
+            <strong>Rate Comments:</strong> {{rateComments}}
+          {{/if}}
+          <span class="help-block">{{errorMessage 'shiftRate'}}</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-3 control-label" for="comments">Comments:</label>
+        <div class="col-sm-9">
+          <div class="controls">
+              <textarea rows="6" name="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="col-sm-offset-3 col-sm-9">
+          <input type="submit" value="Create Shift" class="btn btn-primary"/>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-group">
-    <div class="col-sm-offset-3 col-sm-9">
-      <input type="submit" value="Create Shift" class="btn btn-primary"/>
-    </div>
-  </div>
-  </div>
   </form>
 </template>

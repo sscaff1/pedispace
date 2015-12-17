@@ -1,0 +1,18 @@
+<template name="joinManager">
+  <div class="container">
+    <div class="item">
+      <h4>Do you ride for a business? <a href="{{pathFor 'joinRider'}}">Join as a rider instead.</a></h4>
+    </div>
+    <form class="main form page" name="insertForm">
+      <div class="form-group {{errorClass 'business'}}">
+        <label class="control-label required" for="business">Business Name</label>
+        <input class="form-control" name="business" type="text">
+        <span class="help-block">{{errorMessage 'business'}}</span>
+      </div>
+      {{> join}}
+      <div class="form-group">
+        <input type="submit" value="Create Account" class="btn btn-primary"/>
+      </div>
+    </form>
+  </div>
+</template>

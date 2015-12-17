@@ -1,20 +1,23 @@
 <template name="shiftItem">
   <div class="item item-s">
-    <div class="col-xs-6">
-      <h4><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span>{{userName}}</b></h4>
-      <b>Location:</b> {{locationName.name}}<br />
-      <b>Bike:</b> {{bikeName}}<br /> 
-      {{#if radioId}}<b>Radio:</b> {{radioName}}{{/if}}<br />
+    <div clas="row">
+      <div class="col-xs-6">
+        <h4><strong><i class="fa fa-user"></i>{{userName}}</strong></h4>
+        <strong><i class="fa fa-bicycle"></i>Bike:</strong> {{bikeName}}<br />
+        {{#if radioId}}<strong><i class="fa fa-phone"></i>Radio:</strong> {{radioName}}{{/if}}<br />
+      </div>
+      <div class="col-xs-6">
+      	<strong>Start Time:</strong> {{startTimeF}}<br/>
+        <strong>End Time:</strong> {{endTimeF}}<br />
+      	<strong>Total Made:</strong> ${{totalMade}}<br />
+      	<strong>Drop:</strong> ${{ratePaid}}<br />
+      	<strong>Shift Rate:</strong> ${{shiftRate}}<br />
+      </div>
     </div>
-    <div class="col-xs-6">
-    	<b>Start Time:</b> {{startTimeF}}<br/>
-      <b>End Time:</b> {{endTimeF}}<br />
-    	<b>Total Made:</b> ${{totalMade}}<br />
-    	<b>Drop:</b> ${{ratePaid}}<br />
-    	<b>Shift Rate:</b> ${{shiftRate}}<br />
+    <div class="row">
+      <div class="col-xs-12">
+        <strong>Comments:</strong> {{comments}}
+      </div>
     </div>
-    <span class="col-xs-12">
-      <b>Comments:</b> {{comments}}
-    </span>
   </div>
 </template>

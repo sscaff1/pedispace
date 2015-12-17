@@ -1,24 +1,20 @@
 <template name="addUser">
   <form class="main form page" name="insertForm">
-    <div class="form-group">
+    <div class="form-group {{errorClass 'fullName'}}">
       <label class="control-label required" for="fullName">Full Name</label>
-      <div class="controls">
-        <input name="fullName" type="text" placeholder="User Full Name" class="form-control"/>
-      </div>
+      <input name="fullName" type="text" placeholder="User Full Name" class="form-control"/>
+      <span class="help-block">{{errorMessage 'fullName'}}</span>
     </div>
-    <div class="form-group">
+    <div class="form-group {{errorClass 'email'}}">
       <label class="control-label required" for="email">Email</label>
-      <div class="controls">
-        <input name="email" type="text" placeholder="User Email" class="form-control"/>
-      </div>
+      <input name="email" type="text" placeholder="User Email" class="form-control"/>
+      <span class="help-block">{{errorMessage 'email'}}</span>
     </div>
     <div class="form-group">
       <label class="control-label" for="phoneNumber">Phone Number</label>
-      <div class="controls">
-        <input name="phoneNumber" type="text" placeholder="User Phone Number" class="form-control"/>
-      </div>
+      <input name="phoneNumber" type="text" placeholder="User Phone Number" class="form-control"/>
     </div>
-    <div class="form-group">
+    <div class="form-group {{errorClass 'role'}}">
   	  <label for="role" class="required">Role</label>
   	  <select class="form-control" name="role">
   	  	<option value="">Choose a Role</option>
@@ -26,6 +22,7 @@
   	    	<option value="{{name}}">{{name}}</option>
   	    {{/each}}
   	  </select>
+      <span class="help-block">{{errorMessage 'role'}}</span>
 	  </div>
     <input type="submit" value="Create User" class="btn btn-primary"/>
   </form>

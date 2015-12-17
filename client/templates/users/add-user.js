@@ -1,3 +1,7 @@
+Template.addUser.onCreated(function() {
+	Session.set('postSubmitErrors', {});
+});
+
 Template.addUser.helpers({
 	role: function() {
 		return Meteor.roles.find();
@@ -13,6 +17,10 @@ Template.addUser.events({
 			roles: [template.$('[name=role]').val()],
 			businessId: Meteor.user().profile.businessId
 		};
-		Meteor.call('managerCreateUser', user);
+		Meteor.call('managerCreateUser', user, function(error) {
+			if (error)
+				console.log(error);
+			document.insertForm.reset();
+		});
 	}
-})
+});

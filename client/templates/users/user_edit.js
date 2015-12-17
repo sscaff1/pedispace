@@ -6,17 +6,23 @@ Template.userEdit.onRendered(function() {
 
 Template.userEdit.helpers({
 	role: function() {
-		return Meteor.roles.find();
+		return Meteor.roles.find({name: {$nin: ['shop']}});
 	}
 });
 
 Template.userEdit.events({
-	'submit form': function(e) {
-		e.preventDefault();
+	'submit form': function(event) {
+		event.preventDefault();
 		var user = {
-			"profile.active": $(e.target).find('[name=activeCheckbox]').prop('checked')
+			activeflag: $(event.target).find('[name=activeCheckbox]').prop('checked')
 		};
-		var role = $(e.target).find('[name=role]').val();
-		Meteor.call('userEdit', user, this._id, role);
+		var role = $(event.target).find('[name=role]').val();
+		if (!role)
+			return Messages.throw('You must assign the user a role.', 'danger');
+		Meteor.call('userEdit', user, this._id, role, function(error) {
+			if (error)
+				console.log(error);
+			Router.go('userList');
+		});
 	}
 });

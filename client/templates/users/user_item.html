@@ -3,16 +3,16 @@
     <div class="item-content">
       <div class="col-xs-4">
   	    <h3>
-          <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+          <i class="fa fa-user"></i>
           {{profile.name}}
         </h3>
-  	    <small><b>Status:</b> {{#if profile.active}}Active{{else}}Not Active{{/if}}</small>
-        <small><b>Phone:</b> {{profile.phoneNumber}}</small><br />
+  	    <small><strong>Status:</strong> {{#if profile.active}}Active{{else}}Not Active{{/if}}</small><br/>
+        <small><strong>Role:</strong> {{roles.[0]}}</small>
       </div>
       <div class="col-xs-4 text-center">
-        <small><b>Email:</b>
-          <a href="mailto:{{emails.[0].address}}">{{emails.[0].address}}</a> {{#if emails.[0].verified}}<i class="glyphicon glyphicon-ok text-success"></i>{{else}}<i class="glyphicon glyphicon-remove text-danger"></i>{{/if}}</small><br />
-        <small><b>Role:</b> {{roles.[0]}}</small>
+        <small><strong><i class="fa fa-envelope"></i> Email:</strong>
+          <a href="mailto:{{emails.[0].address}}">{{emails.[0].address}}</a> {{#if emails.[0].verified}}<i class="fa fa-check text-success"></i>{{else}}<i class="fa fa-close text-danger"></i>{{/if}}</small><br />
+          <small><strong><i class="fa fa-phone"></i> Phone:</strong> {{profile.phoneNumber}}</small>
       </div>
       <div class="col-xs-4 text-right">
       	<a href="{{pathFor 'userEdit'}}"><button type="button" class="btn btn-default" aria-expanded="false">Edit</button></a>

@@ -5,7 +5,7 @@ Template.scheduleRider.onCreated(function() {
 
 Template.scheduleRider.helpers({
 	rider: function() {
-		return Meteor.users.find({roles: 'biker', "profile.active": true});
+		return Meteor.users.find({roles: 'rider', "profile.active": true});
 	},
 	shiftTypes: function() {
 		return ShiftTypes.find();

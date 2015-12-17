@@ -43,18 +43,42 @@ Meteor.publish('radios', function() {
   }
 });
 
-Meteor.publish('shifts', function(limit) {
+Meteor.publish('shifts', function(limit, searchDate) {
 	if (Roles.userIsInRole(this.userId, ['manager'])) {
-		return Shifts.find({
-      businessId: Meteor.users.findOne(this.userId).profile.businessId
-    },{
-      limit: limit,
-      sort: {submitted: -1}
-    });
+    if (!searchDate) {
+  		return Shifts.find({
+        businessId: Meteor.users.findOne(this.userId).profile.businessId
+      },{
+        limit: limit,
+        sort: {submitted: -1}
+      });
+    } else {
+      var dateFilter2 = moment(searchDate).clone().add(1, 'days').toDate();
+      return Shifts.find({
+        businessId: Meteor.users.findOne(this.userId).profile.businessId,
+        startTime: {$gte: searchDate, $lt: dateFilter2}
+      },{
+        limit: limit,
+        sort: {submitted: -1}
+      });
+    }
 	} else {
 		this.ready();
 	};
 });
+
+Meteor.publish('riders', function() {
+  if (this.userId) {
+    return Meteor.users.find({
+      "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId,
+      "profile.active": true,
+      'roles': 'rider'
+    },
+    { fields: {'profile.name': 1} });
+  } else {
+    this.ready();
+  }
+})
 
 Meteor.publish('userData', function () {
   if (Roles.userIsInRole(this.userId, ['manager'])) {
@@ -62,17 +86,26 @@ Meteor.publish('userData', function () {
       "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId
     },
     { fields: {'emails': 1, 'profile': 1, 'roles': 1} });
-  } else if (this.userId) {
-    return Meteor.users.find({
-      "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId,
-      "profile.active": true,
-      'roles': 'biker'
-    },
-    { fields: {'emails': 1, 'profile': 1} });
   } else {
     this.ready();
   }
 });
+
+Meteor.publish('userSchedule', function() {
+  if (Roles.userIsInRole(this.userId, ['manager'])) {
+    return Meteor.users.find({
+      "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId
+    },
+    { fields: {'emails': 1, 'profile': 1, 'roles': 1} });
+  } else if (this.userId) {
+    return Meteor.users.find({
+      _id: this.userId
+    },
+    { fields: {'emails': 1, 'profile': 1, 'roles': 1} });
+  } else {
+    this.ready();
+  }
+})
 
 Meteor.publish('roles', function() {
   if (Roles.userIsInRole(this.userId, ['manager'])) {

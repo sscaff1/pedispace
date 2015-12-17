@@ -1,6 +1,6 @@
 <template name="userEdit">
   <form class="main form page" name="insertForm">
-  	<div class="form-group">
+  	<div class="form-group {{errorClass 'role'}}">
   	  <label for="role">Role</label>
   	  <select class="form-control" id="role" name="role">
   	  	<option value="">Choose a Role</option>
@@ -8,6 +8,7 @@
   	    	<option value="{{name}}">{{name}}</option>
   	    {{/each}}
   	  </select>
+      <span class="help-block">{{errorMessage 'role'}}</span>
 	   </div>
   	<div class="checkbox">
   	  {{#if profile.active}}
