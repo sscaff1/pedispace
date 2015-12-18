@@ -24,13 +24,13 @@ Template.requestEdit.onRendered(function() {
 Template.requestEdit.events({
 	'submit form': function(event) {
 		event.preventDefault();
-    var rId = this._id;
+    var request = this;
+    var rId = request._id;
     var schedule = {
-      userId: this.userId,
+      userId: request.userId,
 			shiftTypeId: $(event.target).find('[name=shiftType]').val(),
-			rider: $(event.target).find('[name=riderType]').prop('checked'),
       comments: $(event.target).find('[name=comments]').val(),
-      guaranteeRate: $(event.target).find('[name=guaranteeRate]').prop('checked')
+      guaranteeRate: $(event.target).find('[name=guaranteeRate]').prop('checked'),
   	}
     var scheduleDate = $(event.target).find('[name=scheduleDate]').val();
 		if (scheduleDate) {
@@ -43,10 +43,13 @@ Template.requestEdit.events({
     Meteor.call('requestEdit', rId, schedule, function(error, result) {
 			if (error)
 				console.log(error.reason);
-			if (result)
+			if (result) {
 				return Messages.throw('This request has already been made.', 'danger');
-			Session.set('postSubmitErrors', {});
-      Router.go('requestList');
+      } else {
+        Messages.throw('You\'ve successfully updated your request.', 'success');
+        Session.set('postSubmitErrors', {});
+        Router.go('requestList');
+      }
 		});
 	},
   'change [name=shiftType], change [name=scheduleDate]': function(event, template) {

@@ -1,5 +1,6 @@
 Template.requestList.onCreated(function() {
   Session.set('postSubmitErrors', {});
+  $('#deleteModal').modal({show: false});
 });
 
 Template.requestList.onRendered(function() {
@@ -30,11 +31,12 @@ Template.requestItem.helpers({
 			return 'alternate';
 		}
 	},
-	timeElapse: function() {
-		var requested = moment().diff(moment(this.submitted), 'hours', true);
-		if (requested < 1) {
-			return true;
-		}
+	requestConfirmed: function() {
+    if (this.scheduled === true) {
+      return false;
+    } else {
+      return true;
+    }
 	},
 	shiftType: function() {
 		return ShiftTypes.findOne(this.shiftTypeId).name;
@@ -50,5 +52,16 @@ Template.requestItem.events({
 	},
 	'click #alternate': function() {
 		Requests.update(this._id, {$set: {scheduled: true, rider: false}});
-	}
+	},
+  'click #delete-button': function() {
+    Meteor.call('deleteRequest', this._id, function(error, result) {
+      if (error) {
+        console.log(error);
+      } else if (result) {
+        Messages.throw(result.message, 'danager')
+      } else {
+        Messages.throw('You\'ve deleted your request.', 'danger');
+      }
+    });
+  }
 })

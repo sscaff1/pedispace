@@ -72,7 +72,7 @@ Meteor.publish('riders', function() {
     return Meteor.users.find({
       "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId,
       "profile.active": true,
-      'roles': 'rider'
+      roles: 'rider'
     },
     { fields: {'profile.name': 1} });
   } else {

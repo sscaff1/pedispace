@@ -4,7 +4,7 @@ Meteor.methods({
       name: String,
       email: String,
       phoneNumber: String,
-      roles: Array,
+      role: String,
       businessId: String
     });
 		var newUserId = Accounts.createUser({

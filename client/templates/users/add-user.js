@@ -14,7 +14,7 @@ Template.addUser.events({
 			name: template.$('[name=fullName]').val(),
 			email: template.$('[name=email]').val(),
 			phoneNumber: template.$('[name=phoneNumber]').val(),
-			roles: [template.$('[name=role]').val()],
+			role: template.$('[name=role]').val(),
 			businessId: Meteor.user().profile.businessId
 		};
 		Meteor.call('managerCreateUser', user, function(error) {

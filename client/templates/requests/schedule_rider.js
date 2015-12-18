@@ -5,7 +5,7 @@ Template.scheduleRider.onCreated(function() {
 
 Template.scheduleRider.helpers({
 	rider: function() {
-		return Meteor.users.find({roles: 'rider', "profile.active": true});
+		return Meteor.users.find({_id: {$ne: Meteor.userId()}});
 	},
 	shiftTypes: function() {
 		return ShiftTypes.find();
@@ -37,6 +37,7 @@ Template.scheduleRider.events({
       schedule.guaranteeRate = $(event.target).find('[name=guaranteeRate]').prop('checked');
       schedule.scheduled = false;
       schedule.userId = Meteor.userId();
+      schedule.rider = true;
     }
 
 		var errors = validateRequest(schedule);
