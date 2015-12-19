@@ -11,8 +11,10 @@
   background-color: #f5f5f5;
 }
 .grid-block, .main, .item, .comments li, .comment-form {
-  background: #fff;
+  background: ##eaf6fa;
+	font-family: "Montserrat", sans-serif;
   border-radius: 3px;
+	border: 2px solid #000;
   padding: 10px;
   margin-bottom: 10px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -20,8 +22,8 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15); }
 
 body {
-  background: #eee;
-  color: #666666;
+  background: #eaf6fa;
+  color: #000;
 	overflow-x: hidden;
   padding-top: 50px;
 }
@@ -134,7 +136,7 @@ body {
   height: 100px;
 }
 
-.jumbotron {
+.jumbotron.jumbotron-main-page {
   background-color: #000;
 	color: #fff;
 }
@@ -162,7 +164,7 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-	font-family: Montserrat;
+	font-family: "Montserrat", sans-serif;
 }
 h1 {
 	font-size: 24px;
@@ -199,3 +201,15 @@ h4 {
 	padding: 20px 0px 20px 0px;
 	background-color: #fff;
 }
+.jumbotron-shift-list {
+	background-color: #eaf6fa;
+}
+.btn-primary {
+    background: #396faf;
+    color: #000;
+		border: 2px solid #000;
+		font-family: "Montserrat", sans-serif;
+	}
+	.shop-password-item {
+		background-color: #f0cdc1;
+	}

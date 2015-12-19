@@ -20,8 +20,8 @@
 		{{/if}}
 	{{/if}}
 	{{else}}
-	<div class="jumbotron text-center">
-		<h2>{{emptyShifts.message}}</h2>
+	<div class="jumbotron text-center jumbotron-shift-list">
+		<h3><strong>{{emptyShifts.message}}</strong></h3>
 		{{#if emptyShifts.noPassword}}
 			{{> setPasswordForShop}}
 		{{/if}}
@@ -30,19 +30,23 @@
 </template>
 
 <template name="setPasswordForShop">
-	<div class="item">
-		<h4>Looks like you haven't setup a password for your shop account. Set it below.</h4>
+	<div class="item shop-password-item">
+		<h4>Looks like you haven't set up a password for your shop account. Set it below.</h4>
 	</div>
-	<form class="main form page" name="shopNewPasswordForm">
+	<form class="main form page form-horizontal" style="background-color: #acd9ec;" name="shopNewPasswordForm">
 		<div class="form-group {{errorClass 'password'}}">
-			<label class="control-label required" for="password">Password</label>
-			<input class="form-control" name="password" type="password">
-			<span class="help-block">{{errorMessage 'password'}}</span>
+			<label class="col-xs-2 col-xs-offset-1 control-label required" for="password">Password</label>
+			<div class="col-xs-8">
+				<input class="form-control" name="password" type="password">
+				<span class="help-block">{{errorMessage 'password'}}</span>
+			</div>
 		</div>
 		<div class="form-group {{errorClass 'confirmPassword'}}">
-			<label class="control-label required" for="confirmPassword">Confirm Password</label>
-			<input class="form-control" name="confirmPassword" type="password">
-			<span class="help-block">{{errorMessage 'confirmPassword'}}</span>
+			<label class="col-xs-2 col-xs-offset-1 control-label required" for="confirmPassword">Confirm Password</label>
+			<div class="col-xs-8">
+				<input class="form-control" name="confirmPassword" type="password">
+				<span class="help-block">{{errorMessage 'confirmPassword'}}</span>
+			</div>
 		</div>
 		<div class="form-group">
 			<input type="submit" value="Set Shop Password" class="btn btn-primary"/>
