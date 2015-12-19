@@ -134,12 +134,14 @@ body {
   height: 100px;
 }
 
-.jumbotron{
-  text-align: center;
+.jumbotron {
+  background-color: #000;
+	color: #fff;
 }
 .jumbotron h2{
-  font-size: 60px;
-  font-weight: 100;
+  font-size: 50px;
+  font-weight: 300;
+	color: #fff;
 }
 .required:after {
 	content:"*";
@@ -154,11 +156,16 @@ body {
 	padding: 30px 0px 30px 0px;
 	margin-top: 0px;
 }
+.row.button-row {
+	padding:25px;
+	background-color: #acc9bd;
+}
+
 h1, h2, h3, h4, h5, h6 {
 	font-family: Montserrat;
 }
 h1 {
-	font-size: 28px;
+	font-size: 24px;
 	color: #000;
 }
 
@@ -167,7 +174,7 @@ h2 {
 	color: #004822;
 }
 h3 {
-	font-size: 18px;
+	font-size: 17px;
 	font-weight: lighter;
 	color: #000;
 }
@@ -177,18 +184,17 @@ h4 {
 	font-weight: 300;
 }
 .pedispace-title-body {
-	background-color: #7fa390;
-	padding: 30px 0px 55px 0px;
-	margin-bottom: 0%;
-	margin-top: 0px;
-	background-image: url("/img/line2.png");
+	background: #fff url("/img/upsetline.jpg");
 	background-repeat: no-repeat;
-	background-position: center;
+	background-attachment: fixed;
+	background-position: center top;
+	min-height: 400px;
+	padding-top: 1.5em;
 }
-.button-row {
-	background-color: #d7f0ea;
-	padding: 50px 0px 50px 0px;
+.pedispace-title-body > h1 {
+	margin-top: 0em;
 }
+
 .row.screen-shot-row {
 	padding: 20px 0px 20px 0px;
 	background-color: #fff;
