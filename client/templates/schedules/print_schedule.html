@@ -1,4 +1,11 @@
 <template name="printSchedule">
+  {{> dateRangeForm}}
+  {{#each scheduleDates}}
+    {{> scheduleDay scheduleDateNice=scheduleDateNice}}
+  {{/each}}
+</template>
+
+<template name="dateRangeForm">
   <div class="form-inline">
     <div class="form-group has-feedback">
       <label for="initialDate">From Date:</label>
@@ -14,7 +21,4 @@
       <span class="glyphicon glyphicon-calendar form-control-feedback"></span>
     </div>
   </div>
-  {{#each scheduleDates}}
-    {{> scheduleDay scheduleDateNice=scheduleDateNice}}
-  {{/each}}
 </template>

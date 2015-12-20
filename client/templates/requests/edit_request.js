@@ -1,24 +1,27 @@
 Template.requestEdit.onCreated(function() {
   var instance = this;
   Session.set('postSubmitErrors', {});
-  instance.rateSelected = new ReactiveVar(null);
+  instance.rateSelected = new ReactiveVar({});
 });
 
 Template.requestEdit.onRendered(function() {
   var instance = this;
+  const currentData = Template.currentData();
   var rateFound = Rates.findOne({
-    scheduleDate: Template.parentData(0).scheduleDate,
-    shiftTypeId: Template.parentData(0).shiftTypeId
+    scheduleDate: currentData.scheduleDate,
+    shiftTypeId: currentData.shiftTypeId
   });
-  if (rateFound)
+  if (rateFound) {
     instance.rateSelected.set(rateFound);
+  }
 	$('[name=scheduleDate]').datepicker({
 	  format: "MM dd yyyy",
 	  autoclose: true
-	}).val(moment(Template.parentData(0).scheduleDate).format('MMMM DD YYYY'));
-  $('[name=shiftType]').val(Template.parentData(0).shiftTypeId);
-  if (Template.parentData(0).guaranteeRate)
+	}).val(moment(currentData.scheduleDate).format('MMMM DD YYYY'));
+  $('[name=shiftType]').val(currentData.shiftTypeId);
+  if (currentData.guaranteeRate) {
     $('[name=guaranteeRate]').prop('checked', true);
+  }
 });
 
 Template.requestEdit.events({

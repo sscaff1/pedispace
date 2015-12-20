@@ -46,13 +46,17 @@ Template.scheduleRider.events({
 			return Session.set('postSubmitErrors', errors);
 
 		Meteor.call('requestAdd', schedule, function(error, result) {
-			if (error)
+			if (error) {
 				console.log(error);
-			if (result)
+      }
+			if (result) {
 				return Messages.throw('This request has already been made.', 'danger');
-			Session.set('postSubmitErrors', {});
-      template.rateSelected.set({});
-      document.insertForm.reset();
+      } else {
+        return Messages.throw('You\'ve successfully requested this shift.', 'success');
+  			Session.set('postSubmitErrors', {});
+        template.rateSelected.set({});
+        document.insertForm.reset();
+      }
 		});
 
 	},

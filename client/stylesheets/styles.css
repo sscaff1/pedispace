@@ -213,3 +213,16 @@ h4 {
 	.shop-password-item {
 		background-color: #f0cdc1;
 	}
+.request-table td, .request-table th, .request-table thead tr th {
+	padding:5px;
+	border: 1px solid black;
+	text-align: center;
+}
+
+.request-table {
+	border: 1px solid black;
+	margin-top:15px
+}
+.request-table .edit-button {
+	margin-bottom:5px;
+}
