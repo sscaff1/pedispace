@@ -3,15 +3,20 @@ Template.addShiftTypes.events({
 		event.preventDefault();
 
 		var shiftType = {
-			name: $(event.target).find('[name=shiftTypeName]').val()
+			name: $(event.target).find('[name=shiftTypeName]').val(),
+			startTime: $(event.target).find('[name=startTime]').val()
 		};
-		if (!shiftType.name) {
-			Messages.throw('The shift type name cannot be blank.', 'danger');
+
+		if (!shiftType.name || !shiftType.startTime) {
+			Messages.throw('No field can be blank.', 'danger');
 		}
 		Meteor.call('shiftTypeAdd', shiftType, function(error) {
-			if (error)
+			if (error) {
 				console.log(error);
-			document.insertForm.reset();
+			} else {
+				Messages.throw('You\'ve created a new shift.', 'success')
+				document.insertForm.reset();
+			}
 		});
 
 	}

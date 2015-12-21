@@ -1,3 +1,10 @@
+Template.radioEdit.onCreated(function() {
+	var instance = this;
+	instance.autorun(function() {
+		instance.subscribe('radios');
+	});
+});
+
 Template.radioEdit.events({
 	'submit form': function(event) {
 		event.preventDefault();
@@ -10,9 +17,12 @@ Template.radioEdit.events({
 			return Messages.throw('The radio name cannot be blank.', 'danger');
 		}
 		Radios.update(currentId, {$set: radio}, function(error) {
-			if (error)
+			if (error) {
 				console.log(error);
-			Router.go('radiosList');
+			} else {
+				Messages.throw('The radios has been updated.', 'success');
+				Router.go('radiosList');
+			}
 		});
 	}
 });

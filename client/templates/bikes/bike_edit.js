@@ -1,3 +1,10 @@
+Template.bikeEdit.onCreated(function() {
+	var instance = this;
+	instance.autorun(function() {
+		instance.subscribe('bikes');
+	});
+});
+
 Template.bikeEdit.events({
 	'submit form': function(event) {
 		event.preventDefault();
@@ -10,9 +17,12 @@ Template.bikeEdit.events({
 			Messages.throw('The bike name cannot be blank.', 'danger');
 		}
 		Bikes.update(currentBikeId, {$set: bike}, function(error) {
-			if (error)
+			if (error) {
 				console.log(error)
-			Router.go('bikesList');
+			} else {
+				Messages.throw('The bike has been updated.', 'success')
+				Router.go('bikesList');
+			}
 		});
 	}
 });

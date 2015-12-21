@@ -224,10 +224,13 @@ p {
 .btn-primary {
     background: #FF6E40;
 		border: 1px solid #E57373;
-    color: #000;
+    color: #FFF;
 		font-family: "Montserrat", sans-serif;
 	}
 	.btn-primary:hover {
+		background: #FF3D00;
+	}
+	.btn-primary:enabled, .btn-primary:active {
 		background: #FF3D00;
 	}
 	.shop-password-item {

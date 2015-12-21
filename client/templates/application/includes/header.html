@@ -22,15 +22,12 @@
           </ul>
         </li>
         <li><a href="{{pathFor 'usersList'}}">Users</a></li>
-        <li><a href="{{pathFor 'rateSchedule'}}">Set Rates</a></li>
-        <li><a href="{{pathFor 'requestsCal'}}">Schedule Riders</a></li>
-        <li><a href="{{pathFor 'printSchedule'}}">Print Schedule</a></li>
+        <li><a href="{{pathFor 'requestsCal'}}">Rates & Schedule</a></li>
       </ul>
     {{else}}
       {{#if isInRole 'rider'}}
         <ul class="nav navbar-nav">
           <li><a href="{{pathFor 'requestsCal'}}">Request Schedule</a></li>
-          <li><a href="{{pathFor 'printSchedule'}}">Print Schedule</a></li>
         </ul>
       {{/if}}
     {{/if}}

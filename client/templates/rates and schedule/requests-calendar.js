@@ -47,6 +47,9 @@ Template.requestsCal.helpers({
 	shiftTypes() {
 		var businessId = Meteor.user().profile.businessId;
 		return ShiftTypes.find({businessId: businessId});
+	},
+	dateNum(scheduleDate) {
+		return scheduleDate.valueOf();
 	}
 });
 
@@ -79,4 +82,18 @@ Template.shiftComments.helpers({
 			return rate;
 		return false;
 	},
-})
+});
+
+Template.setRates.helpers({
+	shiftTypes() {
+		return ShiftTypes.find({
+			businessId: Meteor.user().profile.businessId
+		});
+	},
+	dateNum(scheduleDate) {
+		return scheduleDate.valueOf();
+	},
+	scheduleDateNice(scheduleDate) {
+		return moment(scheduleDate).format('MMMM DD, YYYY')
+	},
+});

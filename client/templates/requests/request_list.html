@@ -1,6 +1,6 @@
 <template name="requestList">
   <div class="row">
-    <p class="lead"><a href="{{pathFor 'requestsCal'}}">View as Calendar</a> | View as List</p>
+    <p class="lead"><a href="{{pathFor 'requestsCal'}}">Set Rates & Schedule (Calendar View)</a> | <a href="{{pathFor 'rateSchedule'}}">Set Rates (List View)</a></p>
   </div>
   {{#if ready}}
     {{> scheduleRider}}

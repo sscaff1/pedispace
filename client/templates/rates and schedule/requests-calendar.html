@@ -1,6 +1,6 @@
 <template name="requestsCal">
   <div class="row">
-    <p class="lead">View as Calendar | <a href="{{pathFor 'requestList'}}">View as List</a></p>
+    <p class="lead"><a href="{{pathFor 'requestList'}}">Set Schedule (List View)</a> | <a href="{{pathFor 'rateSchedule'}}">Set Rates (List View)</a></p>
   </div>
   <div class="col-xs-8">
     {{> dateRangeForm}}
@@ -19,13 +19,17 @@
         <tr>
           <th>Date</th>
           {{#each shiftType in shiftTypes}}
-            <th>{{shiftType.name}}</th>
+            <th>{{shiftType.name}} <small>starts at {{shiftType.startTime}}</small></th>
           {{/each}}
         </tr>
       </thead>
       {{#each scheduleDate in scheduleDates}}
         <tr>
-          <th>{{scheduleDateNice scheduleDate.scheduleDate}}</th>
+          <th>
+            {{scheduleDateNice scheduleDate.scheduleDate}}<br/>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#setRates{{dateNum scheduleDate.scheduleDate}}">Set Rates</button>
+          </th>
+          {{> setRates scheduleDate}}
           {{#each shiftType in shiftTypes}}
             {{#if isInRole 'manager'}}
               {{> specificShiftManager shiftTypeId=shiftType._id scheduleDate=scheduleDate.scheduleDate}}
