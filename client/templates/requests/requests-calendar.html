@@ -3,7 +3,7 @@
     <p class="lead">View as Calendar | <a href="{{pathFor 'requestList'}}">View as List</a></p>
   </div>
   {{> dateRangeForm}}
-  {{#if ready}}
+  {{#if Template.subscriptionsReady}}
     <table class="table request-table text-center">
       <thead>
         <tr>
@@ -17,43 +17,18 @@
         <tr>
           <th>{{scheduleDateNice scheduleDate.scheduleDate}}</th>
           {{#each shiftType in shiftTypes}}
-            {{> specificShiftRider shiftTypeId=shiftType._id scheduleDateSpecific=scheduleDate.scheduleDate}}
+            {{#if isInRole 'manager'}}
+              {{> specificShiftManager shiftTypeId=shiftType._id scheduleDate=scheduleDate.scheduleDate}}
+            {{else}}
+              {{> specificShiftRider shiftTypeId=shiftType._id scheduleDateSpecific=scheduleDate.scheduleDate}}
+            {{/if}}
           {{/each}}
         </tr>
       {{/each}}
     </table>
+  {{else}}
+    {{> loading}}
   {{/if}}
-</template>
-
-<template name="specificShiftRider">
-  <td>
-    {{#if requested scheduleDateSpecific shiftTypeId}}
-      {{#if scheduled scheduleDateSpecific shiftTypeId}}
-        <strong>Scheduled for Shift:</strong> <i class="fa fa-check text-success"></i>
-        {{> shiftComments scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
-      {{else}}
-        <div class="row">
-          <a href="{{pathFor 'requestEdit' data=(requestIdPath scheduleDateSpecific shiftTypeId)}}">
-            <buttton type="button" class="btn btn-default edit-button">
-              Edit Request
-          </buttton></a>
-        </div>
-        <div class="row">
-          <buttton type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{requestId scheduleDateSpecific shiftTypeId}}">
-            <i class="fa fa-calendar-check-o"></i> Delete Request
-          </buttton>
-        </div>
-        {{> shiftComments scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
-        {{> deleteModal requestId=(requestId scheduleDateSpecific shiftTypeId)}}
-      {{/if}}
-    {{else}}
-      <button class="btn btn-default" name="request-button" data-toggle="modal" data-target="#requestModal{{requestRandomId}}">
-        <i class="fa fa-calendar-check-o"></i> Request
-      </button>
-      {{> shiftComments scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
-      {{> requestModal requestId=requestRandomId scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
-    {{/if}}
-  </td>
 </template>
 
 <template name="shiftComments">

@@ -1,0 +1,45 @@
+<template name="specificShiftManager">
+  <td>
+    <strong>Riders Scheduled: </strong> {{ridersScheduled scheduleDate shiftTypeId}}<br/>
+    <strong>Bikes Available: </strong> {{bikesAvailable scheduleDate shiftTypeId}}<br/><br/>
+    {{#if requestsCount}}
+      <strong>Current Requests</strong><br/>
+    {{/if}}
+    {{#each request in requests}}
+      {{> riderRequest request}}
+    {{/each}}
+    {{#if riders}}
+      <form class="main form page" name="insertForm">
+        <div class="form-group">
+          <label class="control-label required" for="userId">Rider</label>
+          <select class="form-control" name="userId">
+            <option value="">Choose a Rider</option>
+            {{#each rider in riders}}
+              <option value="{{rider._id}}">{{rider.profile.name}}</option>
+            {{/each}}
+          </select>
+        </div>
+        <div class="checkbox form-group">
+          <label><input type="checkbox" name="riderType" checked="checked">Schedule as Rider</label>
+        </div>
+        <div class="form-group">
+          <label class="control-label" for="comments">Comments</label>
+          <textarea rows="3" name="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
+        </div>
+        <input type="submit" value="Schedule Rider" class="btn btn-primary"/>
+      </form>
+    {{/if}}
+  </td>
+</template>
+
+<template name="riderRequest">
+  {{#if _id}}
+    {{riderName userId}}
+    {{#if scheduled}}
+      <i class="fa fa-times-circle text-warning"></i>
+    {{else}}
+      <i class="fa fa-bicycle text-success"></i>
+      <i class="fa fa-mobile text-success"></i>
+    {{/if}}
+  {{/if}}
+</template>
