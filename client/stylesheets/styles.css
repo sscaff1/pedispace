@@ -11,7 +11,7 @@
   background-color: #f5f5f5;
 }
 .grid-block, .main, .item, .comments li, .comment-form {
-  background: ##eaf6fa;
+  background: #fff;
 	font-family: "Montserrat", sans-serif;
   border-radius: 3px;
 	border: 2px solid #000;
@@ -22,7 +22,7 @@
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15); }
 
 body {
-  background: #eaf6fa;
+  background: #fff;
   color: #000;
 	overflow-x: hidden;
   padding-top: 50px;
@@ -139,6 +139,7 @@ body {
 .jumbotron.jumbotron-main-page {
   background-color: #000;
 	color: #fff;
+	padding: 0px 0px 0px 0px;
 }
 .jumbotron h2{
   font-size: 50px;
@@ -160,7 +161,11 @@ body {
 }
 .row.button-row {
 	padding:25px;
-	background-color: #acc9bd;
+	background-color: #B2DFDB;
+}
+
+.row.button-row div {
+	margin-bottom:15px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -169,28 +174,40 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
 	font-size: 24px;
 	color: #000;
+	opacity: 0.87;
 }
 
 h2 {
 	font-size: 24px;
-	color: #004822;
+	color: #004D40;
 }
 h3 {
 	font-size: 17px;
 	font-weight: lighter;
 	color: #000;
+	line-height: 1.4em;
 }
 h4 {
 	color: #000;
 	font-size: 16px;
 	font-weight: 300;
 }
+h5 {
+	color: rgba(0,0,0,0.54);
+	font-size: 20px;
+	font-weight: 300;
+	line-height: 1.2em;
+}
+p {
+	font-family: "Montserrat", sans-serif;
+	line-height: 1.6em;
+}
 .pedispace-title-body {
-	background: #fff url("/img/upsetline.jpg");
+	background: #fff url("/img/ughline2.png");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-position: center top;
-	min-height: 400px;
+	min-height: 350px;
 	padding-top: 1.5em;
 }
 .pedispace-title-body > h1 {
@@ -202,14 +219,29 @@ h4 {
 	background-color: #fff;
 }
 .jumbotron-shift-list {
-	background-color: #eaf6fa;
+	background-color: #fff;
 }
 .btn-primary {
-    background: #7dc4c6;
+    background: #FF6E40;
+		border: 1px solid #E57373;
     color: #000;
-		border: 2px solid #000;
 		font-family: "Montserrat", sans-serif;
+		text-transform: uppercase;
 	}
 	.shop-password-item {
-		background-color: #f0cdc1;
+		background-color: #E57373;
+	}
+	.navbar-inverse .navbar-nav > li > a {
+		color: #fff;
+		font-family: "Montserrat";
+	}
+	.mycustomcontainer {
+		background-color: #000;
+		padding:15px 0;
+	}
+	.mycustomcontainer .row {
+		padding: 0 15px;
+	}
+	.shop-password-form {
+		width:50%;
 	}

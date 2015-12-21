@@ -31,22 +31,18 @@
 
 <template name="setPasswordForShop">
 	<div class="item shop-password-item">
-		<h4>Looks like you haven't set up a password for your shop account. Set it below.</h4>
+		<h4>Looks like you haven't set up a password for your shop account<br>Set it below</h4>
 	</div>
-	<form class="main form page form-horizontal" style="background-color: #627a8e;" name="shopNewPasswordForm">
+	<form class="main form page text-left shop-password-form center-block" style="background-color: #009688;" name="shopNewPasswordForm">
 		<div class="form-group {{errorClass 'password'}}">
-			<label class="col-xs-2 col-xs-offset-1 control-label required" for="password">Password</label>
-			<div class="col-xs-8">
-				<input class="form-control" name="password" type="password">
-				<span class="help-block">{{errorMessage 'password'}}</span>
-			</div>
+			<label class="control-label required" for="password">Password</label>
+			<input class="form-control" name="password" type="password">
+			<span class="help-block">{{errorMessage 'password'}}</span>
 		</div>
 		<div class="form-group {{errorClass 'confirmPassword'}}">
-			<label class="col-xs-2 col-xs-offset-1 control-label required" for="confirmPassword">Confirm Password</label>
-			<div class="col-xs-8">
-				<input class="form-control" name="confirmPassword" type="password">
-				<span class="help-block">{{errorMessage 'confirmPassword'}}</span>
-			</div>
+			<label class="control-label required" for="confirmPassword">Confirm Password</label>
+			<input class="form-control" name="confirmPassword" type="password">
+			<span class="help-block">{{errorMessage 'confirmPassword'}}</span>
 		</div>
 		<div class="form-group">
 			<input type="submit" value="Set Shop Password" class="btn btn-primary"/>
