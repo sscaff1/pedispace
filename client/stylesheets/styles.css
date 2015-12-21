@@ -226,10 +226,13 @@ p {
 		border: 1px solid #E57373;
     color: #000;
 		font-family: "Montserrat", sans-serif;
-		text-transform: uppercase;
+	}
+	.btn-primary:hover {
+		background: #FF3D00;
 	}
 	.shop-password-item {
-		background-color: #E57373;
+		background-color: #fff;
+		border-color: #FF6E40;
 	}
 	.navbar-inverse .navbar-nav > li > a {
 		color: #fff;
@@ -243,7 +246,8 @@ p {
 		padding: 0 15px;
 	}
 	.shop-password-form {
-		width:50%;
+		width:60%;
+		border-color: #B2DFDB;
 	}
 .request-table td, .request-table th, .request-table thead tr th {
 	padding:5px;
@@ -257,4 +261,9 @@ p {
 }
 .request-table .edit-button {
 	margin-bottom:5px;
+}
+.custom-formcontrol-shifts {
+	background-color: #fff;
+	width: 75%;
+	display: inline-block;
 }
