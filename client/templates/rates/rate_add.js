@@ -4,8 +4,9 @@ Template.rateAdd.events({
 
 		var rate = {
 			shiftTypeId: $(event.target).find('[name=shiftType]').val(),
-			rateAmount: parseFloat($(event.target).find('[name=rateAmount]').val()),
-			comments: $(event.target).find('[name=comments]').val()
+			rateAmount: parseInt($(event.target).find('[name=rateAmount]').val()),
+			comments: $(event.target).find('[name=comments]').val(),
+			businessId: Meteor.user().profile.businessId
 		}
 		var scheduleDate = $(event.target).find('[name=scheduleDate]').val();
 		if (scheduleDate) {
@@ -15,10 +16,13 @@ Template.rateAdd.events({
 		if (!$.isEmptyObject(errors))
       return Session.set('postSubmitErrors', errors);
   	Meteor.call('rateAdd', rate, function(error, result) {
-  		if (error)
+  		if (error) {
   			console.log(error);
-			Session.set('postSubmitErrors', {});
-			document.insertForm.reset();
+			} else {
+				Messages.throw('You\'re rate has been updated.', 'success')
+				Session.set('postSubmitErrors', {});
+				document.insertForm.reset();
+			}
   	});
 	}
 });
@@ -27,12 +31,4 @@ Template.rateAdd.helpers({
 	shiftTypes: function() {
 		return ShiftTypes.find();
 	}
-});
-
-Rates.after.insert(function(userId, doc) {
-	return Messages.throw("You've successfully created a rate schedule.", 'success');
-});
-
-Rates.after.update(function(userId, doc) {
-	return Messages.throw("You've successfully updated a rate schedule.", 'success');
 });

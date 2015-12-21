@@ -1,5 +1,13 @@
 <template name="specificShiftManager">
   <td>
+    {{#if rate}}
+      <span class="popover-comments" data-content="{{rate.comments}}">
+        {{#if rate.comments}}
+          <i class="fa fa-info"></i>
+        {{/if}}
+        <strong>Rate:</strong> ${{rate.rateAmount}}
+      </span><br/>
+    {{/if}}
     <strong>Riders Scheduled: </strong> {{ridersScheduled scheduleDate shiftTypeId}}<br/>
     <strong>Alternates Scheduled: </strong> {{alternatesScheduled scheduleDate shiftTypeId}}<br/>
     <strong>Bikes Available: </strong> {{bikesAvailable scheduleDate shiftTypeId}}<br/><br/>
@@ -25,7 +33,7 @@
         </div>
         <div class="form-group">
           <label class="control-label" for="comments">Comments</label>
-          <textarea rows="3" name="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
+          <textarea rows="3" name="comments" type="text" placeholder="Comments for the Rider" class="form-control"></textarea>
         </div>
         <input type="submit" value="Schedule Rider" class="btn btn-primary"/>
       </form>
@@ -35,7 +43,12 @@
 
 <template name="riderRequest">
   {{#if _id}}
-    <span class="popover-comments" data-content="{{popOverContent}}">{{riderName userId}}</span>
+    <span class="popover-comments" data-content="{{popOverContent}}">
+      {{#if popOverContent}}
+        <i class="fa fa-info"></i>
+      {{/if}}
+      {{riderName userId}}
+    </span>
     {{#if scheduled}}
       <i class="fa fa-times-circle fa-2x text-warning valign-center hover-click"></i>
     {{else}}

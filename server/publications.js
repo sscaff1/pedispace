@@ -141,9 +141,10 @@ Meteor.publish('rates', function() {
       businessId: Meteor.users.findOne(this.userId).profile.businessId
     });
   } else if (this.userId) {
+    var currentDate = moment().startOf('day').toDate();
     return Rates.find({
       businessId: Meteor.users.findOne(this.userId).profile.businessId,
-      scheduleDate: {$gte: new Date()}
+      scheduleDate: {$gte: currentDate}
     });
   } else {
     this.ready();

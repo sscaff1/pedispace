@@ -11,6 +11,13 @@ Template.specificShiftManager.onCreated(function() {
   }
 });
 
+Template.specificShiftManager.onRendered(function() {
+  $('.popover-comments').popover({
+    trigger: 'hover',
+    placement: 'left'
+	});
+});
+
 Template.specificShiftManager.helpers({
   ridersScheduled(scheduleDate,shiftTypeId) {
     return Template.instance().returnRequested(scheduleDate,shiftTypeId, true);
@@ -22,7 +29,8 @@ Template.specificShiftManager.helpers({
     const data = Template.currentData();
     var userIds = _.pluck(Requests.find({
       scheduleDate: data.scheduleDate.toDate(),
-      shiftTypeId: data.shiftTypeId
+      shiftTypeId: data.shiftTypeId,
+      businessId: Meteor.user().profile.businessId
     },
     {fields: {userId: 1}}).fetch(), 'userId');
     userIds.push(Meteor.userId());
@@ -39,14 +47,16 @@ Template.specificShiftManager.helpers({
     const data = Template.currentData();
     return Requests.find({
       scheduleDate: data.scheduleDate.toDate(),
-      shiftTypeId: data.shiftTypeId
+      shiftTypeId: data.shiftTypeId,
+      businessId: Meteor.user().profile.businessId
     });
   },
   requestsCount() {
     const data = Template.currentData();
     var requestCount = Requests.find({
       scheduleDate: data.scheduleDate.toDate(),
-      shiftTypeId: data.shiftTypeId
+      shiftTypeId: data.shiftTypeId,
+      businessId: Meteor.user().profile.businessId
     }).count();
     if (requestCount > 0) {
       return true;
@@ -60,6 +70,17 @@ Template.specificShiftManager.helpers({
       businessId: Meteor.user().profile.businessId
     }).count();
     return (bikes-riders);
+  },
+  rate() {
+    const data = Template.currentData();
+    var rate = Rates.findOne({
+      scheduleDate: data.scheduleDate.toDate(),
+      shiftTypeId: data.shiftTypeId,
+      businessId: Meteor.user().profile.businessId
+    });
+    if (rate) {
+      return rate;
+    }
   }
 });
 
@@ -98,13 +119,6 @@ Template.specificShiftManager.events({
 	'click .fa-mobile': function() {
 		Requests.update(this._id, {$set: {scheduled: true, rider: false}});
 	}
-});
-
-Template.riderRequest.onRendered(function() {
-  $('.popover-comments').popover({
-    trigger: 'hover',
-    placement: 'left'
-	});
 });
 
 Template.riderRequest.helpers({

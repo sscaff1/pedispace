@@ -97,3 +97,44 @@ Template.setRates.helpers({
 		return moment(scheduleDate).format('MMMM DD, YYYY')
 	},
 });
+
+Template.setRates.events({
+	'click #set-rate': function(event,template) {
+		event.preventDefault();
+		var forms = template.findAll('.rate-form');
+		const data = Template.currentData();
+		_.each(forms, function(form) {
+			var rate = {
+				shiftTypeId: $(form).find('[name=shiftTypeId]').val(),
+				rateAmount: parseInt($(form).find('[name=rateAmount]').val()),
+				comments: $(form).find('[name=comments]').val(),
+				scheduleDate: data.scheduleDate.toDate(),
+				businessId: Meteor.user().profile.businessId
+			}
+			if (isNaN(rate.rateAmount)) {
+				console.log('moving on');
+			} else {
+				Meteor.call('rateAdd', rate, function(error, result) {
+		  		if (error) {
+						return console.log(error);
+					}
+		  	});
+			}
+		});
+		Messages.throw('You\'ve successfully updated the shift rates.', 'success');
+	}
+});
+
+Template.rateFormModal.helpers({
+	rate() {
+		const data = Template.currentData();
+		var rate = Rates.findOne({
+			businessId: Meteor.user().profile.businessId,
+			scheduleDate: data.scheduleDate.toDate(),
+			shiftTypeId: data.shiftTypeId
+		});
+		if (rate) {
+			return rate;
+		}
+	}
+})
