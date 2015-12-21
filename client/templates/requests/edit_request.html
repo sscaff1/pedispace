@@ -1,8 +1,9 @@
 <template name="requestEdit">
+  {{#if ready}}
   <form class="main form page" name="insertForm" id="requestForm">
     <div class="form-group has-feedback {{errorClass 'scheduleDate'}}">
       <label class="control-label required" for="scheduleDate">Schedule Date</label>
-      <input name="scheduleDate" type="text" placeholder="Select Date" class="form-control"/>
+      <input name="scheduleDate" type="text" placeholder="Select Date" class="form-control" value="{{request.scheduleDate}}"/>
       <i class="glyphicon glyphicon-calendar form-control-feedback"></i>
       <span class="help-block">{{errorMessage 'scheduleDate'}}</span>
     </div>
@@ -10,20 +11,23 @@
   	  <label for="shiftType" class="required">Shift Type</label>
   	  <select class="form-control" name="shiftType">
   	  	<option value="">Choose a Shift Type</option>
-  	    {{#each shiftTypes}}
-  	    	<option value="{{_id}}">{{name}}</option>
+  	    {{#each shiftType in shiftTypes}}
+  	    	<option value="{{shiftType._id}}" selected="{{selectedShiftType shiftType._id}}">{{shiftType.name}}</option>
   	    {{/each}}
   	  </select>
       <span class="help-block">{{errorMessage 'shiftType'}}</span>
 	  </div>
     {{> rateSelectedTemplate rateSelect=rateSelect}}
     <div class="checkbox form-group">
-      <label><input type="checkbox" name="guaranteeRate">Guarantee Rate</label>
+      <label><input type="checkbox" name="guaranteeRate" {{request.guaranteeRate}}>Guarantee Rate</label>
     </div>
     <div class="form-group">
       <label class="control-label" for="comments">Comments</label>
-      <textarea rows="3" name="comments" type="text" placeholder="Add your comments" class="form-control"></textarea>
+      <textarea rows="3" name="comments" type="text" placeholder="Add your comments" class="form-control">{{request.comments}}</textarea>
     </div>
     <input type="submit" value="Request Schedule" class="btn btn-primary"/>
   </form>
+  {{else}}
+    {{> loading}}
+  {{/if}}
 </template>

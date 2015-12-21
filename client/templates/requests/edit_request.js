@@ -2,26 +2,21 @@ Template.requestEdit.onCreated(function() {
   var instance = this;
   Session.set('postSubmitErrors', {});
   instance.rateSelected = new ReactiveVar({});
-});
-
-Template.requestEdit.onRendered(function() {
-  var instance = this;
-  const currentData = Template.currentData();
-  var rateFound = Rates.findOne({
-    scheduleDate: currentData.scheduleDate,
-    shiftTypeId: currentData.shiftTypeId
+  instance.autorun(function() {
+    instance.subscribe('requests');
+    instance.subscribe('shiftTypes');
+    instance.subscribe('rates');
+    if (instance.subscriptionsReady()) {
+      const currentData = Template.currentData();
+      var rateFound = Rates.findOne({
+        scheduleDate: currentData.scheduleDate,
+        shiftTypeId: currentData.shiftTypeId
+      });
+      if (rateFound) {
+        instance.rateSelected.set(rateFound);
+      }
+    }
   });
-  if (rateFound) {
-    instance.rateSelected.set(rateFound);
-  }
-	$('[name=scheduleDate]').datepicker({
-	  format: "MM dd yyyy",
-	  autoclose: true
-	}).val(moment(currentData.scheduleDate).format('MMMM DD YYYY'));
-  $('[name=shiftType]').val(currentData.shiftTypeId);
-  if (currentData.guaranteeRate) {
-    $('[name=guaranteeRate]').prop('checked', true);
-  }
 });
 
 Template.requestEdit.events({
@@ -51,10 +46,16 @@ Template.requestEdit.events({
       } else {
         Messages.throw('You\'ve successfully updated your request.', 'success');
         Session.set('postSubmitErrors', {});
-        Router.go('requestList');
+        Router.go('requestsCal');
       }
 		});
 	},
+  'focus [name=scheduleDate]': function(event) {
+    $(event.target).datepicker({
+      format: "MM dd yyyy",
+      autoclose: true
+    });
+  },
   'change [name=shiftType], change [name=scheduleDate]': function(event, template) {
     event.preventDefault();
     var scheduleDate =
@@ -75,5 +76,24 @@ Template.requestEdit.helpers({
 	},
   shiftTypes: function() {
     return ShiftTypes.find();
+  },
+  ready() {
+    return Template.instance().subscriptionsReady();
+  },
+  request() {
+    const request = Template.currentData();
+    var requestData = {};
+    requestData.scheduleDate = moment(request.scheduleDate).format('MMMM DD YYYY');
+    requestData.comments = request.comments;
+    if (request.guaranteeRate) {
+      requestData.guaranteeRate = 'checked';
+    } else {
+      requestData.guaranteeRate = '';
+    }
+    return requestData;
+  },
+  selectedShiftType(shiftType) {
+    if (Template.currentData().shiftTypeId === shiftType)
+      return 'selected';
   }
 });
