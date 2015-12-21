@@ -1,0 +1,81 @@
+<template name="requestsCal">
+  <div class="row">
+    <p class="lead">View as Calendar | <a href="{{pathFor 'requestList'}}">View as List</a></p>
+  </div>
+  {{> dateRangeForm}}
+  {{#if ready}}
+    <table class="table request-table text-center">
+      <thead>
+        <tr>
+          <th>Date</th>
+          {{#each shiftType in shiftTypes}}
+            <th>{{shiftType.name}}</th>
+          {{/each}}
+        </tr>
+      </thead>
+      {{#each scheduleDate in scheduleDates}}
+        <tr>
+          <th>{{scheduleDateNice scheduleDate.scheduleDate}}</th>
+          {{#each shiftType in shiftTypes}}
+            {{> specificShiftRider shiftTypeId=shiftType._id scheduleDateSpecific=scheduleDate.scheduleDate}}
+          {{/each}}
+        </tr>
+      {{/each}}
+    </table>
+  {{/if}}
+</template>
+
+<template name="specificShiftRider">
+  <td>
+    {{#if requested scheduleDateSpecific shiftTypeId}}
+      {{#if scheduled scheduleDateSpecific shiftTypeId}}
+        <strong>Scheduled for Shift:</strong> <i class="fa fa-check text-success"></i>
+        {{> shiftComments scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
+      {{else}}
+        <div class="row">
+          <a href="{{pathFor 'requestEdit' data=(requestIdPath scheduleDateSpecific shiftTypeId)}}">
+            <buttton type="button" class="btn btn-default edit-button">
+              Edit Request
+          </buttton></a>
+        </div>
+        <div class="row">
+          <buttton type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal{{requestId scheduleDateSpecific shiftTypeId}}">
+            <i class="fa fa-calendar-check-o"></i> Delete Request
+          </buttton>
+        </div>
+        {{> shiftComments scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
+        {{> deleteModal requestId=(requestId scheduleDateSpecific shiftTypeId)}}
+      {{/if}}
+    {{else}}
+      <button class="btn btn-default" name="request-button" data-toggle="modal" data-target="#requestModal{{requestRandomId}}">
+        <i class="fa fa-calendar-check-o"></i> Request
+      </button>
+      {{> shiftComments scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
+      {{> requestModal requestId=requestRandomId scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
+    {{/if}}
+  </td>
+</template>
+
+<template name="shiftComments">
+  <div class="row">
+    {{#if request}}
+      {{#if request.comments}}
+        <strong>Request Comments:</strong> {{request.comments}}<br/>
+      {{/if}}
+      <strong>Rate Guaranteed:</strong>
+        {{#if request.guaranteeRate}}
+          <i class="fa fa-check text-success"></i>
+        {{else}}
+          <i class="fa fa-close text-danger"></i>
+        {{/if}}
+    {{/if}}
+  </div>
+  <div class="row">
+    {{#if rate}}
+      <strong>Rate:</strong> ${{rate.rateAmount}}<br/>
+      {{#if rate.comments}}
+        <strong>Rate Comments:</strong> {{rate.comments}}
+      {{/if}}
+    {{/if}}
+  </div>
+</template>

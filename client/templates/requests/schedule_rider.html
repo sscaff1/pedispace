@@ -28,7 +28,7 @@
   	  </select>
       <span class="help-block">{{errorMessage 'shiftType'}}</span>
 	  </div>
-    {{> rateSelectedTemplate}}
+    {{> rateSelectedTemplate rateSelect=rateSelect}}
     {{#if isInRole 'manager'}}
   		<div class="checkbox form-group">
   	    <label><input type="checkbox" name="riderType" checked="checked">Schedule as Rider</label>
@@ -48,15 +48,4 @@
       <input type="submit" value="Request Schedule" class="btn btn-primary"/>
     {{/if}}
   </form>
-</template>
-
-<template name="rateSelectedTemplate">
-  {{#if rateSelect.rateAmount}}
-    <div>
-      <strong>Rate Amount:</strong> ${{rateSelect.rateAmount}}<br/>
-      {{#if rateSelect.comments}}
-        <strong>Comments:</strong> {{rateSelect.comments}}
-      {{/if}}
-    </div>
-  {{/if}}
 </template>

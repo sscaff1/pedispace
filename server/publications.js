@@ -121,14 +121,14 @@ Meteor.publish('requests', function() {
       businessId: Meteor.users.findOne(this.userId).profile.businessId,
       scheduleDate: {$gt: new Date()}
     },{
-      sort: {scheduled: -1, scheduleDate: 1, submitted: 1}
+      sort: {scheduleDate: 1, submitted: 1}
     });
   } else if (this.userId) {
     return Requests.find({
       userId: this.userId,
       scheduleDate: {$gte: new Date()}
     }, {
-      sort: {scheduled: -1, scheduleDate: 1, submitted: 1}
+      sort: {scheduleDate: 1, submitted: 1}
     });
   } else {
     this.ready();

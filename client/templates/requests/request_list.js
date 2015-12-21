@@ -1,6 +1,12 @@
 Template.requestList.onCreated(function() {
+  var instance = this;
+  instance.autorun(() => {
+    instance.subscribe('requests');
+    instance.subscribe('riders');
+    instance.subscribe('shiftTypes');
+    instance.subscribe('rates');
+  });
   Session.set('postSubmitErrors', {});
-  $('#deleteModal').modal({show: false});
 });
 
 Template.requestList.onRendered(function() {
@@ -11,8 +17,16 @@ Template.requestList.onRendered(function() {
 });
 
 Template.requestList.helpers({
-	requests: function () {
-		return Requests.find();
+  ready() {
+    return Template.instance().subscriptionsReady();
+  },
+	requests() {
+		return Requests.find({
+      userId: Meteor.userId(),
+      scheduleDate: {$gte: new Date()}
+    }, {
+      sort: {scheduleDate: 1, submitted: 1}
+    });
 	}
 });
 
@@ -54,7 +68,7 @@ Template.requestItem.events({
 		Requests.update(this._id, {$set: {scheduled: true, rider: false}});
 	},
   'click #delete-button': function() {
-    Meteor.call('deleteRequest', this._id, function(error, result) {
+    Meteor.call('deleteRequest', this.requestId, function(error, result) {
       if (error) {
         console.log(error);
       } else if (result) {
