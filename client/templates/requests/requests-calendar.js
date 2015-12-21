@@ -28,7 +28,7 @@ Template.requestsCal.onRendered(function() {
 		autoclose: true,
 		orientation: 'top'
 	});
-	var thisSat = moment().add(1,'day').format("MM/DD/YYYY");
+	var thisSat = moment().format("MM/DD/YYYY");
 	$('[name=initialDate]').val(thisSat);
 	var nextWeek = moment().day(7).format("MM/DD/YYYY");
 	$('[name=finalDate]').val(nextWeek);

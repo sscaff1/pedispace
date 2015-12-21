@@ -22,7 +22,7 @@ Template.requestList.helpers({
   },
 	requests() {
 		return Requests.find({
-      userId: Meteor.userId(),
+      businessId: Meteor.user().profile.businessId,
       scheduleDate: {$gte: new Date()}
     }, {
       sort: {scheduleDate: 1, submitted: 1}

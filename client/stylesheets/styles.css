@@ -267,3 +267,9 @@ p {
 	width: 75%;
 	display: inline-block;
 }
+.valign-center {
+	vertical-align: middle;
+}
+.hover-click:hover {
+	cursor: pointer;
+}

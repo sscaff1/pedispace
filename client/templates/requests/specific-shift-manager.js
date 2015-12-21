@@ -1,19 +1,22 @@
 Template.specificShiftManager.onCreated(function() {
   const instance = this;
-  instance.returnRequested = function(scheduleDate, shiftTypeId) {
+  instance.returnRequested = function(scheduleDate, shiftTypeId, rider) {
     return Requests.find({
       businessId: Meteor.user().profile.businessId,
       scheduleDate: scheduleDate.toDate(),
       shiftTypeId: shiftTypeId,
-      scheduled: true
+      scheduled: true,
+      rider: rider
     }).count();
   }
 });
 
-
 Template.specificShiftManager.helpers({
   ridersScheduled(scheduleDate,shiftTypeId) {
-    return Template.instance().returnRequested(scheduleDate,shiftTypeId);
+    return Template.instance().returnRequested(scheduleDate,shiftTypeId, true);
+  },
+  alternatesScheduled(scheduleDate,shiftTypeId) {
+    return Template.instance().returnRequested(scheduleDate,shiftTypeId, false);
   },
   riders() {
     const data = Template.currentData();
@@ -52,7 +55,7 @@ Template.specificShiftManager.helpers({
     }
   },
   bikesAvailable(scheduleDate,shiftTypeId) {
-    var riders = Template.instance().returnRequested(scheduleDate,shiftTypeId);
+    var riders = Template.instance().returnRequested(scheduleDate,shiftTypeId, true);
     var bikes = Bikes.find({
       businessId: Meteor.user().profile.businessId
     }).count();
@@ -74,7 +77,6 @@ Template.specificShiftManager.events({
       scheduled: true,
       userId: $(event.target).find('[name=userId]').val()
 		}
-
 		Meteor.call('requestAdd', schedule, function(error, result) {
 			if (error) {
 				console.log(error);
@@ -86,11 +88,31 @@ Template.specificShiftManager.events({
         $(event.target).find('.form-control').val('');
       }
 		});
+	},
+  'click .fa-times-circle': function() {
+		Requests.update(this._id, {$set: {scheduled: false}});
+	},
+	'click .fa-bicycle': function() {
+		Requests.update(this._id, {$set: {scheduled: true, rider: true}});
+	},
+	'click .fa-mobile': function() {
+		Requests.update(this._id, {$set: {scheduled: true, rider: false}});
 	}
+});
+
+Template.riderRequest.onRendered(function() {
+  $('.popover-comments').popover({
+    trigger: 'hover',
+    placement: 'left'
+	});
 });
 
 Template.riderRequest.helpers({
   riderName(userId) {
     return Meteor.users.findOne(userId).profile.name;
+  },
+  popOverContent() {
+    const data = Template.currentData();
+    return Requests.findOne(data._id).comments;
   }
-})
+});

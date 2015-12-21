@@ -1,6 +1,7 @@
 <template name="specificShiftManager">
   <td>
     <strong>Riders Scheduled: </strong> {{ridersScheduled scheduleDate shiftTypeId}}<br/>
+    <strong>Alternates Scheduled: </strong> {{alternatesScheduled scheduleDate shiftTypeId}}<br/>
     <strong>Bikes Available: </strong> {{bikesAvailable scheduleDate shiftTypeId}}<br/><br/>
     {{#if requestsCount}}
       <strong>Current Requests</strong><br/>
@@ -34,12 +35,12 @@
 
 <template name="riderRequest">
   {{#if _id}}
-    {{riderName userId}}
+    <span class="popover-comments" data-content="{{popOverContent}}">{{riderName userId}}</span>
     {{#if scheduled}}
-      <i class="fa fa-times-circle text-warning"></i>
+      <i class="fa fa-times-circle fa-2x text-warning valign-center hover-click"></i>
     {{else}}
-      <i class="fa fa-bicycle text-success"></i>
-      <i class="fa fa-mobile text-success"></i>
+      <i class="fa fa-bicycle fa-2x text-success valign-center hover-click"></i>
+      <i class="fa fa-mobile fa-2x text-success valign-center hover-click"></i>
     {{/if}}
   {{/if}}
 </template>

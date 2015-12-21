@@ -119,14 +119,14 @@ Meteor.publish('requests', function() {
   if (Roles.userIsInRole(this.userId, ['manager'])) {
     return Requests.find({
       businessId: Meteor.users.findOne(this.userId).profile.businessId,
-      scheduleDate: {$gt: new Date()}
+      scheduleDate: {$gte: moment().startOf('day').toDate()}
     },{
       sort: {scheduleDate: 1, submitted: 1}
     });
   } else if (this.userId) {
     return Requests.find({
       userId: this.userId,
-      scheduleDate: {$gte: new Date()}
+      scheduleDate: {$gte: moment().startOf('day').toDate()}
     }, {
       sort: {scheduleDate: 1, submitted: 1}
     });

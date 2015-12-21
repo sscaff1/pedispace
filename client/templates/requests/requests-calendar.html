@@ -2,7 +2,17 @@
   <div class="row">
     <p class="lead">View as Calendar | <a href="{{pathFor 'requestList'}}">View as List</a></p>
   </div>
-  {{> dateRangeForm}}
+  <div class="col-xs-8">
+    {{> dateRangeForm}}
+  </div>
+  <div class="col-xs-4">
+    {{#if isInRole 'manager'}}
+      Hover over rider to see comments<br/>
+      <i class="fa fa-times-circle fa-2x text-warning valign-center"></i>=Click to Unconfirm Schedule<br/>
+      <i class="fa fa-bicycle fa-2x text-success valign-center"></i>=Click to Confirm Request as Rider<br/>
+      <i class="fa fa-mobile fa-2x text-success valign-center"></i>=Click to Confirm Request as Alternate
+    {{/if}}
+  </div>
   {{#if Template.subscriptionsReady}}
     <table class="table request-table text-center">
       <thead>
