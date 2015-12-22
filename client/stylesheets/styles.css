@@ -10,11 +10,16 @@
   text-align: right;
   background-color: #f5f5f5;
 }
+
+form.main {
+	background: #E0F2F1;
+}
+.item {
+	background-color: #ECEFF1;
+}
+
 .grid-block, .main, .item, .comments li, .comment-form {
-  background: #fff;
 	font-family: "Montserrat", sans-serif;
-  border-radius: 3px;
-	border: 2px solid #000;
   padding: 10px;
   margin-bottom: 10px;
   -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.15);
@@ -222,16 +227,14 @@ p {
 	background-color: #fff;
 }
 .btn-primary {
-    background: #FF6E40;
-		border: 1px solid #E57373;
+    background: #FF8F00;
+		border: 1px solid #FF8F00;
     color: #FFF;
 		font-family: "Montserrat", sans-serif;
 	}
-	.btn-primary:hover {
-		background: #FF3D00;
-	}
-	.btn-primary:enabled, .btn-primary:active {
-		background: #FF3D00;
+	.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+		background: #E65100;
+		border: 1px solid #E65100;
 	}
 	.shop-password-item {
 		background-color: #fff;
@@ -267,12 +270,20 @@ p {
 }
 .custom-formcontrol-shifts {
 	background-color: #fff;
-	width: 75%;
-	display: inline-block;
 }
 .valign-center {
 	vertical-align: middle;
 }
 .hover-click:hover {
 	cursor: pointer;
+}
+.form-control-contact {
+	background-color: #B2DFDB;
+	font-family: "Montserrat", sans-serif;
+	color: #000;
+}
+.custom-input-group-addon {
+	background-color: #004D40;
+	color: #fff;
+	border: #004D40;
 }

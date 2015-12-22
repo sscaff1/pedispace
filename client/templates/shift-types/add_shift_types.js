@@ -8,7 +8,7 @@ Template.addShiftTypes.events({
 		};
 
 		if (!shiftType.name || !shiftType.startTime) {
-			Messages.throw('No field can be blank.', 'danger');
+			return Messages.throw('No field can be blank.', 'danger');
 		}
 		Meteor.call('shiftTypeAdd', shiftType, function(error) {
 			if (error) {

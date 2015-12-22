@@ -33,7 +33,7 @@
 	<div class="item shop-password-item">
 		<h4 style="color: #FF6E40">Looks like you haven't set up a password for your shop account.<br>Set it below.</h4>
 	</div>
-	<form class="main form page text-center shop-password-form center-block" style="background-color: #E0F2F1;" name="shopNewPasswordForm">
+	<form class="main form text-left page shop-password-form center-block" style="background-color: #E0F2F1;" name="shopNewPasswordForm">
 		<div class="form-group {{errorClass 'password'}}">
 			<label class="control-label required" for="password">Password</label>
 			<input class="form-control custom-formcontrol-shifts" name="password" type="password">
@@ -42,9 +42,9 @@
 		<div class="form-group {{errorClass 'confirmPassword'}}">
 			<label class="control-label required" for="confirmPassword">Confirm Password</label>
 			<input class="form-control custom-formcontrol-shifts" name="confirmPassword" type="password">
-			<span class="help-block">{{errorMessage 'confirmPassword'}}</span>
+			<span class="help-block">{{errorMessage 'password'}}</span>
 		</div>
-		<div class="form-group">
+		<div class="form-group text-center">
 			<input type="submit" value="Set Shop Password" class="btn btn-primary"/>
 		</div>
 	</form>
