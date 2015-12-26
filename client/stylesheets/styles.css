@@ -196,6 +196,7 @@ h4 {
 	color: #000;
 	font-size: 16px;
 	font-weight: 300;
+	line-height: 1.5em;
 }
 h5 {
 	color: rgba(0,0,0,0.54);
@@ -225,7 +226,7 @@ p {
 }
 .jumbotron-shift-list {
 	background-color: #fff;
-}
+	}
 .btn-primary {
     background: #FF8F00;
 		border: 1px solid #FF8F00;
@@ -235,6 +236,24 @@ p {
 	.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
 		background: #E65100;
 		border: 1px solid #E65100;
+		border-color: #E65100;
+		font-family: "Montserrat", sans-serif;
+	}
+	.btn:focus, .btn:active:focus, .btn.active:focus {
+    background: #BF360C;
+		border-color: #BF360C;
+		font-family: "Montserrat", sans-serif;
+	}
+.btn-default {
+    background: #fff;
+		border: 1px solid #E65100;
+    color: #E65100;
+		font-family: "Montserrat", sans-serif;
+	}
+	.btn-default:hover, .btn-default:focus, .btn-default:active {
+		background: #fff;
+		border: 1px solid #000;
+		font-family: "Montserrat", sans-serif;
 	}
 	.shop-password-item {
 		background-color: #fff;
@@ -286,4 +305,25 @@ p {
 	background-color: #004D40;
 	color: #fff;
 	border: #004D40;
+}
+.next-steps-row {
+	background-color: #efe7dc;
+	padding-bottom: 2%;
+	padding-top: 3%;
+}
+.customized-solutions-row {
+	background:  #000 url("/img/ughline3 with background.jpeg");
+	background-attachment: fixed;
+	background-position: center;
+	min-height: 300px;
+	padding-top: 6em;
+}
+.radios-item {
+	background-color: #B2DFDB;
+}
+.bikes-item {
+	background-color: #B2DFDB;
+}
+.item-custom-shift-type {
+	background-color: #B2DFDB;
 }
