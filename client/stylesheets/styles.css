@@ -294,7 +294,7 @@ p {
 	vertical-align: middle;
 }
 .hover-click:hover {
-	cursor: pointer;
+	cursor: url("/img/Transport-Bicycle-icon.png"), auto;
 }
 .form-control-contact {
 	background-color: #B2DFDB;
