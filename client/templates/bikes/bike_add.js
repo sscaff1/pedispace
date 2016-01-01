@@ -5,7 +5,7 @@ Template.bikeAdd.events({
 			name: $(event.target).find('[name=bikeName]').val()
 		};
 		if (!bike.name) {
-			Messages.throw('The bike name cannot be blank.', 'danger');
+			return Messages.throw('The bike name cannot be blank.', 'danger');
 		}
 		Meteor.call('bikeAdd', bike, function(error) {
 			if (error)

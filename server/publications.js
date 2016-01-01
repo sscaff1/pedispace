@@ -91,6 +91,16 @@ Meteor.publish('userData', function () {
   }
 });
 
+Meteor.publish('managers', function() {
+  if (!this.userId) {
+    return Meteor.users.find({
+      roles: 'manager'
+    });
+  } else {
+    return this.ready();
+  }
+})
+
 Meteor.publish('userSchedule', function() {
   if (Roles.userIsInRole(this.userId, ['manager'])) {
     return Meteor.users.find({
@@ -109,7 +119,7 @@ Meteor.publish('userSchedule', function() {
 
 Meteor.publish('roles', function() {
   if (Roles.userIsInRole(this.userId, ['manager'])) {
-    return Meteor.roles.find({name: {$ne: 'admin'}});
+    return Meteor.roles.find({name: {$nin: ['admin', 'mechanic', 'shop']}});
   } else {
     this.ready();
   }

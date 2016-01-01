@@ -4,25 +4,27 @@ Template.shiftAdd.onCreated(function() {
   instance.rateComments = new ReactiveVar(null);
 });
 
-Template.shiftAdd.onRendered(function() {
-	var now = moment().local().subtract(8, 'hours').toDate();
-	$('[name=startTime]').val(now);
-});
-
 Template.shiftAdd.helpers({
-	bike: function() {
+  defaultStart() {
+    var now = moment().local().subtract(8, 'hours').format('YYYY-MM-DDTHH:mm');
+    return now;
+  },
+	bikes() {
 		return Bikes.find();
 	},
-	radio: function() {
+	radios() {
 		if (Radios.find().count() === 0) {
 			return false;
 		}
 		return Radios.find();
 	},
-	rider: function() {
+	riders() {
 		return Meteor.users.find({roles: 'biker', "profile.active": true});
 	},
-	rateComments: function() {
+  shiftTypes() {
+    return ShiftTypes.find({}, {sort: {name: 1}});
+  },
+	rateComments() {
 		return Template.instance().rateComments.get()
 	}
 });
@@ -35,9 +37,9 @@ Template.shiftAdd.events({
 			bikeId: $(event.target).find('[name=bikeName]').val(),
 			radioId: $(event.target).find('[name=radioName]').val(),
 			shiftTypeId: $(event.target).find('[name=shiftType]').val(),
-			totalMade: parseFloat($(event.target).find('[name=totalMade]').val()),
-			ratePaid: parseFloat($(event.target).find('[name=ratePaid]').val()),
-			shiftRate: parseFloat($(event.target).find('[name=shiftRate]').val()),
+			totalMade: parseInt($(event.target).find('[name=totalMade]').val()),
+			ratePaid: parseInt($(event.target).find('[name=ratePaid]').val()),
+			shiftRate: parseInt($(event.target).find('[name=shiftRate]').val()),
 			startTime: moment($(event.target).find('[name=startTime]').val()).toDate(),
 			comments: $(event.target).find('[name=comments]').val(),
 			userId: $(event.target).find('[name=userName]').val()
@@ -47,35 +49,35 @@ Template.shiftAdd.events({
   	if (!$.isEmptyObject(errors))
     		return Session.set('postSubmitErrors', errors);
 		Meteor.call('shiftAdd', shift, function(error, result) {
-			if (error)
+			if (error) {
 				console.log(error);
-			Session.set('postSubmitErrors', {});
-      template.rateComments.set(null);
-      document.insertForm.reset();
+      } else {
+        Messages.throw("You've successfully created logged your shift.", 'success');
+        Session.set('postSubmitErrors', {});
+        template.rateComments.set(null);
+        document.insertForm.reset();
+      }
 		});
 
 	},
-	'change [name=shiftType], change [name=startTime]': function(event) {
+	'change [name=shiftType], change [name=startTime]': function(event, template) {
 		event.preventDefault();
 
-		var s = $('[name=insertForm]').find('[name=startTime]').val();
-		s = moment(s).startOf('day').toDate();
-		var st = $('[name=insertForm]').find('[name=shiftType]').val();
-		var r = Rates.findOne({
+		var startTime = template.$('[name=startTime]').val();
+		startTime = moment(startTime).startOf('day').toDate();
+		var shiftType = template.$('[name=shiftType]').val();
+		var rate = Rates.findOne({
 			businessId: Meteor.user().profile.businessId,
-			scheduleDate: s,
-			shiftType: st
+			scheduleDate: startTime,
+			shiftTypeId: shiftType
 		});
-		if (r) {
-			$('[name=insertForm]').find('[name=shiftRate]').val(r.rateAmount);
-			$('[name=insertForm]').find('[name=shiftRate]').prop('disabled', true);
-			template.rateComments.set(r.comments);
+    console.log(rate);
+		if (rate) {
+			template.$('[name=shiftRate]').val(rate.rateAmount);
+			template.$('[name=shiftRate]').prop('disabled', true);
+			template.rateComments.set(rate.comments);
 		} else {
 			template.rateComments.set(null);;
 		}
 	}
-});
-
-Shifts.after.insert(function(userId, doc) {
-	return throwSuccess("You've successfully created logged your shift.");
 });

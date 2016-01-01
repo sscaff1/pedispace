@@ -24,7 +24,7 @@ Template.joinManager.events({
         Meteor.setTimeout(function() {
           var businessId = Meteor.users.findOne({_id: result}).profile.businessId;
           var shopUser = {
-            email: user.businessId.replace(/ /g,'').toLowerCase()+'@pedispace.com',
+            email: $(event.target).find('[name=shopEmail]').val()+'@pedispace.com',
             businessId: businessId,
             name: user.businessId,
             role: 'shop'
@@ -40,5 +40,10 @@ Template.joinManager.events({
         });
       }
     });
+  },
+  'blur [name=business]': function(event,template) {
+    var businessName = $(event.target).val();
+    businessName = businessName.replace(/[^A-Z0-9]/gi, '').toLowerCase();
+    template.$('[name=shopEmail]').val(businessName);
   }
 });

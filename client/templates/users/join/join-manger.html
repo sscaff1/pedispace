@@ -9,6 +9,15 @@
         <input class="form-control" name="business" type="text">
         <span class="help-block">{{errorMessage 'business'}}</span>
       </div>
+      <div class="form-group {{errorClass 'shopEmail'}}">
+        <label class="control-label required" for="shopEmail">Shop Email</label>
+        <div class="input-group">
+          <input class="form-control" name="shopEmail" type="text">
+          <span class="input-group-addon">@pedispace.com</span>
+        </div>
+        <span class="help-block">This email will be used by all riders to access the shop view for you business. The shop view lets you record shifts for revenue tracking purposes.</span>
+        <span class="help-block">{{errorMessage 'shopEmail'}}</span>
+      </div>
       {{> join}}
       <div class="form-group">
         <input type="submit" value="Create Account" class="btn btn-primary"/>

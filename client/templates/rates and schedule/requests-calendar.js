@@ -30,7 +30,7 @@ Template.requestsCal.onRendered(function() {
 	});
 	var thisSat = moment().format("MM/DD/YYYY");
 	$('[name=initialDate]').val(thisSat);
-	var nextWeek = moment().day(7).format("MM/DD/YYYY");
+	var nextWeek = moment().day(7+7).format("MM/DD/YYYY");
 	$('[name=finalDate]').val(nextWeek);
 	var initialDate = moment(instance.$('[name=initialDate]').val(), 'MM/DD/YYYY');
 	var finalDate = moment(instance.$('[name=finalDate]').val(), 'MM/DD/YYYY');
@@ -42,7 +42,7 @@ Template.requestsCal.helpers({
 		return Template.instance().scheduleDates.get();
 	},
 	scheduleDateNice(scheduleDate) {
-		return moment(scheduleDate).format('MMMM DD, YYYY')
+		return moment(scheduleDate).format('ddd MMMM DD, YYYY')
 	},
 	shiftTypes() {
 		var businessId = Meteor.user().profile.businessId;

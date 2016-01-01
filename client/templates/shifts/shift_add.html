@@ -6,8 +6,8 @@
         <div class="col-sm-9">
           <select class="form-control" name="userName">
             <option value="">Choose a Rider</option>
-            {{#each rider}}
-              <option value="{{_id}}">{{profile.name}}</option>
+            {{#each rider in riders}}
+              <option value="{{rider._id}}">{{rider.profile.name}}</option>
             {{/each}}
           </select>
           <span class="help-block">{{errorMessage 'userId'}}</span>
@@ -18,21 +18,21 @@
         <div class="col-sm-9">
           <select class="form-control" name="bikeName">
             <option value="">Choose a Bike</option>
-            {{#each bike}}
-              <option value="{{_id}}">{{name}}</option>
+            {{#each bike in bikes}}
+              <option value="{{bike._id}}">{{bike.name}}</option>
             {{/each}}
           </select>
           <span class="help-block">{{errorMessage 'bikeId'}}</span>
         </div>
       </div>
-      {{#if radio}}
+      {{#if radios}}
       <div class="form-group {{errorClass 'radioId'}}">
         <label for="radioName" class="col-sm-3 control-label">Radio Name:</label>
         <div class="col-sm-9">
           <select class="form-control" name="radioName">
             <option value="">Choose a Radio</option>
-            {{#each radio}}
-              <option value="{{_id}}">{{name}}</option>
+            {{#each radio in radios}}
+              <option value="{{radio._id}}">{{radio.name}}</option>
             {{/each}}
           </select>
           <span class="help-block">{{errorMessage 'radioId'}}</span>
@@ -44,8 +44,8 @@
         <div class="col-sm-9">
           <select class="form-control" name="shiftType">
             <option value="">Choose a Shift Type</option>
-              {{#each shiftType}}
-                <option value="{{_id}}">{{name}}</option>
+              {{#each shiftType in shiftTypes}}
+                <option value="{{shiftType._id}}">{{shiftType.name}}</option>
               {{/each}}
           </select>
           <span class="help-block">{{errorMessage 'shiftType'}}</span>
@@ -54,8 +54,8 @@
       <div class="form-group {{errorClass 'startTime'}}">
         <label class="col-sm-3 control-label required" for="startTime">Start Time:</label>
         <div class="col-sm-9 controls">
-            <input name="startTime" type="datetime-local" class="form-control"/>
-            Time has been defaulted. Please change your start time appropriately.
+            <input name="startTime" type="datetime-local" class="form-control" value="{{defaultStart}}"/>
+            <span class="help-block">Time has been defaulted. Please change your start time appropriately.</span>
             <span class="help-block">{{errorMessage 'startTime'}}</span>
         </div>
       </div>

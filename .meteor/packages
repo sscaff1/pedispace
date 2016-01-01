@@ -9,7 +9,6 @@ twbs:bootstrap
 underscore
 accounts-password
 alanning:roles
-matb33:collection-hooks
 ian:accounts-ui-bootstrap-3
 momentjs:moment
 email

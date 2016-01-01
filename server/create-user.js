@@ -1,4 +1,14 @@
 Meteor.methods({
+  checkUserPassword: function(userId) {
+    if (Meteor.users.findOne(userId).services.password == null) {
+      return true;
+    } else {
+      return false;
+    }
+  },
+  setNewShopPassword: function(userId, password) {
+    Accounts.setPassword(userId, password);
+  },
   managerCreateUser: function(user) {
     check(user, {
       name: String,
@@ -31,30 +41,9 @@ Meteor.methods({
     });
     Accounts.sendVerificationEmail(newUserId);
     return newUserId;
-  },
-  createShopUser: function(user) {
-    check(user, {
-      name: String,
-      email: String,
-      businessId: String,
-      role: String
-    });
-    Accounts.createUser({
-      email: user.email,
-      profile: user
-    });
-  },
-  setNewShopPassword: function(userId, password) {
-    Accounts.setPassword(userId, password);
-  },
-  checkUserPassword: function(userId) {
-    if (Meteor.users.findOne(userId).services.password == null) {
-      return true;
-    } else {
-      return false;
-    }
   }
-});
+})
+
 Accounts.onCreateUser(function(options, user) {
   options.roles = [options.profile.role];
   if (options.profile.role === 'manager') {

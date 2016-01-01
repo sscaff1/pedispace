@@ -15,7 +15,7 @@ form.main {
 	background: #E0F2F1;
 }
 .item {
-	background-color: #ECEFF1;
+	background-color: #E0F2F1;
 }
 
 .grid-block, .main, .item, .comments li, .comment-form {
@@ -233,10 +233,11 @@ p {
     color: #FFF;
 		font-family: "Montserrat", sans-serif;
 	}
-	.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+	.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:active:focus {
 		background: #E65100;
 		border: 1px solid #E65100;
 		border-color: #E65100;
+		outline: none;
 		font-family: "Montserrat", sans-serif;
 	}
 	.btn:focus, .btn:active:focus, .btn.active:focus {
@@ -256,7 +257,7 @@ p {
 		font-family: "Montserrat", sans-serif;
 	}
 	.shop-password-item {
-		background-color: #fff;
+		background-color: #FAFAFA;
 		border-color: #FF6E40;
 	}
 	.navbar-inverse .navbar-nav > li > a {
@@ -293,9 +294,6 @@ p {
 .valign-center {
 	vertical-align: middle;
 }
-.hover-click:hover {
-	cursor: url("/img/Transport-Bicycle-icon.png"), auto;
-}
 .form-control-contact {
 	background-color: #B2DFDB;
 	font-family: "Montserrat", sans-serif;
@@ -319,11 +317,11 @@ p {
 	padding-top: 6em;
 }
 .radios-item {
-	background-color: #B2DFDB;
+	background-color: #E0F2F1;
 }
 .bikes-item {
-	background-color: #B2DFDB;
+	background-color: #E0F2F1;
 }
 .item-custom-shift-type {
-	background-color: #B2DFDB;
+	background-color: #E0F2F1;
 }
