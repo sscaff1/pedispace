@@ -9,7 +9,8 @@ Template.editProfile.events({
 			emails: [{address:$(event.target).find('[name=email]').val()}],
 			profile: {
 				name: $(event.target).find('[name=userName]').val(),
-				phoneNumber: $(event.target).find('[name=phoneNumber]').val()
+				phoneNumber: $(event.target).find('[name=phoneNumber]').val(),
+				businessId: Meteor.user().profile.businessId
 			}
 		}
 
@@ -19,9 +20,11 @@ Template.editProfile.events({
 		}
 
 		Meteor.call('userUpdate', user, function(error) {
-			if (error)
+			if (error) {
 				console.log(error)
-			Router.go('shiftAdd');
+			} else {
+				Router.go('shiftsList');
+			}
 		});
 	}
 });
