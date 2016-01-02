@@ -3,6 +3,11 @@
     {{#if requested scheduleDateSpecific shiftTypeId}}
       {{#if scheduled scheduleDateSpecific shiftTypeId}}
         <strong>Scheduled for Shift:</strong> <i class="fa fa-check text-success"></i>
+        {{#if rider scheduleDateSpecific shiftTypeId}}
+          <i class="fa fa-bicycle fa-lg text-success valign-center"></i>
+        {{else}}
+          <i class="fa fa-mobile fa-lg text-success valign-center"></i>
+        {{/if}}
         {{> shiftComments scheduleDate=scheduleDateSpecific shiftTypeId=shiftTypeId}}
       {{else}}
         <div class="row">

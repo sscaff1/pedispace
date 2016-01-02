@@ -4,11 +4,12 @@ Template.shiftAdd.onCreated(function() {
   instance.rateComments = new ReactiveVar(null);
 });
 
+Template.shiftAdd.onRendered(function() {
+  var currentTime = moment().local().subtract(8, 'hours').format('YYYY-MM-DDTHH:mm');
+  document.getElementById('startTime').defaultValue = currentTime;
+})
+
 Template.shiftAdd.helpers({
-  defaultStart() {
-    var now = moment().local().subtract(8, 'hours').format('YYYY-MM-DDTHH:mm');
-    return now;
-  },
 	bikes() {
 		return Bikes.find();
 	},
@@ -19,7 +20,7 @@ Template.shiftAdd.helpers({
 		return Radios.find();
 	},
 	riders() {
-		return Meteor.users.find({roles: 'biker', "profile.active": true});
+		return Meteor.users.find({_id: {$ne: Meteor.userId()}});
 	},
   shiftTypes() {
     return ShiftTypes.find({}, {sort: {name: 1}});
@@ -40,7 +41,7 @@ Template.shiftAdd.events({
 			totalMade: parseInt($(event.target).find('[name=totalMade]').val()),
 			ratePaid: parseInt($(event.target).find('[name=ratePaid]').val()),
 			shiftRate: parseInt($(event.target).find('[name=shiftRate]').val()),
-			startTime: moment($(event.target).find('[name=startTime]').val()).toDate(),
+			startTime: new Date(moment($(event.target).find('[name=startTime]').val(), 'YYYY-MM-DDTHH:mm')),
 			comments: $(event.target).find('[name=comments]').val(),
 			userId: $(event.target).find('[name=userName]').val()
 		}
@@ -58,7 +59,6 @@ Template.shiftAdd.events({
         document.insertForm.reset();
       }
 		});
-
 	},
 	'change [name=shiftType], change [name=startTime]': function(event, template) {
 		event.preventDefault();

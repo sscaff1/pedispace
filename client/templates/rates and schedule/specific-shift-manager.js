@@ -113,10 +113,10 @@ Template.specificShiftManager.events({
   'click .fa-times-circle': function() {
 		Requests.update(this._id, {$set: {scheduled: false}});
 	},
-	'click .fa-bicycle': function() {
+	'click .fa-bicycle.schedule-shift': function() {
 		Requests.update(this._id, {$set: {scheduled: true, rider: true}});
 	},
-	'click .fa-mobile': function() {
+	'click .fa-mobile.schedule-shift': function() {
 		Requests.update(this._id, {$set: {scheduled: true, rider: false}});
 	}
 });

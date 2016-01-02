@@ -34,7 +34,7 @@ Template.shiftsList.events({
 		event.preventDefault();
 		var dateFilter =
 			moment($(event.target).find('[name=dateFilter]').val(), 'MMMM DD YYYY').toDate();
-		instance.dateFilter.set(dateFilter);
+		template.dateFilter.set(dateFilter);
 	}
 });
 

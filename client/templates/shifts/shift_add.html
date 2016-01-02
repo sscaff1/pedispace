@@ -54,7 +54,7 @@
       <div class="form-group {{errorClass 'startTime'}}">
         <label class="col-sm-3 control-label required" for="startTime">Start Time:</label>
         <div class="col-sm-9 controls">
-            <input name="startTime" type="datetime-local" class="form-control" value="{{defaultStart}}"/>
+            <input name="startTime" type="datetime-local" class="form-control" id="startTime"/>
             <span class="help-block">Time has been defaulted. Please change your start time appropriately.</span>
             <span class="help-block">{{errorMessage 'startTime'}}</span>
         </div>

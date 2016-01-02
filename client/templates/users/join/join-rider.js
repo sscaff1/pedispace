@@ -32,6 +32,7 @@ Template.joinRider.events({
     }
     Meteor.call('createUserOnJoin', user, function(error) {
       if (error) {
+        Messages.throw(error.reason, 'danger');
         console.log(error);
       } else {
         Meteor.loginWithPassword(user.email, user.password, function(error) {

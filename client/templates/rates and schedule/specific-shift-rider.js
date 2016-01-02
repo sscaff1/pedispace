@@ -27,6 +27,10 @@ Template.specificShiftRider.helpers({
 		var request = Template.instance().requestLookup(scheduleDate,shiftTypeId);
 		return request.scheduled;
 	},
+	rider(scheduleDate, shiftTypeId) {
+		var request = Template.instance().requestLookup(scheduleDate,shiftTypeId);
+		return request.rider;
+	},
 	requestId(scheduleDate, shiftTypeId) {
 		var request = Template.instance().requestLookup(scheduleDate,shiftTypeId);
 		return request._id;
