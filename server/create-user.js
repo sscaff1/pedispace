@@ -41,6 +41,18 @@ Meteor.methods({
     });
     Accounts.sendVerificationEmail(newUserId);
     return newUserId;
+  },
+  createShopUser: function(user) {
+    check(user, {
+      name: String,
+      email: String,
+      businessId: String,
+      role: String
+    });
+    Accounts.createUser({
+      email: user.email,
+      profile: user
+    });
   }
 })
 

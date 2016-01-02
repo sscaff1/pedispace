@@ -21,6 +21,7 @@ Template.joinManager.events({
       if (error) {
         console.log(error);
       } else {
+        Router.go('shiftsList');
         Meteor.setTimeout(function() {
           var businessId = Meteor.users.findOne({_id: result}).profile.businessId;
           var shopUser = {

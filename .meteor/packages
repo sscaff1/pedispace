@@ -32,3 +32,5 @@ check
 sscaff1:messages
 fortawesome:fontawesome
 sacha:spin
+okgrow:router-autoscroll
+meteorhacks:ssr

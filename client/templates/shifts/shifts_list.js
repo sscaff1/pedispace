@@ -53,13 +53,15 @@ Template.shiftsList.helpers({
 	emptyShifts: function() {
 		if (Template.instance().shifts().count() === 0) {
 			var shopAccount = Meteor.users.findOne({roles: 'shop'});
-			Meteor.call('checkUserPassword', shopAccount._id, function(error, result) {
-				Session.set('noPassword',{
-					flag: false,
-					message: "Oops looks like there are no shifts yet. You can create shifts by logging into your shop account: " + shopAccount.emails[0].address,
-					noPassword: result
+			if (shopAccount) {
+				Meteor.call('checkUserPassword', shopAccount._id, function(error, result) {
+					Session.set('noPassword',{
+						flag: false,
+						message: "Oops looks like there are no shifts yet. You can create shifts by logging into your shop account: " + shopAccount.emails[0].address,
+						noPassword: result
+					});
 				});
-			});
+			}
 		} else {
 			return {
 				flag: true

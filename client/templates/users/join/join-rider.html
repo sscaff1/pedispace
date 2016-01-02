@@ -3,22 +3,26 @@
     <div class="item">
       <h4>Are you a business owner? <a href="{{pathFor 'joinManager'}}">Join as a business owner instead.</a></h4>
     </div>
-    <form class="main form page" name="insertForm">
-      <div class="form-group {{errorClass 'email'}}">
-        <label class="control-label required" for="business">Business Name</label>
-        <select class="form-control" name="business">
-          <option value="">Select a Business</option>
-          {{#each business}}
-            <option value="_id">{{name}} - {{ownerName}}</option>
-          {{/each}}
-        </select>
-        Don't see your business? Tell your boss today to join pediSpace.
-        <span class="help-block">{{errorMessage 'business'}}</span>
-      </div>
-      {{> join}}
-      <div class="form-group">
-        <input type="submit" value="Update Profile" class="btn btn-primary"/>
-      </div>
-    </form>
+    {{#if Template.subscriptionsReady}}
+      <form class="main form page" name="insertForm">
+        <div class="form-group {{errorClass 'email'}}">
+          <label class="control-label required" for="business">Business Name</label>
+          <select class="form-control" name="business">
+            <option value="">Select a Business</option>
+            {{#each business}}
+              <option value="_id">{{name}} - {{ownerName}}</option>
+            {{/each}}
+          </select>
+          Don't see your business? Tell your boss today to join pediSpace.
+          <span class="help-block">{{errorMessage 'business'}}</span>
+        </div>
+        {{> join}}
+        <div class="form-group">
+          <input type="submit" value="Update Profile" class="btn btn-primary"/>
+        </div>
+      </form>
+    {{else}}
+      {{> loading}}
+    {{/if}}
   </div>
 </template>

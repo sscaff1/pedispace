@@ -14,6 +14,7 @@
     {{/if}}
   </div>
   {{#if Template.subscriptionsReady}}
+  {{#if shiftTypesCount}}
     <table class="table request-table text-center">
       <thead>
         <tr>
@@ -42,6 +43,16 @@
         </tr>
       {{/each}}
     </table>
+  {{else}}
+  <div class="jumbotron text-center jumbotron-shift-list">
+    <strong><h3>Looks like you haven't set up any shift types.</h3></strong>
+    <a href="{{pathFor 'listShiftTypes'}}">
+      <button type="button" class="btn btn-primary">
+        Click here to set one up!
+      </button>
+    </a>
+  </div>
+  {{/if}}
   {{else}}
     {{> loading}}
   {{/if}}

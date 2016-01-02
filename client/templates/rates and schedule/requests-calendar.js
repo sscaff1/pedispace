@@ -48,6 +48,15 @@ Template.requestsCal.helpers({
 		var businessId = Meteor.user().profile.businessId;
 		return ShiftTypes.find({businessId: businessId});
 	},
+	shiftTypesCount() {
+		var businessId = Meteor.user().profile.businessId;
+		var count = ShiftTypes.find({businessId: businessId}).count();
+		if (count === 0) {
+			return false;
+		} else {
+			return true;
+		}
+	}
 	dateNum(scheduleDate) {
 		return scheduleDate.valueOf();
 	}
