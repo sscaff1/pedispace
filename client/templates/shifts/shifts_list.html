@@ -1,6 +1,6 @@
 <template name="shiftsList">
 	{{#if emptyShifts.flag}}
-		<!-- <form class="form-inline" name="filterForm">
+		<form class="form-inline" name="filterForm">
 			<div class="form-group">
 		  		<label for="dateFilter">Select Date to Filter</label>
 		  		<input type="date" class="form-control" placeholder="Filter Date" name="dateFilter">
@@ -10,7 +10,7 @@
 				<a href="{{pathFor 'shiftAdd'}}"><button class="btn btn-primary reset">Reset</button></a>
 			{{/if}}
 		</form>
-		<br /> -->
+		<br />
 		{{#each shifts}}
 			{{> shiftItem}}
 		{{/each}}

@@ -7,9 +7,11 @@ Meteor.publish('bikes', function() {
     return Bikes.find({
       businessId: Meteor.users.findOne(this.userId).profile.businessId,
       active: true
+    },{
+      sort: {name: 1}
     });
   } else {
-    this.ready();
+    return this.ready();
   }
 });
 
@@ -22,9 +24,11 @@ Meteor.publish('shiftTypes', function() {
     return ShiftTypes.find({
       businessId: Meteor.users.findOne(this.userId).profile.businessId,
       active: true
+    },{
+      sort: {name: 1}
     });
   } else {
-    this.ready();
+    return this.ready();
   }
 })
 
@@ -37,9 +41,11 @@ Meteor.publish('radios', function() {
     return Radios.find({
       businessId: Meteor.users.findOne(this.userId).profile.businessId,
       active: true
+    },{
+      sort: {name: 1}
     });
   } else {
-    this.ready();
+    return this.ready();
   }
 });
 
@@ -53,6 +59,7 @@ Meteor.publish('shifts', function(limit, searchDate) {
         sort: {submitted: -1}
       });
     } else {
+      searchDate = moment(searchDate).clone().startOf('day').toDate();
       var dateFilter2 = moment(searchDate).clone().add(1, 'days').toDate();
       return Shifts.find({
         businessId: Meteor.users.findOne(this.userId).profile.businessId,
@@ -63,7 +70,7 @@ Meteor.publish('shifts', function(limit, searchDate) {
       });
     }
 	} else {
-		this.ready();
+		return this.ready();
 	};
 });
 
@@ -73,10 +80,12 @@ Meteor.publish('riders', function() {
       "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId,
       "profile.active": true,
       roles: 'rider'
-    },
-    { fields: {'profile.name': 1} });
+    },{
+      fields: {'profile.name': 1},
+      sort: {"profile.name": 1}
+    });
   } else {
-    this.ready();
+    return this.ready();
   }
 })
 
@@ -87,7 +96,7 @@ Meteor.publish('userData', function () {
     },
     { fields: {'emails': 1, 'profile': 1, 'roles': 1} });
   } else {
-    this.ready();
+    return this.ready();
   }
 });
 
@@ -99,29 +108,13 @@ Meteor.publish('managers', function() {
   } else {
     return this.ready();
   }
-})
-
-Meteor.publish('userSchedule', function() {
-  if (Roles.userIsInRole(this.userId, ['manager'])) {
-    return Meteor.users.find({
-      "profile.businessId": Meteor.users.findOne(this.userId).profile.businessId
-    },
-    { fields: {'emails': 1, 'profile': 1, 'roles': 1} });
-  } else if (this.userId) {
-    return Meteor.users.find({
-      _id: this.userId
-    },
-    { fields: {'emails': 1, 'profile': 1, 'roles': 1} });
-  } else {
-    this.ready();
-  }
-})
+});
 
 Meteor.publish('roles', function() {
   if (Roles.userIsInRole(this.userId, ['manager'])) {
     return Meteor.roles.find({name: {$nin: ['admin', 'mechanic', 'shop']}});
   } else {
-    this.ready();
+    return this.ready();
   }
 });
 
@@ -135,13 +128,14 @@ Meteor.publish('requests', function() {
     });
   } else if (this.userId) {
     return Requests.find({
+      businessId: Meteor.users.findOne(this.userId).profile.businessId,
       userId: this.userId,
       scheduleDate: {$gte: moment().startOf('day').toDate()}
     }, {
       sort: {scheduleDate: 1, submitted: 1}
     });
   } else {
-    this.ready();
+    return this.ready();
   }
 });
 
@@ -157,7 +151,7 @@ Meteor.publish('rates', function() {
       scheduleDate: {$gte: currentDate}
     });
   } else {
-    this.ready();
+    return this.ready();
   }
 });
 
@@ -169,4 +163,4 @@ Meteor.publish('businesses', function() {
   } else {
     return Businesses.find();
   }
-})
+});

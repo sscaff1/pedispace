@@ -33,7 +33,7 @@ Template.shiftsList.events({
 	'submit [name=filterForm]': function(event, template) {
 		event.preventDefault();
 		var dateFilter =
-			moment($(event.target).find('[name=dateFilter]').val(), 'MMMM DD YYYY').toDate();
+			moment($(event.target).find('[name=dateFilter]').val(), 'YYYY MM DD').toDate();
 		template.dateFilter.set(dateFilter);
 	}
 });
