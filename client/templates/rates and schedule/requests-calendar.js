@@ -56,7 +56,7 @@ Template.requestsCal.helpers({
 		} else {
 			return true;
 		}
-	}
+	},
 	dateNum(scheduleDate) {
 		return scheduleDate.valueOf();
 	}
